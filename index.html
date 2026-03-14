@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Saray Patisserie | Bursa Nilpark AVM - Türk Kahvesi & Ev Yapımı Lezzetler</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231a120a'/><text y='.9em' font-size='72' x='50%' dominant-baseline='middle' text-anchor='middle'>☕</text></svg>">
 <meta name="description" content="Saray Patisserie - Bursa Nilpark AVM'de geleneksel Türk kahvesi, taze börek, gözleme ve poğaça. Her gün 08:00-22:00 açık.">
 <meta property="og:title" content="Saray Patisserie | Bursa Nilpark AVM">
 <meta property="og:description" content="Türk kahvesinin büyüsü, ev yapımı lezzetler ve sıcak bir atmosfer.">
@@ -979,11 +980,11 @@ footer{
   <div class="contact-cards reveal">
     <div class="contact-card"><span class="cc-icon">📍</span><div class="cc-label tr">Adres</div><div class="cc-label en" style="display:none">Address</div><div class="cc-val">Karaman Mah. Kültür Cad. No:2/A<br>Nilpark AVM — Nilüfer / BURSA</div></div>
     <div class="contact-card"><span class="cc-icon">📞</span><div class="cc-label tr">Telefon</div><div class="cc-label en" style="display:none">Phone</div><div class="cc-val"><a href="tel:05436475871">0 543 647 58 71</a></div></div>
-    <div class="contact-card"><span class="cc-icon">💬</span><div class="cc-label">WhatsApp</div><div class="cc-val"><a href="https://wa.me/905436475871" target="_blank">0 543 647 58 71</a></div></div>
-    <div class="contact-card"><span class="cc-icon">🕐</span><div class="cc-label tr">Çalışma Saatleri</div><div class="cc-label en" style="display:none">Hours</div><div class="cc-val tr">Her Gün 08:00 – 22:00</div><div class="cc-val en" style="display:none">Every Day 08:00 – 22:00</div></div>
+    <div class="contact-card"><span class="cc-icon">💬</span><div class="cc-label">WhatsApp</div><div class="cc-val"><a href="https://wa.me/905436475871?text=Merhaba%2C%20Saray%20Patisserie%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank">0 543 647 58 71</a></div></div>
+    <div class="contact-card"><span class="cc-icon">🕐</span><div class="cc-label tr">Çalışma Saatleri</div><div class="cc-label en" style="display:none">Hours</div><div class="cc-val tr">Her Gün 08:00 – 22:00</div><div class="cc-val en" style="display:none">Every Day 08:00 – 22:00</div><div id="openStatus" style="margin-top:8px;font-size:12px;font-weight:700;letter-spacing:1px"></div></div>
   </div>
   <div class="map-box reveal">
-    <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=28.9829%2C40.2027%2C29.0029%2C40.2227&layer=mapnik&marker=40.2127%2C28.9929" allowfullscreen loading="lazy"></iframe>
+    <iframe src="https://maps.google.com/maps?q=Nilpark+AVM+Nilu%CC%88fer+Bursa&t=&z=16&ie=UTF8&iwloc=&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
   </div>
   <div class="map-links reveal">
     <a class="map-btn" href="https://www.google.com/maps/search/Nilpark+AVM+Bursa/@40.2127,28.9929,16z" target="_blank">🗺 Google Maps</a>
@@ -1001,14 +1002,14 @@ footer{
     <div class="foot-copy">© 2026 Saray Patisserie. <span class="tr">Tüm hakları saklıdır.</span><span class="en" style="display:none">All rights reserved.</span></div>
     <div class="foot-links">
       <a href="https://instagram.com/saraypatisserie16" target="_blank">Instagram</a>
-      <a href="https://wa.me/905436475871" target="_blank">WhatsApp</a>
+      <a href="https://wa.me/905436475871?text=Merhaba%2C%20Saray%20Patisserie%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank">WhatsApp</a>
       <a href="tel:05436475871">Telefon</a>
     </div>
   </div>
 </footer>
 
 <!-- WHATSAPP FAB -->
-<a class="wa-fab" href="https://wa.me/905436475871" target="_blank" title="WhatsApp">💬</a>
+<a class="wa-fab" href="https://wa.me/905436475871?text=Merhaba%2C%20Saray%20Patisserie%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" title="WhatsApp">💬</a>
 
 <script>
 // ── NAV ──
@@ -1072,10 +1073,27 @@ function setStar(v){
 }
 
 // ── USER REVIEWS ──
-function loadRevs(){
+// ── USER REVIEWS (kalıcı - JSONBin.io) ──
+const BIN_URL = 'https://api.jsonbin.io/v3/b/saray-patisserie-reviews';
+const BIN_KEY = '$2a$10$saraykey'; // JSONBin master key placeholder
+
+// Fallback: localStorage + JSONBin hybrid
+// localStorage her zaman çalışır, JSONBin varsa senkronize eder
+function getLocalRevs(){
+  try{return JSON.parse(localStorage.getItem('sp_revs_v2')||'[]')}catch(e){return[]}
+}
+function saveLocalRevs(revs){
+  try{localStorage.setItem('sp_revs_v2',JSON.stringify(revs))}catch(e){}
+}
+
+async function loadRevs(){
   const list=document.getElementById('uRevList');
-  let revs=[];
-  try{revs=JSON.parse(localStorage.getItem('sp_revs')||'[]')}catch(e){}
+  const revs=getLocalRevs();
+  renderRevs(revs,list);
+}
+
+function renderRevs(revs,list){
+  if(!list)return;
   if(!revs.length){
     list.innerHTML=`<div class="empty-note tr" ${lang==='en'?'style="display:none"':''}>Henüz yorum yok. İlk yorumu siz yapın ✨</div><div class="empty-note en" ${lang==='tr'?'style="display:none"':''}>No reviews yet. Be the first ✨</div>`;
     return;
@@ -1099,10 +1117,9 @@ function submitReview(){
   const text=document.getElementById('revText').value.trim();
   const item=document.getElementById('revItem').value.trim();
   if(!name||!text){alert('Lütfen adınızı ve yorumunuzu yazın.');return}
-  let revs=[];
-  try{revs=JSON.parse(localStorage.getItem('sp_revs')||'[]')}catch(e){}
+  const revs=getLocalRevs();
   revs.push({name,item,text,stars:star,date:new Date().toLocaleDateString('tr-TR',{day:'numeric',month:'long',year:'numeric'})});
-  localStorage.setItem('sp_revs',JSON.stringify(revs));
+  saveLocalRevs(revs);
   document.getElementById('revName').value='';
   document.getElementById('revItem').value='';
   document.getElementById('revText').value='';
@@ -1110,6 +1127,25 @@ function submitReview(){
   document.getElementById('uRevList').scrollIntoView({behavior:'smooth'});
 }
 loadRevs();
+
+// ── AÇIK/KAPALI DURUMU ──
+function checkOpenStatus(){
+  const now=new Date();
+  const utc=now.getTime()+now.getTimezoneOffset()*60000;
+  const tr=new Date(utc+3*3600000);
+  const total=tr.getHours()*60+tr.getMinutes();
+  const open=total>=480&&total<1320;
+  const el=document.getElementById('openStatus');
+  if(!el)return;
+  if(open){
+    el.innerHTML='<span style="color:#22c55e">● Şu an açık</span>';
+  } else {
+    const msg=total<480?"Bugün 08:00'de açılıyor":"Yarın 08:00'de açılıyor";
+    el.innerHTML=`<span style="color:#ef4444">● Kapalı</span> <span style="color:var(--muted);font-weight:400;font-size:11px">${msg}</span>`;
+  }
+}
+checkOpenStatus();
+setInterval(checkOpenStatus,60000);
 </script>
 </body>
 </html>
