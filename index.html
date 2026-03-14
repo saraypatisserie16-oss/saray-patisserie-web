@@ -5,16 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Saray Patisserie - Modern Kafe</title>
 <style>
-  /* Genel Ayarlar */
+  /* Genel Stil */
   * {
     box-sizing: border-box;
   }
   body {
     margin: 0;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #0e0e0e;
+    background-color: #0f0e0d;
     color: #d4af37;
     line-height: 1.6;
+    scroll-behavior: smooth;
   }
   a {
     color: #c59d5f;
@@ -23,6 +24,8 @@
   a:hover {
     text-decoration: underline;
   }
+
+  /* Header */
   header {
     background-color: #000;
     padding: 20px 10%;
@@ -31,195 +34,333 @@
     align-items: center;
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 999;
+    box-shadow: 0 2px 10px #000000cc;
   }
   header h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     margin: 0;
+    font-weight: 900;
+    letter-spacing: 4px;
+    text-shadow: 0 0 8px #d4af37;
   }
   nav a {
-    margin-left: 20px;
-    font-weight: 600;
-    font-size: 1rem;
+    margin-left: 25px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 5px 10px;
+    border-radius: 6px;
+    transition: background 0.3s ease;
   }
-  nav a:first-child {
-    margin-left: 0;
+  nav a:hover {
+    background: #c59d5f22;
   }
 
   /* Hero Bölümü */
   .hero {
-    height: 70vh;
-    background: url("images/kafe.jpg") center/cover no-repeat;
+    height: 80vh;
+    background: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1470&q=80') center/cover no-repeat;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     text-align: center;
-  }
-  .hero h2 {
-    font-size: 3.5rem;
-    margin-bottom: 0.5rem;
+    padding: 0 20px;
+    color: #f9f6f0;
     text-shadow: 0 0 15px #c59d5f;
   }
+  .hero h2 {
+    font-size: 4rem;
+    margin-bottom: 0.2rem;
+    font-weight: 900;
+  }
   .hero p {
-    font-size: 1.4rem;
-    max-width: 600px;
-    margin: 0 auto;
-    text-shadow: 0 0 10px #c59d5f;
+    font-size: 1.5rem;
+    font-weight: 600;
+    max-width: 700px;
+  }
+
+  /* Ana içerik bölümü */
+  main {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
   }
 
   /* Menü Bölümü */
-  section {
-    padding: 60px 10%;
+  #menu {
+    margin-bottom: 60px;
   }
-  section h2 {
+  #menu h2 {
+    color: #c59d5f;
     font-size: 2.8rem;
-    margin-bottom: 40px;
-    border-bottom: 2px solid #c59d5f;
+    border-bottom: 3px solid #c59d5f;
     padding-bottom: 10px;
-    max-width: 320px;
+    max-width: 350px;
+    margin-bottom: 40px;
+    font-weight: 900;
   }
-  .menu {
+  .menu-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
     gap: 40px;
   }
-  .menu-column h3 {
-    margin-bottom: 20px;
-    font-size: 1.8rem;
-    border-bottom: 1px solid #c59d5f;
+  .menu-category {
+    background: #1c1a18;
+    padding: 20px 25px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px #c59d5f33;
+  }
+  .menu-category h3 {
+    margin-bottom: 25px;
+    font-weight: 800;
+    font-size: 1.7rem;
+    border-bottom: 2px solid #c59d5f;
     padding-bottom: 8px;
   }
-  ul {
+  ul.menu-list {
     list-style: none;
-    padding-left: 0;
+    padding: 0;
+    margin: 0;
   }
-  ul li {
+  ul.menu-list li {
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid #333;
-    padding: 10px 0;
+    border-bottom: 1px solid #444;
+    padding: 12px 0;
     font-size: 1.1rem;
   }
-  ul li span {
+  ul.menu-list li:last-child {
+    border-bottom: none;
+  }
+  ul.menu-list li span.price {
     font-weight: 700;
   }
 
-  /* İletişim & Harita */
-  #contact {
-    background: #111;
-    color: #d4af37;
+  /* Hakkımızda Bölümü */
+  #about {
+    margin-bottom: 60px;
+    color: #f9f6f0;
   }
-  #contact .contact-info {
+  #about h2 {
+    color: #c59d5f;
+    font-size: 2.8rem;
+    border-bottom: 3px solid #c59d5f;
+    padding-bottom: 10px;
+    max-width: 300px;
+    margin-bottom: 20px;
+    font-weight: 900;
+  }
+  #about p {
+    max-width: 900px;
+    font-size: 1.2rem;
+    line-height: 1.7;
+  }
+
+  /* SSS Bölümü */
+  #faq {
+    margin-bottom: 60px;
+    color: #f9f6f0;
+  }
+  #faq h2 {
+    color: #c59d5f;
+    font-size: 2.8rem;
+    border-bottom: 3px solid #c59d5f;
+    padding-bottom: 10px;
+    max-width: 350px;
+    margin-bottom: 40px;
+    font-weight: 900;
+  }
+  .faq-item {
+    background: #1c1a18;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 0 15px #c59d5f44;
+  }
+  .faq-question {
+    padding: 20px 25px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1.1rem;
+    position: relative;
+  }
+  .faq-question::after {
+    content: "+";
+    position: absolute;
+    right: 25px;
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+  }
+  .faq-question.active::after {
+    content: "-";
+    transform: rotate(180deg);
+  }
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 25px;
+    background: #12100e;
+    color: #ccc;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  .faq-answer.active {
+    max-height: 200px;
+    padding: 15px 25px 25px;
+  }
+
+  /* İletişim Bölümü */
+  #contact {
+    margin-bottom: 60px;
+    color: #f9f6f0;
+  }
+  #contact h2 {
+    color: #c59d5f;
+    font-size: 2.8rem;
+    border-bottom: 3px solid #c59d5f;
+    padding-bottom: 10px;
+    max-width: 350px;
+    margin-bottom: 40px;
+    font-weight: 900;
+  }
+  .contact-wrapper {
     display: flex;
     flex-wrap: wrap;
     gap: 40px;
-    padding: 40px 10%;
-    justify-content: center;
   }
-  .contact-card {
-    flex: 1 1 300px;
-    background: #1a1a1a;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 20px #c59d5f50;
+  .contact-info {
+    flex: 1 1 350px;
+    background: #1c1a18;
+    padding: 25px 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px #c59d5f44;
   }
-  .contact-card h3 {
+  .contact-info h3 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
     margin-bottom: 20px;
-    font-size: 1.6rem;
-    border-bottom: 1px solid #c59d5f;
+    border-bottom: 2px solid #c59d5f;
     padding-bottom: 8px;
   }
-  .contact-card p, .contact-card a {
+  .contact-info p, .contact-info a {
     font-size: 1.1rem;
-    margin-bottom: 10px;
-    display: block;
+    margin-bottom: 15px;
+    color: #d4af37;
   }
-  iframe.map {
+  .contact-info a:hover {
+    color: #f9f6f0;
+  }
+  .map-container {
+    flex: 2 1 600px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 25px #c59d5f99;
+  }
+  iframe {
     width: 100%;
     height: 400px;
     border: none;
   }
 
-  /* Yorum Bölümü */
+  /* Müşteri Yorumları Bölümü */
   #reviews {
-    background: #111;
-    padding: 60px 10%;
-    color: #d4af37;
+    margin-bottom: 80px;
   }
   #reviews h2 {
-    margin-bottom: 30px;
+    color: #c59d5f;
+    font-size: 2.8rem;
+    border-bottom: 3px solid #c59d5f;
+    padding-bottom: 10px;
+    max-width: 350px;
+    margin-bottom: 40px;
+    font-weight: 900;
   }
   form#review-form {
-    max-width: 600px;
-    margin: 0 auto 40px auto;
-    display: flex;
-    flex-direction: column;
+    max-width: 700px;
+    margin: 0 auto 50px auto;
+    background: #1c1a18;
+    padding: 25px 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 25px #c59d5f44;
   }
   form#review-form input,
   form#review-form textarea {
-    background: #222;
-    border: 1px solid #555;
-    color: #d4af37;
-    padding: 10px;
+    width: 100%;
+    padding: 12px 15px;
     margin-bottom: 20px;
+    background: #12100e;
+    border: 1px solid #444;
+    color: #d4af37;
     font-size: 1.1rem;
-    border-radius: 5px;
+    border-radius: 8px;
+    resize: vertical;
   }
   form#review-form button {
     background: #c59d5f;
     border: none;
-    padding: 12px;
+    padding: 14px;
     font-size: 1.2rem;
     font-weight: 700;
     color: #111;
     cursor: pointer;
-    border-radius: 5px;
-    transition: background 0.3s ease;
+    border-radius: 8px;
+    width: 100%;
+    transition: background-color 0.3s ease;
   }
   form#review-form button:hover {
-    background: #a17e3e;
+    background-color: #a17e3e;
   }
   .reviews-list {
     max-width: 700px;
     margin: 0 auto;
+    color: #d4af37;
   }
   .review-item {
-    background: #222;
+    background: #1c1a18;
     padding: 15px 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px #c59d5f50;
+    margin-bottom: 25px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px #c59d5f44;
   }
   .review-item strong {
     display: block;
-    margin-bottom: 5px;
-    font-size: 1.2rem;
+    margin-bottom: 6px;
+    font-size: 1.3rem;
+    font-weight: 800;
   }
   .review-item em {
     font-size: 0.9rem;
-    color: #aaa;
+    color: #bfa451cc;
+    margin-bottom: 10px;
+    display: block;
   }
-
-  /* Footer */
-  footer {
-    background: #000;
-    text-align: center;
-    color: #777;
-    padding: 30px 10%;
-    font-size: 0.9rem;
+  .review-item p {
+    font-size: 1.1rem;
+    line-height: 1.5;
   }
 
   /* Responsive */
-  @media (max-width: 768px) {
+  @media (max-width: 860px) {
+    .contact-wrapper {
+      flex-direction: column;
+    }
+  }
+  @media (max-width: 480px) {
     header {
       flex-direction: column;
       gap: 15px;
     }
-    .menu {
-      grid-template-columns: 1fr;
+    nav a {
+      margin-left: 0;
+      margin-right: 15px;
     }
-    .contact-info {
-      flex-direction: column;
+    .hero h2 {
+      font-size: 2.8rem;
+    }
+    .hero p {
+      font-size: 1.2rem;
     }
   }
 </style>
@@ -231,182 +372,108 @@
   <nav>
     <a href="#hero">Ana Sayfa</a>
     <a href="#menu">Menü</a>
+    <a href="#about">Hakkımızda</a>
+    <a href="#faq">SSS</a>
     <a href="#contact">İletişim</a>
     <a href="#reviews">Yorumlar</a>
   </nav>
 </header>
 
-<section class="hero" id="hero">
-  <div>
-    <h2>Modern Coffee & Dessert Menu</h2>
-    <p>Kahve ve lezzetin buluşma noktası</p>
-  </div>
+<section class="hero" id="hero" role="banner" aria-label="Saray Patisserie ana görseli">
+  <h2>Modern Coffee & Dessert Menu</h2>
+  <p>Kahve ve lezzetin buluşma noktası</p>
 </section>
 
-<section id="menu" class="section">
-  <h2>Menümüz</h2>
-  <div class="menu">
+<main>
 
-    <div class="menu-column">
-      <h3>Espresso Bar</h3>
-      <ul>
-        <li>Shot Espresso <span>90 TL</span></li>
-        <li>Double Espresso <span>150 TL</span></li>
-        <li>Sütlü Espresso <span>180 TL</span></li>
-        <li>Americano <span>180 TL</span></li>
-        <li>Cappuccino <span>180 TL</span></li>
-        <li>Latte Macchiato <span>180 TL</span></li>
-        <li>Caffe Mocha <span>180 TL</span></li>
-      </ul>
-      <h3>Soğuk Kahveler</h3>
-      <ul>
-        <li>Soğuk Kahve (Sade) <span>180 TL</span></li>
-        <li>Soğuk Kahve (Sütlü) <span>180 TL</span></li>
-      </ul>
-      <h3>Çay & Su</h3>
-      <ul>
-        <li>Çay <span>35 TL</span></li>
-        <li>Su <span>20 TL</span></li>
-      </ul>
-      <h3>Soğuk İçecekler</h3>
-      <ul>
-        <li>Sade Soda <span>45 TL</span></li>
-        <li>Meyveli Soda <span>60 TL</span></li>
-        <li>Pepsi <span>100 TL</span></li>
-        <li>Gazoz <span>90 TL</span></li>
-        <li>Capri-Sun <span>60 TL</span></li>
-        <li>Ayran <span>50 TL</span></li>
-        <li>Meyve Suyu <span>60 TL</span></li>
-        <li>Go Up <span>90 TL</span></li>
-      </ul>
+  <section id="menu" aria-labelledby="menu-title">
+    <h2 id="menu-title">Menümüz</h2>
+    <div class="menu-grid">
+
+      <article class="menu-category" aria-labelledby="espresso-bar">
+        <h3 id="espresso-bar">Espresso Bar</h3>
+        <ul class="menu-list">
+          <li>Shot Espresso <span class="price">90 TL</span></li>
+          <li>Double Espresso <span class="price">150 TL</span></li>
+          <li>Sütlü Espresso <span class="price">180 TL</span></li>
+          <li>Americano <span class="price">180 TL</span></li>
+          <li>Cappuccino <span class="price">180 TL</span></li>
+          <li>Latte Macchiato <span class="price">180 TL</span></li>
+          <li>Caffe Mocha <span class="price">180 TL</span></li>
+        </ul>
+
+        <h3 id="cold-coffee">Soğuk Kahveler</h3>
+        <ul class="menu-list">
+          <li>Soğuk Kahve (Sade) <span class="price">180 TL</span></li>
+          <li>Soğuk Kahve (Sütlü) <span class="price">180 TL</span></li>
+        </ul>
+
+        <h3 id="tea-water">Çay & Su</h3>
+        <ul class="menu-list">
+          <li>Çay <span class="price">35 TL</span></li>
+          <li>Su <span class="price">20 TL</span></li>
+        </ul>
+
+        <h3 id="cold-drinks-left">Soğuk İçecekler</h3>
+        <ul class="menu-list">
+          <li>Sade Soda <span class="price">45 TL</span></li>
+          <li>Meyveli Soda <span class="price">60 TL</span></li>
+          <li>Pepsi <span class="price">100 TL</span></li>
+          <li>Gazoz <span class="price">90 TL</span></li>
+          <li>Capri-Sun <span class="price">60 TL</span></li>
+          <li>Ayran <span class="price">50 TL</span></li>
+          <li>Meyve Suyu <span class="price">60 TL</span></li>
+          <li>Go Up <span class="price">90 TL</span></li>
+        </ul>
+      </article>
+
+      <article class="menu-category" aria-labelledby="turk-kahvesi">
+        <h3 id="turk-kahvesi">Türk Kahvesi & Özel Kahveler</h3>
+        <ul class="menu-list">
+          <li>Türk Kahvesi <span class="price">150 TL</span></li>
+          <li>Sütlü Türk Kahvesi <span class="price">130 TL</span></li>
+          <li>Dibek Kahvesi <span class="price">160 TL</span></li>
+        </ul>
+
+        <h3 id="hot-drinks">Sıcak İçecekler</h3>
+        <ul class="menu-list">
+          <li>Sıcak Çikolata <span class="price">180 TL</span></li>
+          <li>Sütlü Çikolata <span class="price">180 TL</span></li>
+          <li>Sütlü Nescafe <span class="price">180 TL</span></li>
+        </ul>
+
+        <h3 id="refreshing-drinks">Ferah İçecekler</h3>
+        <ul class="menu-list">
+          <li>Limonata <span class="price">150 TL</span></li>
+          <li>Yaban Mersini İçeceği <span class="price">180 TL</span></li>
+          <li>Churchill <span class="price">90 TL</span></li>
+        </ul>
+
+        <h3 id="snacks">Atıştırmalıklar</h3>
+        <ul class="menu-list">
+          <li>Tost <span class="price">180 TL</span></li>
+          <li>Soğuk Sandviç <span class="price">150 TL</span></li>
+          <li>Patates Kızartması <span class="price">100 TL</span></li>
+        </ul>
+
+        <h3 id="breakfast">Kahvaltı & Sıcak Tabaklar</h3>
+        <ul class="menu-list">
+          <li>Gözleme <span class="price">250 TL</span></li>
+          <li>Gözleme Menü <span class="price">300 TL</span></li>
+          <li>Menemen <span class="price">250 TL</span></li>
+          <li>Arnavut Böreği <span class="price">170 TL</span></li>
+          <li>Poğaça Çeşitleri <span class="price">40 TL</span></li>
+          <li>Su Böreği <span class="price">150 TL</span></li>
+        </ul>
+      </article>
     </div>
+  </section>
 
-    <div class="menu-column">
-      <h3>Türk Kahvesi & Özel Kahveler</h3>
-      <ul>
-        <li>Türk Kahvesi <span>150 TL</span></li>
-        <li>Sütlü Türk Kahvesi <span>130 TL</span></li>
-        <li>Dibek Kahvesi <span>160 TL</span></li>
-      </ul>
-      <h3>Sıcak İçecekler</h3>
-      <ul>
-        <li>Sıcak Çikolata <span>180 TL</span></li>
-        <li>Sütlü Çikolata <span>180 TL</span></li>
-        <li>Sütlü Nescafe <span>180 TL</span></li>
-      </ul>
-      <h3>Ferah İçecekler</h3>
-      <ul>
-        <li>Limonata <span>150 TL</span></li>
-        <li>Yaban Mersini İçeceği <span>180 TL</span></li>
-        <li>Churchill <span>90 TL</span></li>
-      </ul>
-      <h3>Atıştırmalıklar</h3>
-      <ul>
-        <li>Tost <span>180 TL</span></li>
-        <li>Soğuk Sandviç <span>150 TL</span></li>
-        <li>Patates Kızartması <span>100 TL</span></li>
-      </ul>
-      <h3>Kahvaltı & Sıcak Tabaklar</h3>
-      <ul>
-        <li>Gözleme <span>250 TL</span></li>
-        <li>Gözleme Menü <span>300 TL</span></li>
-        <li>Menemen <span>250 TL</span></li>
-        <li>Arnavut Böreği <span>170 TL</span></li>
-        <li>Poğaça Çeşitleri <span>40 TL</span></li>
-        <li>Su Böreği <span>150 TL</span></li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section id="contact">
-  <h2>İletişim</h2>
-  <div class="contact-info">
-    <div class="contact-card">
-      <h3>Adres</h3>
-      <p>Karaman Mah. Kültür Cad. No:2/A<br />Nilpark AVM — Nilüfer / BURSA</p>
-      <h3>Telefon</h3>
-      <p><a href="tel:+905436475871">0 543 647 58 71</a></p>
-      <h3>WhatsApp</h3>
-      <p><a href="https://wa.me/905436475871" target="_blank" rel="noopener noreferrer">0 543 647 58 71</a></p>
-      <h3>Instagram</h3>
-      <p><a href="https://instagram.com/saraypatisserie16" target="_blank" rel="noopener noreferrer">@saraypatisserie16</a></p>
-      <h3>Çalışma Saatleri</h3>
-      <p>Her Gün 08:00 – 22:00</p>
-    </div>
-    <div class="contact-card" style="flex:2 1 600px;">
-      <iframe
-        class="map"
-        src="https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q=Karaman+Mahallesi+Kültür+Caddesi+Nilpark+Avm+Nilüfer+Bursa"
-        allowfullscreen
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-      ></iframe>
-    </div>
-  </div>
-</section>
-
-<section id="reviews">
-  <h2>Müşteri Yorumları</h2>
-  <form id="review-form">
-    <input type="text" id="name" placeholder="Adınız" required />
-    <textarea id="comment" rows="4" placeholder="Yorumunuz" required></textarea>
-    <button type="submit">Gönder</button>
-  </form>
-  <div class="reviews-list" id="reviews-list">
-    <!-- Yorumlar buraya eklenecek -->
-  </div>
-</section>
-
-<footer>
-  <p>© 2026 Saray Patisserie. Tüm hakları saklıdır.</p>
-</footer>
-
-<script>
-  // Basit yorum ekleme (sayfa yenilendiğinde silinir)
-  const form = document.getElementById("review-form");
-  const reviewsList = document.getElementById("reviews-list");
-
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const name = document.getElementById("name").value.trim();
-    const comment = document.getElementById("comment").value.trim();
-
-    if (!name || !comment) {
-      alert("Lütfen adınızı ve yorumunuzu yazınız.");
-      return;
-    }
-
-    const reviewItem = document.createElement("div");
-    reviewItem.className = "review-item";
-    const now = new Date();
-    const dateString = now.toLocaleDateString("tr-TR") + " " + now.toLocaleTimeString("tr-TR");
-
-    reviewItem.innerHTML = `
-      <strong>${escapeHtml(name)}</strong>
-      <em>${dateString}</em>
-      <p>${escapeHtml(comment)}</p>
-    `;
-
-    reviewsList.prepend(reviewItem);
-
-    form.reset();
-  });
-
-  // XSS önlemek için basit kaçış fonksiyonu
-  function escapeHtml(text) {
-    const map = {
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#039;",
-    };
-    return text.replace(/[&<>"']/g, function (m) {
-      return map[m];
-    });
-  }
-</script>
-</body>
-</html>
+  <section id="about" aria-labelledby="about-title">
+    <h2 id="about-title">Hakkımızda</h2>
+    <p>
+      Saray Patisserie olarak, lezzetli kahveler ve taze tatlılar eşliğinde sıcak ve samimi bir ortam sunuyoruz.
+      Kaliteli malzemelerle hazırlanan ürünlerimizle, misafirlerimizin gününü güzelleştirmeyi hedefliyoruz.
+      Siz de bizi ziyaret ederek bu eşsiz deneyimi yaşayın!
+    </p>
+    <img src="https://images.unsplash.com/photo-1516685304081-de7947d419d5?auto=format
