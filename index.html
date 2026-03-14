@@ -1088,59 +1088,74 @@ function setStar(v){
   document.querySelectorAll('.st-btn').forEach(b=>b.classList.toggle('on',parseInt(b.dataset.v)<=v));
 }
 
-// ── USER REVIEWS ──
-// ── USER REVIEWS (kalıcı - JSONBin.io) ──
-const BIN_URL = 'https://api.jsonbin.io/v3/b/saray-patisserie-reviews';
-const BIN_KEY = '$2a$10$saraykey'; // JSONBin master key placeholder
+// ── USER REVIEWS (Supabase - tüm cihazlarda kalıcı) ──
+const SB_URL='https://pzfygcxwshvpcbbgtqqw.supabase.co';
+const SB_KEY='sb_publishable_uhWUToq78VxIdnZ0J-6Ieg_1jWkEejL';
+const SB_HEADERS={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'};
 
-// Fallback: localStorage + JSONBin hybrid
-// localStorage her zaman çalışır, JSONBin varsa senkronize eder
-function getLocalRevs(){
-  try{return JSON.parse(localStorage.getItem('sp_revs_v2')||'[]')}catch(e){return[]}
-}
-function saveLocalRevs(revs){
-  try{localStorage.setItem('sp_revs_v2',JSON.stringify(revs))}catch(e){}
-}
+function esc(t){return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 
-async function loadRevs(){
+function renderRevs(revs){
   const list=document.getElementById('uRevList');
-  const revs=getLocalRevs();
-  renderRevs(revs,list);
-}
-
-function renderRevs(revs,list){
   if(!list)return;
-  if(!revs.length){
-    list.innerHTML=`<div class="empty-note tr" ${lang==='en'?'style="display:none"':''}>Henüz yorum yok. İlk yorumu siz yapın ✨</div><div class="empty-note en" ${lang==='tr'?'style="display:none"':''}>No reviews yet. Be the first ✨</div>`;
+  if(!revs||!revs.length){
+    list.innerHTML='<div class="empty-note">Henüz yorum yok. İlk yorumu siz yapın ✨</div>';
     return;
   }
-  list.innerHTML=revs.slice().reverse().map(r=>`
+  list.innerHTML=revs.map(r=>`
     <div class="urev-item">
       <div class="urev-top">
         <div style="display:flex;align-items:center;gap:10px">
           <div class="urev-av">${esc(r.name).substring(0,2).toUpperCase()}</div>
-          <div><div class="urev-name">${esc(r.name)}</div><div class="urev-meta">${r.date}${r.item?' · '+esc(r.item):''}</div></div>
+          <div><div class="urev-name">${esc(r.name)}</div><div class="urev-meta">${new Date(r.created_at).toLocaleDateString('tr-TR',{day:'numeric',month:'long',year:'numeric'})}${r.item?' · '+esc(r.item):''}</div></div>
         </div>
         <div class="urev-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</div>
       </div>
-      <div class="urev-text">${esc(r.text)}</div>
+      <div class="urev-text">${esc(r.review)}</div>
     </div>
   `).join('');
 }
-function esc(t){return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
-function submitReview(){
+
+async function loadRevs(){
+  const list=document.getElementById('uRevList');
+  if(list) list.innerHTML='<div class="empty-note">Yorumlar yükleniyor...</div>';
+  try{
+    const res=await fetch(`${SB_URL}/rest/v1/reviews?order=created_at.desc&limit=50`,{headers:SB_HEADERS});
+    const revs=await res.json();
+    renderRevs(Array.isArray(revs)?revs:[]);
+  }catch(e){
+    if(list) list.innerHTML='<div class="empty-note">Yorumlar yüklenemedi. Sayfayı yenileyin.</div>';
+  }
+}
+
+async function submitReview(){
   const name=document.getElementById('revName').value.trim();
-  const text=document.getElementById('revText').value.trim();
+  const review=document.getElementById('revText').value.trim();
   const item=document.getElementById('revItem').value.trim();
-  if(!name||!text){alert('Lütfen adınızı ve yorumunuzu yazın.');return}
-  const revs=getLocalRevs();
-  revs.push({name,item,text,stars:star,date:new Date().toLocaleDateString('tr-TR',{day:'numeric',month:'long',year:'numeric'})});
-  saveLocalRevs(revs);
-  document.getElementById('revName').value='';
-  document.getElementById('revItem').value='';
-  document.getElementById('revText').value='';
-  setStar(5);loadRevs();
-  document.getElementById('uRevList').scrollIntoView({behavior:'smooth'});
+  if(!name||!review){alert('Lütfen adınızı ve yorumunuzu yazın.');return}
+  const btn=document.querySelector('.rf-submit');
+  btn.textContent='Gönderiliyor...';btn.disabled=true;
+  try{
+    const res=await fetch(`${SB_URL}/rest/v1/reviews`,{
+      method:'POST',
+      headers:{...SB_HEADERS,'Prefer':'return=representation'},
+      body:JSON.stringify({name,item,review,stars:star})
+    });
+    if(res.ok){
+      document.getElementById('revName').value='';
+      document.getElementById('revItem').value='';
+      document.getElementById('revText').value='';
+      setStar(5);
+      await loadRevs();
+      document.getElementById('uRevList').scrollIntoView({behavior:'smooth'});
+    } else {
+      const err=await res.json();
+      alert('Hata: '+(err.message||'Yorum gönderilemedi.'));
+    }
+  }catch(e){
+    alert('Yorum gönderilemedi. İnternet bağlantınızı kontrol edin.');
+  }
+  btn.textContent='Gönder';btn.disabled=false;
 }
 loadRevs();
 
