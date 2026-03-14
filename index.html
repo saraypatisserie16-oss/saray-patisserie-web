@@ -1,1139 +1,412 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Saray Patisserie | Bursa Nilpark</title>
-<meta name="description" content="Bursa Nilpark AVM'de sıcak bir yuva. Türk kahvesi, börekler, poğaçalar ve ev yapımı lezzetler.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Saray Patisserie - Modern Kafe</title>
 <style>
-:root {
-  --cream:#f5efe6;--cream2:#ede4d8;--brown:#3d2b1f;--brown2:#5c3d2e;--brown3:#7a5544;
-  --gold:#c4973a;--gold2:#d4aa55;--warm:#e8d5b7;--text:#2a1a10;--gray:#8a7060;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.6}
-::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+  /* Genel Ayarlar */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #0e0e0e;
+    color: #d4af37;
+    line-height: 1.6;
+  }
+  a {
+    color: #c59d5f;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  header {
+    background-color: #000;
+    padding: 20px 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  header h1 {
+    font-size: 2rem;
+    margin: 0;
+  }
+  nav a {
+    margin-left: 20px;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  nav a:first-child {
+    margin-left: 0;
+  }
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 5%;transition:.4s}
-nav.sc{background:rgba(61,43,31,.96);backdrop-filter:blur(16px);border-bottom:1px solid rgba(196,151,58,.2)}
-.ni{display:flex;align-items:center;justify-content:space-between;height:72px}
-.logo-wrap{display:flex;align-items:center;gap:12px;cursor:pointer;text-decoration:none}
-.logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px}
-.logo-text{font-family:'Cormorant Garamond',serif}
-.logo-name{font-size:18px;font-weight:700;color:var(--cream);line-height:1.1}
-.logo-sub{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}
-.nav-links{display:flex;gap:2px;align-items:center}
-.nav-links a{color:rgba(245,239,230,.7);text-decoration:none;padding:7px 16px;border-radius:6px;font-size:13px;font-weight:500;letter-spacing:.5px;transition:.2s;cursor:pointer}
-.nav-links a:hover,.nav-links a.act{color:var(--cream);background:rgba(255,255,255,.08)}
-.nav-lang{background:transparent;border:1px solid rgba(196,151,58,.4);color:var(--gold);padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;font-family:'Jost',sans-serif;transition:.2s;letter-spacing:.5px}
-.nav-lang:hover{background:rgba(196,151,58,.1)}
-.ham{display:none;flex-direction:column;gap:5px;cursor:pointer}
-.ham span{width:22px;height:2px;background:var(--cream);border-radius:2px;transition:.3s}
-.mob-menu{display:none;position:fixed;inset:0;background:var(--brown);z-index:99;padding:90px 6% 40px;flex-direction:column;gap:4px}
-.mob-menu.op{display:flex}
-.mob-menu a{color:var(--cream);text-decoration:none;font-size:22px;font-family:'Cormorant Garamond',serif;font-weight:600;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.08);cursor:pointer}
+  /* Hero Bölümü */
+  .hero {
+    height: 70vh;
+    background: url("images/kafe.jpg") center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .hero h2 {
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 15px #c59d5f;
+  }
+  .hero p {
+    font-size: 1.4rem;
+    max-width: 600px;
+    margin: 0 auto;
+    text-shadow: 0 0 10px #c59d5f;
+  }
 
-/* PAGES */
-.pg{display:none}
-.pg.act{display:block}
+  /* Menü Bölümü */
+  section {
+    padding: 60px 10%;
+  }
+  section h2 {
+    font-size: 2.8rem;
+    margin-bottom: 40px;
+    border-bottom: 2px solid #c59d5f;
+    padding-bottom: 10px;
+    max-width: 320px;
+  }
+  .menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+  }
+  .menu-column h3 {
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    border-bottom: 1px solid #c59d5f;
+    padding-bottom: 8px;
+  }
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  ul li {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #333;
+    padding: 10px 0;
+    font-size: 1.1rem;
+  }
+  ul li span {
+    font-weight: 700;
+  }
 
-/* HERO */
-.hero{min-height:100vh;background:linear-gradient(160deg,var(--brown) 0%,var(--brown2) 45%,#2a1a10 100%);display:flex;align-items:center;position:relative;overflow:hidden;padding:0 5%}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 70% 50%,rgba(196,151,58,.12),transparent),radial-gradient(ellipse 40% 60% at 20% 80%,rgba(92,61,46,.4),transparent)}
-.hero-illustration{position:absolute;right:8%;top:50%;transform:translateY(-50%);opacity:.12;pointer-events:none}
-.hero-content{position:relative;z-index:2;max-width:580px;padding-top:72px}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:24px;font-weight:500}
-.hero-eyebrow::before,.hero-eyebrow::after{content:'';width:30px;height:1px;background:var(--gold);opacity:.5}
-.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(52px,7vw,90px);font-weight:700;line-height:.95;color:var(--cream);margin-bottom:28px}
-.hero h1 em{font-style:italic;color:var(--gold2);display:block}
-.hero-desc{font-size:16px;color:rgba(245,239,230,.65);line-height:1.8;margin-bottom:40px;max-width:420px;font-weight:300}
-.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
-.btn-primary{background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--brown);padding:14px 32px;border-radius:8px;font-size:14px;font-weight:600;letter-spacing:.5px;text-decoration:none;border:none;cursor:pointer;font-family:'Jost',sans-serif;transition:.3s;display:inline-flex;align-items:center;gap:8px}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(196,151,58,.4)}
-.btn-outline{background:transparent;border:1px solid rgba(245,239,230,.25);color:var(--cream);padding:14px 32px;border-radius:8px;font-size:14px;font-weight:500;letter-spacing:.5px;cursor:pointer;font-family:'Jost',sans-serif;transition:.3s;display:inline-flex;align-items:center;gap:8px}
-.btn-outline:hover{border-color:var(--gold);color:var(--gold);background:rgba(196,151,58,.06)}
-.hero-badges{display:flex;gap:24px;margin-top:48px;flex-wrap:wrap}
-.hero-badge{text-align:center}
-.hb-num{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;color:var(--gold);line-height:1}
-.hb-lbl{font-size:11px;color:rgba(245,239,230,.5);letter-spacing:1px;margin-top:4px}
-.hero-sep{width:1px;background:rgba(255,255,255,.1);align-self:stretch;margin:4px 0}
-.scroll-ind{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(245,239,230,.4);font-size:10px;letter-spacing:2px;text-transform:uppercase;animation:bob 2.5s ease-in-out infinite}
-@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
-.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,rgba(196,151,58,.6),transparent)}
+  /* İletişim & Harita */
+  #contact {
+    background: #111;
+    color: #d4af37;
+  }
+  #contact .contact-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    padding: 40px 10%;
+    justify-content: center;
+  }
+  .contact-card {
+    flex: 1 1 300px;
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px #c59d5f50;
+  }
+  .contact-card h3 {
+    margin-bottom: 20px;
+    font-size: 1.6rem;
+    border-bottom: 1px solid #c59d5f;
+    padding-bottom: 8px;
+  }
+  .contact-card p, .contact-card a {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    display: block;
+  }
+  iframe.map {
+    width: 100%;
+    height: 400px;
+    border: none;
+  }
 
-/* SECTION */
-.sec{padding:100px 5%}
-.sec-dark{background:var(--brown)}
-.sec-mid{background:var(--cream2)}
-.sh{text-align:center;margin-bottom:64px}
-.sec-eyebrow{display:inline-block;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;font-weight:500}
-.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,4vw,52px);font-weight:700;line-height:1.1;margin-bottom:14px;color:var(--brown)}
-.sec-title.light{color:var(--cream)}
-.sec-title span{color:var(--gold);font-style:italic}
-.sec-desc{color:var(--gray);font-size:15px;max-width:480px;margin:0 auto;line-height:1.8}
-.sec-desc.light{color:rgba(245,239,230,.6)}
+  /* Yorum Bölümü */
+  #reviews {
+    background: #111;
+    padding: 60px 10%;
+    color: #d4af37;
+  }
+  #reviews h2 {
+    margin-bottom: 30px;
+  }
+  form#review-form {
+    max-width: 600px;
+    margin: 0 auto 40px auto;
+    display: flex;
+    flex-direction: column;
+  }
+  form#review-form input,
+  form#review-form textarea {
+    background: #222;
+    border: 1px solid #555;
+    color: #d4af37;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    border-radius: 5px;
+  }
+  form#review-form button {
+    background: #c59d5f;
+    border: none;
+    padding: 12px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #111;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+  }
+  form#review-form button:hover {
+    background: #a17e3e;
+  }
+  .reviews-list {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .review-item {
+    background: #222;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px #c59d5f50;
+  }
+  .review-item strong {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1.2rem;
+  }
+  .review-item em {
+    font-size: 0.9rem;
+    color: #aaa;
+  }
 
-/* MENU */
-.menu-cats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:52px}
-.mcat{background:transparent;border:1px solid var(--warm);color:var(--gray);padding:8px 20px;border-radius:100px;font-size:13px;font-weight:500;cursor:pointer;font-family:'Jost',sans-serif;transition:.25s;letter-spacing:.3px}
-.mcat:hover,.mcat.act{background:var(--brown);border-color:var(--brown);color:var(--cream)}
-.menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.menu-item{background:#fff;border:1px solid var(--warm);border-radius:16px;overflow:hidden;transition:.3s;position:relative;display:none}
-.menu-item.show{display:flex;flex-direction:column}
-.menu-item::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold2));opacity:0;transition:.3s}
-.menu-item:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(61,43,31,.1);border-color:var(--gold2)}
-.menu-item:hover::before{opacity:1}
+  /* Footer */
+  footer {
+    background: #000;
+    text-align: center;
+    color: #777;
+    padding: 30px 10%;
+    font-size: 0.9rem;
+  }
 
-/* MENU FOOD IMAGES - emoji-based realistic visuals */
-.menu-img{height:160px;display:flex;align-items:center;justify-content:center;font-size:72px;position:relative;overflow:hidden;flex-shrink:0}
-.mi-kahve{background:linear-gradient(135deg,#1a0a00,#3d1a0a)}
-.mi-cay{background:linear-gradient(135deg,#0a1a05,#1a3010)}
-.mi-sicak-ciko{background:linear-gradient(135deg,#1a0505,#2d0a0a)}
-.mi-salep{background:linear-gradient(135deg,#1a1205,#2d2010)}
-.mi-menengi{background:linear-gradient(135deg,#1a1005,#2d1a05)}
-.mi-boza{background:linear-gradient(135deg,#1a1505,#2d2205)}
-.mi-soguk-kahve{background:linear-gradient(135deg,#050a1a,#0a1530)}
-.mi-limonata{background:linear-gradient(135deg,#1a1a05,#2d2d05)}
-.mi-portakal{background:linear-gradient(135deg,#1a0d00,#2d1500)}
-.mi-ayran{background:linear-gradient(135deg,#0a1520,#0f2030)}
-.mi-su{background:linear-gradient(135deg,#050a15,#0a1525)}
-.mi-meyve-suyu{background:linear-gradient(135deg,#150505,#250808)}
-.mi-arnavut{background:linear-gradient(135deg,#1a1005,#2d1a05)}
-.mi-su-boregi{background:linear-gradient(135deg,#1a1208,#2d200f)}
-.mi-gozleme{background:linear-gradient(135deg,#1a0f03,#2d1a08)}
-.mi-sigara{background:linear-gradient(135deg,#1a1005,#251505)}
-.mi-talaş{background:linear-gradient(135deg,#1a1208,#2d200f)}
-.mi-zeytinli{background:linear-gradient(135deg,#081a08,#0f2510)}
-.mi-tost{background:linear-gradient(135deg,#1a0f02,#2d1a05)}
-.mi-kurufasulye{background:linear-gradient(135deg,#1a0808,#2d1010)}
-.mi-patates{background:linear-gradient(135deg,#1a1205,#2d2005)}
-.mi-karisik{background:linear-gradient(135deg,#1a1005,#2d1808)}
-.mi-pasta{background:linear-gradient(135deg,#1a0810,#2d1020)}
-.mi-kurabiye{background:linear-gradient(135deg,#1a1205,#2d2008)}
-
-.menu-img-label{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.5);backdrop-filter:blur(4px);color:#fff;font-size:10px;font-weight:600;padding:3px 10px;border-radius:100px;white-space:nowrap;letter-spacing:.5px}
-
-.menu-body{padding:18px 20px 22px;flex:1;display:flex;flex-direction:column}
-.item-name{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;color:var(--brown);margin-bottom:5px}
-.item-desc{color:var(--gray);font-size:12.5px;line-height:1.6;flex:1}
-.item-footer{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
-.item-tag{background:var(--cream2);color:var(--brown3);padding:3px 10px;border-radius:100px;font-size:10.5px;font-weight:500}
-.item-icon-sm{font-size:18px}
-
-/* ATMOSPHERE */
-.atm-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px}
-.atm-card{text-align:center;padding:36px 24px;border:1px solid rgba(196,151,58,.2);border-radius:18px;background:rgba(255,255,255,.04);transition:.3s}
-.atm-card:hover{background:rgba(196,151,58,.07);border-color:rgba(196,151,58,.4)}
-.atm-icon{font-size:36px;margin-bottom:16px;display:block}
-.atm-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--cream);margin-bottom:10px}
-.atm-desc{color:rgba(245,239,230,.5);font-size:13.5px;line-height:1.7}
-
-/* GALLERY */
-.gallery-grid{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:260px 260px;gap:14px}
-.gal-item{border-radius:14px;overflow:hidden;position:relative;cursor:pointer}
-.gal-item:first-child{grid-row:span 2}
-.gal-item-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:72px;transition:transform .4s}
-.gal-item:hover .gal-item-inner{transform:scale(1.04)}
-.gal-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(61,43,31,.85),transparent);opacity:0;transition:.3s;display:flex;align-items:flex-end;padding:20px}
-.gal-item:hover .gal-overlay{opacity:1}
-.gal-lbl{font-family:'Cormorant Garamond',serif;color:var(--cream);font-size:18px;font-weight:600}
-.g1{background:linear-gradient(135deg,#3d2010,#5c3420)}
-.g2{background:linear-gradient(135deg,#2a1a0a,#3d2b1f)}
-.g3{background:linear-gradient(135deg,#1a0f05,#2d1e10)}
-.g4{background:linear-gradient(135deg,#3d2b1f,#5c4030)}
-.g5{background:linear-gradient(135deg,#2a1a10,#3d2b1f)}
-
-/* GOOGLE REVIEWS */
-.reviews-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:0}
-.rev-card{background:#fff;border:1px solid var(--warm);border-radius:16px;padding:22px 20px;transition:.3s;position:relative}
-.rev-card:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(61,43,31,.1);border-color:var(--gold2)}
-.rev-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-.rev-avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;flex-shrink:0;font-family:'Cormorant Garamond',serif}
-.rev-name{font-weight:600;font-size:14px;color:var(--brown)}
-.rev-date{font-size:11px;color:var(--gray);margin-top:1px}
-.rev-stars{color:#f59e0b;font-size:14px;letter-spacing:1px;margin-bottom:10px}
-.rev-text{color:var(--gray);font-size:13px;line-height:1.7;font-style:italic}
-.rev-text::before{content:'"';font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--gold);line-height:0;vertical-align:-10px;margin-right:3px}
-.google-badge{display:flex;align-items:center;gap:6px;margin-top:12px;padding-top:12px;border-top:1px solid var(--warm)}
-.google-badge svg{width:14px;height:14px}
-.google-badge span{font-size:11px;color:var(--gray)}
-.reviews-summary{display:flex;align-items:center;gap:20px;justify-content:center;margin-bottom:40px;padding:24px 32px;background:#fff;border:1px solid var(--warm);border-radius:18px;max-width:400px;margin-left:auto;margin-right:auto;margin-bottom:48px}
-.rs-score{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:700;color:var(--brown);line-height:1}
-.rs-right{}
-.rs-stars{color:#f59e0b;font-size:20px;letter-spacing:2px}
-.rs-count{font-size:12px;color:var(--gray);margin-top:4px}
-.rs-google{font-size:11px;color:var(--gray);margin-top:2px;display:flex;align-items:center;gap:4px}
-
-/* USER REVIEWS */
-.user-reviews-wrap{max-width:900px;margin:0 auto}
-.user-rev-list{display:flex;flex-direction:column;gap:16px;margin-bottom:40px;max-height:500px;overflow-y:auto;padding-right:4px}
-.user-rev-list::-webkit-scrollbar{width:3px}
-.user-rev-list::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
-.user-rev-item{background:#fff;border:1px solid var(--warm);border-radius:14px;padding:20px 22px;animation:slideIn .4s ease}
-@keyframes slideIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.uri-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.uri-info{display:flex;align-items:center;gap:10px}
-.uri-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--brown);font-family:'Cormorant Garamond',serif}
-.uri-name{font-weight:600;font-size:13.5px;color:var(--brown)}
-.uri-date{font-size:11px;color:var(--gray);margin-top:1px}
-.uri-stars{color:#f59e0b;font-size:13px}
-.uri-text{color:var(--gray);font-size:13.5px;line-height:1.7}
-
-/* REVIEW FORM */
-.rev-form{background:var(--brown);border-radius:20px;padding:36px;margin-top:0}
-.rf-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--cream);margin-bottom:6px}
-.rf-sub{color:rgba(245,239,230,.5);font-size:13.5px;margin-bottom:28px}
-.rf-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.rf-group{margin-bottom:16px}
-.rf-group label{display:block;font-size:11px;font-weight:600;color:rgba(245,239,230,.5);letter-spacing:1px;text-transform:uppercase;margin-bottom:7px}
-.rf-group input,.rf-group textarea,.rf-group select{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 14px;color:var(--cream);font-size:14px;font-family:'Jost',sans-serif;outline:none;transition:.25s}
-.rf-group input:focus,.rf-group textarea:focus,.rf-group select:focus{border-color:var(--gold)}
-.rf-group select option{background:var(--brown)}
-.rf-group textarea{resize:vertical;min-height:90px}
-.star-pick{display:flex;gap:8px;margin-bottom:16px}
-.star-btn{font-size:28px;cursor:pointer;transition:.2s;opacity:.3;background:none;border:none;padding:0}
-.star-btn.active{opacity:1;transform:scale(1.1)}
-.star-btn:hover{opacity:.8}
-.rf-btn{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--brown);border:none;padding:14px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Jost',sans-serif;transition:.3s;letter-spacing:.3px}
-.rf-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(196,151,58,.4)}
-.empty-revs{text-align:center;padding:32px;color:var(--gray);font-style:italic;font-size:14px}
-
-/* CONTACT */
-.contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:60px;align-items:start;margin-top:60px}
-.contact-info h3{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--brown);margin-bottom:8px}
-.contact-info p{color:var(--gray);font-size:14.5px;margin-bottom:32px;line-height:1.7}
-.contact-items{display:flex;flex-direction:column;gap:18px}
-.contact-item{display:flex;gap:14px;align-items:flex-start}
-.ci-ico{width:44px;height:44px;min-width:44px;background:linear-gradient(135deg,var(--cream2),#fff);border:1px solid var(--warm);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px}
-.ci-lbl{font-size:10px;font-weight:600;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px}
-.ci-val{font-size:14.5px;font-weight:500;color:var(--brown)}
-.ci-val a{color:var(--brown);text-decoration:none}
-.ci-val a:hover{color:var(--gold)}
-.ci-sub{color:var(--gray);font-size:12.5px;margin-top:1px}
-.contact-form{background:var(--brown);border-radius:22px;padding:38px}
-.cf-title{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--cream);margin-bottom:6px;font-weight:700}
-.cf-sub{color:rgba(245,239,230,.5);font-size:13.5px;margin-bottom:28px}
-.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.cf-group{margin-bottom:16px}
-.cf-group label{display:block;font-size:11px;font-weight:600;color:rgba(245,239,230,.5);letter-spacing:1px;text-transform:uppercase;margin-bottom:7px}
-.cf-group input,.cf-group textarea,.cf-group select{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 14px;color:var(--cream);font-size:14px;font-family:'Jost',sans-serif;outline:none;transition:.25s}
-.cf-group input:focus,.cf-group textarea:focus,.cf-group select:focus{border-color:var(--gold)}
-.cf-group select option{background:var(--brown)}
-.cf-group textarea{resize:vertical;min-height:100px}
-.cf-btn{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--brown);border:none;padding:14px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Jost',sans-serif;transition:.3s;letter-spacing:.3px}
-.cf-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(196,151,58,.4)}
-
-/* MAP */
-.map-wrap{margin:0 5% 0;border-radius:18px;overflow:hidden;height:380px;border:1px solid var(--warm);box-shadow:0 8px 32px rgba(61,43,31,.12)}
-.map-wrap iframe{width:100%;height:100%;border:none;filter:sepia(20%) contrast(1.05)}
-
-/* FOOTER */
-footer{background:var(--brown);border-top:1px solid rgba(196,151,58,.15);padding:56px 5% 28px}
-.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:44px}
-.foot-desc{color:rgba(245,239,230,.5);font-size:13.5px;line-height:1.8;max-width:260px;margin-top:14px}
-.foot-soc{display:flex;gap:10px;margin-top:20px}
-.fsoc{width:36px;height:36px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;transition:.25s;text-decoration:none;color:var(--cream)}
-.fsoc:hover{border-color:var(--gold);background:rgba(196,151,58,.12)}
-.foot-col h4{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(245,239,230,.4);margin-bottom:18px}
-.foot-col a{display:block;color:rgba(245,239,230,.6);font-size:13.5px;text-decoration:none;margin-bottom:10px;transition:.2s;cursor:pointer}
-.foot-col a:hover{color:var(--gold)}
-.foot-bot{border-top:1px solid rgba(255,255,255,.07);padding-top:22px;display:flex;justify-content:space-between;align-items:center;color:rgba(245,239,230,.35);font-size:12px;flex-wrap:wrap;gap:8px}
-.foot-gold{color:var(--gold)}
-
-/* ANIM */
-.fi{opacity:0;transform:translateY(22px);transition:.7s cubic-bezier(.25,.46,.45,.94)}
-.fi.vis{opacity:1;transform:translateY(0)}
-
-/* ══ PHOTO SLIDER ══ */
-.photo-slider{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden}
-.ps-track{display:flex;width:100%;height:100%;transition:transform .9s cubic-bezier(.77,0,.18,1)}
-.ps-slide{min-width:100%;height:100%;position:relative;overflow:hidden;flex-shrink:0}
-.ps-slide img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.05);transition:transform 6s ease;display:block;z-index:1}
-.ps-slide.act img{transform:scale(1)}
-.ps-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(20,10,5,.75) 0%,rgba(20,10,5,.45) 50%,rgba(20,10,5,.2) 100%);z-index:2}
-.ps-caption{position:absolute;bottom:80px;left:6%;z-index:5;max-width:340px}
-.ps-tag{display:inline-block;background:rgba(196,151,58,.25);border:1px solid rgba(196,151,58,.5);color:var(--gold2);padding:5px 14px;border-radius:100px;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;backdrop-filter:blur(4px)}
-.ps-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,46px);font-weight:700;color:#fff;line-height:1.1;margin-bottom:6px}
-.ps-sub{font-size:14px;color:rgba(255,255,255,.65);font-weight:300}
-.ps-dots{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10}
-.ps-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.35);cursor:pointer;transition:.3s}
-.ps-dot.act{background:#fff;width:22px;border-radius:4px}
-.ps-arr{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(8px);color:#fff;width:48px;height:48px;border-radius:50%;font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.25s;z-index:10}
-.ps-arr:hover{background:rgba(196,151,58,.35);border-color:rgba(196,151,58,.6)}
-.ps-prev{left:24px}
-.ps-next{right:24px}
-/* Hero overlay on top of slider */
-.hero-over{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:0 5%;padding-top:72px;z-index:4;pointer-events:none;max-width:600px}
-.hero-over .hero-btns,.hero-over .hero-badges{pointer-events:all}
-.hero-over h1{font-family:'Cormorant Garamond',serif;font-size:clamp(52px,7vw,90px);font-weight:700;line-height:.95;color:var(--cream);margin-bottom:20px}
-.hero-over h1 em{font-style:italic;color:var(--gold2);display:block}
-.hero-over .hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;font-weight:500}
-.hero-over .hero-eyebrow::before,.hero-over .hero-eyebrow::after{content:'';width:30px;height:1px;background:var(--gold);opacity:.5}
-.hero-over .hero-desc{font-size:16px;color:rgba(245,239,230,.75);line-height:1.8;margin-bottom:32px;max-width:420px;font-weight:300}
-.hero-over .hero-btns{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:36px}
-.hero-over .hero-badges{display:flex;gap:24px;flex-wrap:wrap}
-
-.ps-bg{position:absolute;inset:0;z-index:0}
-.ps-art{position:absolute;inset:0;overflow:hidden}
-.ps-bg-1{background:radial-gradient(ellipse at 70% 50%, #3d1800 0%, #1a0800 40%, #0d0400 100%)}
-.ps-bg-2{background:radial-gradient(ellipse at 70% 50%, #1a3010 0%, #0d1a08 40%, #050d03 100%)}
-.ps-bg-3{background:radial-gradient(ellipse at 70% 50%, #2d1a08 0%, #1a1005 40%, #0d0803 100%)}
-.ps-bg-4{background:radial-gradient(ellipse at 70% 50%, #2d200f 0%, #1a1208 40%, #0d0904 100%)}
-.ps-bg-5{background:radial-gradient(ellipse at 70% 50%, #2d2008 0%, #1a1505 40%, #0d0a03 100%)}
-/* RESPONSIVE */
-@media(max-width:1100px){.menu-grid{grid-template-columns:repeat(2,1fr)}.reviews-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:900px){.gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}.gal-item:first-child{grid-row:span 1}.atm-grid{grid-template-columns:1fr}.contact-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr 1fr}.rf-row{grid-template-columns:1fr}.cf-row{grid-template-columns:1fr}}
-@media(max-width:768px){.nav-links,.nav-lang{display:none}.ham{display:flex}.menu-grid{grid-template-columns:1fr}.reviews-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr}}
+  /* Responsive */
+  @media (max-width: 768px) {
+    header {
+      flex-direction: column;
+      gap: 15px;
+    }
+    .menu {
+      grid-template-columns: 1fr;
+    }
+    .contact-info {
+      flex-direction: column;
+    }
+  }
 </style>
 </head>
 <body>
 
-<nav id="nav">
-  <div class="ni">
-    <div class="logo-wrap" onclick="goTo('home')">
-      <div class="logo-icon">☕</div>
-      <div class="logo-text">
-        <div class="logo-name">Saray Patisserie</div>
-        <div class="logo-sub">Bursa Nilpark — Est. 2020</div>
-      </div>
-    </div>
-    <div class="nav-links">
-      <a onclick="goTo('home')" id="na-home" class="act"><span class="tr">Anasayfa</span><span class="en" style="display:none">Home</span></a>
-      <a onclick="goTo('menu')" id="na-menu"><span class="tr">Menü</span><span class="en" style="display:none">Menu</span></a>
-      <a onclick="goTo('gallery')" id="na-gallery"><span class="tr">Galeri</span><span class="en" style="display:none">Gallery</span></a>
-      <a onclick="goTo('reviews')" id="na-reviews"><span class="tr">Yorumlar</span><span class="en" style="display:none">Reviews</span></a>
-      <a onclick="goTo('contact')" id="na-contact"><span class="tr">İletişim</span><span class="en" style="display:none">Contact</span></a>
-    </div>
-    <button class="nav-lang" onclick="toggleLang()" id="langBtn">🇬🇧 EN</button>
-    <div class="ham" onclick="toggleMob()"><span></span><span></span><span></span></div>
+<header>
+  <h1>Saray Patisserie</h1>
+  <nav>
+    <a href="#hero">Ana Sayfa</a>
+    <a href="#menu">Menü</a>
+    <a href="#contact">İletişim</a>
+    <a href="#reviews">Yorumlar</a>
+  </nav>
+</header>
+
+<section class="hero" id="hero">
+  <div>
+    <h2>Modern Coffee & Dessert Menu</h2>
+    <p>Kahve ve lezzetin buluşma noktası</p>
   </div>
-</nav>
-<div class="mob-menu" id="mobMenu">
-  <a onclick="goTo('home');toggleMob()">☕ <span class="tr">Anasayfa</span><span class="en" style="display:none">Home</span></a>
-  <a onclick="goTo('menu');toggleMob()">🍽️ <span class="tr">Menü</span><span class="en" style="display:none">Menu</span></a>
-  <a onclick="goTo('gallery');toggleMob()">📸 <span class="tr">Galeri</span><span class="en" style="display:none">Gallery</span></a>
-  <a onclick="goTo('reviews');toggleMob()">⭐ <span class="tr">Yorumlar</span><span class="en" style="display:none">Reviews</span></a>
-  <a onclick="goTo('contact');toggleMob()">📍 <span class="tr">İletişim</span><span class="en" style="display:none">Contact</span></a>
-</div>
+</section>
 
-<!-- ══ HOME ══ -->
-<div class="pg act" id="pg-home">
+<section id="menu" class="section">
+  <h2>Menümüz</h2>
+  <div class="menu">
 
-  <!-- PHOTO SLIDER -->
-  <div class="photo-slider" id="photoSlider">
-    <div class="ps-track" id="psTrack">
-      <!-- Slayt 1: Türk Kahvesi -->
-      <div class="ps-slide">
-        <div class="ps-bg ps-bg-1">
-          <div class="ps-art">
-            <svg viewBox="0 0 600 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;inset:0;opacity:.18">
-              <!-- Kahve fincanı dekoratif arka plan -->
-              <circle cx="500" cy="250" r="220" fill="none" stroke="#c4973a" stroke-width="1" opacity=".4"/>
-              <circle cx="500" cy="250" r="160" fill="none" stroke="#c4973a" stroke-width="1" opacity=".3"/>
-              <circle cx="500" cy="250" r="100" fill="none" stroke="#c4973a" stroke-width="1" opacity=".2"/>
-              <!-- Steam lines -->
-              <path d="M460 180 Q450 160 460 140 Q470 120 460 100" fill="none" stroke="#d4aa55" stroke-width="3" stroke-linecap="round" opacity=".5"/>
-              <path d="M500 175 Q490 155 500 135 Q510 115 500 95" fill="none" stroke="#d4aa55" stroke-width="3" stroke-linecap="round" opacity=".5"/>
-              <path d="M540 180 Q530 160 540 140 Q550 120 540 100" fill="none" stroke="#d4aa55" stroke-width="3" stroke-linecap="round" opacity=".5"/>
-              <!-- Fincan gövdesi -->
-              <ellipse cx="500" cy="270" rx="80" ry="15" fill="#c4973a" opacity=".3"/>
-              <path d="M420 200 Q420 270 430 285 Q500 310 570 285 Q580 270 580 200 Z" fill="#3d2010" stroke="#c4973a" stroke-width="2" opacity=".4"/>
-              <ellipse cx="500" cy="200" rx="80" ry="18" fill="#1a0800" stroke="#c4973a" stroke-width="2" opacity=".5"/>
-              <!-- Tabak -->
-              <ellipse cx="500" cy="295" rx="110" ry="20" fill="none" stroke="#c4973a" stroke-width="2" opacity=".3"/>
-              <!-- Lokum -->
-              <rect x="600" y="260" width="30" height="30" rx="5" fill="#c4973a" opacity=".25"/>
-              <rect x="636" y="260" width="30" height="30" rx="5" fill="#d4aa55" opacity=".2"/>
-            </svg>
-          </div>
-        </div>
-        <img src="IMG_TURK_KAHVESI" alt="Türk Kahvesi"
-             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:none"
-             onerror="this.style.display='none'">
-        <div class="ps-overlay"></div>
-        <div class="ps-caption">
-          <div class="ps-tag">☕ İmza Lezzetimiz</div>
-          <div class="ps-title">Türk Kahvesi</div>
-          <div class="ps-sub">Geleneksel cezve ile, yanında lokum</div>
-        </div>
-      </div>
-
-      <!-- Slayt 2: Çay -->
-      <div class="ps-slide">
-        <div class="ps-bg ps-bg-2">
-          <div class="ps-art">
-            <svg viewBox="0 0 600 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;inset:0;opacity:.18">
-              <circle cx="500" cy="250" r="220" fill="none" stroke="#4ade80" stroke-width="1" opacity=".3"/>
-              <circle cx="500" cy="250" r="160" fill="none" stroke="#4ade80" stroke-width="1" opacity=".2"/>
-              <!-- Çay bardağı -->
-              <path d="M440 160 Q435 260 445 290 Q500 320 555 290 Q565 260 560 160 Z" fill="#2d1a05" stroke="#c4973a" stroke-width="2" opacity=".4"/>
-              <ellipse cx="500" cy="160" rx="60" ry="14" fill="#8b1a1a" opacity=".6"/>
-              <!-- Çayın kırmızı rengi -->
-              <path d="M442 170 Q437 260 447 288 Q500 315 553 288 Q563 260 558 170" fill="#6b1010" opacity=".4"/>
-              <!-- Buhar -->
-              <path d="M470 150 Q465 130 472 110 Q479 90 474 70" fill="none" stroke="#c4973a" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>
-              <path d="M500 145 Q495 125 502 105 Q509 85 504 65" fill="none" stroke="#c4973a" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>
-              <path d="M530 150 Q525 130 532 110 Q539 90 534 70" fill="none" stroke="#c4973a" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>
-              <!-- Tabak -->
-              <ellipse cx="500" cy="300" rx="90" ry="16" fill="none" stroke="#c4973a" stroke-width="1.5" opacity=".3"/>
-              <!-- Şeker küpleri -->
-              <rect x="600" cy="265" width="25" height="25" rx="3" fill="#f5efe6" opacity=".2"/>
-              <rect x="628" cy="265" width="25" height="25" rx="3" fill="#f5efe6" opacity=".15"/>
-            </svg>
-          </div>
-        </div>
-        <img src="IMG_CAY" alt="Türk Çayı"
-             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:none"
-             onerror="this.style.display='none'">
-        <div class="ps-overlay"></div>
-        <div class="ps-caption">
-          <div class="ps-tag">🍵 Klasik</div>
-          <div class="ps-title">Demlik Çay</div>
-          <div class="ps-sub">İnce bel bardakta taze demlenmiş çay</div>
-        </div>
-      </div>
-
-      <!-- Slayt 3: Gözleme -->
-      <div class="ps-slide">
-        <div class="ps-bg ps-bg-3">
-          <div class="ps-art">
-            <svg viewBox="0 0 600 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;inset:0;opacity:.18">
-              <!-- Gözleme yuvarlak/oval -->
-              <ellipse cx="500" cy="260" rx="180" ry="120" fill="#5c3d2e" stroke="#c4973a" stroke-width="2" opacity=".4"/>
-              <ellipse cx="500" cy="260" rx="160" ry="104" fill="#3d2010" opacity=".5"/>
-              <!-- Izgara izleri -->
-              <line x1="340" y1="220" x2="660" y2="220" stroke="#7a5544" stroke-width="2" opacity=".4"/>
-              <line x1="340" y1="240" x2="660" y2="240" stroke="#7a5544" stroke-width="2" opacity=".4"/>
-              <line x1="340" y1="260" x2="660" y2="260" stroke="#7a5544" stroke-width="2" opacity=".4"/>
-              <line x1="340" y1="280" x2="660" y2="280" stroke="#7a5544" stroke-width="2" opacity=".4"/>
-              <line x1="340" y1="300" x2="660" y2="300" stroke="#7a5544" stroke-width="2" opacity=".4"/>
-              <!-- Sac izgara -->
-              <line x1="400" y1="160" x2="400" y2="360" stroke="#c4973a" stroke-width="1" opacity=".25"/>
-              <line x1="440" y1="150" x2="440" y2="370" stroke="#c4973a" stroke-width="1" opacity=".25"/>
-              <line x1="480" y1="145" x2="480" y2="375" stroke="#c4973a" stroke-width="1" opacity=".25"/>
-              <line x1="520" y1="145" x2="520" y2="375" stroke="#c4973a" stroke-width="1" opacity=".25"/>
-              <line x1="560" y1="150" x2="560" y2="370" stroke="#c4973a" stroke-width="1" opacity=".25"/>
-              <line x1="600" y1="160" x2="600" y2="360" stroke="#c4973a" stroke-width="1" opacity=".25"/>
-              <!-- İç dolgu -->
-              <ellipse cx="500" cy="260" rx="120" ry="70" fill="#c4973a" opacity=".15"/>
-              <circle cx="500" cy="250" r="200" fill="none" stroke="#c4973a" stroke-width="1" opacity=".2"/>
-            </svg>
-          </div>
-        </div>
-        <img src="IMG_GOZLEME" alt="Gözleme"
-             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:none"
-             onerror="this.style.display='none'">
-        <div class="ps-overlay"></div>
-        <div class="ps-caption">
-          <div class="ps-tag">🫓 Sacdan Taze</div>
-          <div class="ps-title">Gözleme</div>
-          <div class="ps-sub">Peynirli, ıspanaklı, patatesli çeşitler</div>
-        </div>
-      </div>
-
-      <!-- Slayt 4: Su Böreği -->
-      <div class="ps-slide">
-        <div class="ps-bg ps-bg-4">
-          <div class="ps-art">
-            <svg viewBox="0 0 600 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;inset:0;opacity:.18">
-              <!-- Katmanlı börek -->
-              <rect x="320" y="200" width="300" height="160" rx="8" fill="#3d2010" stroke="#c4973a" stroke-width="2" opacity=".4"/>
-              <!-- Katmanlar -->
-              <line x1="320" y1="228" x2="620" y2="228" stroke="#c4973a" stroke-width="2" opacity=".4"/>
-              <line x1="320" y1="248" x2="620" y2="248" stroke="#d4aa55" stroke-width="1.5" opacity=".35"/>
-              <line x1="320" y1="268" x2="620" y2="268" stroke="#c4973a" stroke-width="2" opacity=".4"/>
-              <line x1="320" y1="288" x2="620" y2="288" stroke="#d4aa55" stroke-width="1.5" opacity=".35"/>
-              <line x1="320" y1="308" x2="620" y2="308" stroke="#c4973a" stroke-width="2" opacity=".4"/>
-              <line x1="320" y1="328" x2="620" y2="328" stroke="#d4aa55" stroke-width="1.5" opacity=".35"/>
-              <!-- Üst peynirli görünüm -->
-              <rect x="320" y="200" width="300" height="28" rx="8" fill="#c4973a" opacity=".2"/>
-              <!-- Kesim -->
-              <line x1="470" y1="200" x2="470" y2="360" stroke="#c4973a" stroke-width="1.5" opacity=".3"/>
-              <!-- Bıçak gölgesi -->
-              <circle cx="470" cy="180" r="60" fill="none" stroke="#c4973a" stroke-width="1" opacity=".15"/>
-              <circle cx="300" cy="250" r="180" fill="none" stroke="#c4973a" stroke-width="1" opacity=".2"/>
-            </svg>
-          </div>
-        </div>
-        <img src="IMG_SU_BOREGI" alt="Su Böreği"
-             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:none"
-             onerror="this.style.display='none'">
-        <div class="ps-overlay"></div>
-        <div class="ps-caption">
-          <div class="ps-tag">🥙 Ev Yapımı</div>
-          <div class="ps-title">Su Böreği</div>
-          <div class="ps-sub">Geleneksel yöntemle, peynirli veya kıymalı</div>
-        </div>
-      </div>
-
-      <!-- Slayt 5: Poğaça -->
-      <div class="ps-slide">
-        <div class="ps-bg ps-bg-5">
-          <div class="ps-art">
-            <svg viewBox="0 0 600 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;inset:0;opacity:.18">
-              <!-- 3 poğaça -->
-              <circle cx="430" cy="240" r="80" fill="#5c3d2e" stroke="#c4973a" stroke-width="2" opacity=".5"/>
-              <circle cx="430" cy="240" r="65" fill="#3d2010" opacity=".4"/>
-              <!-- Pişme rengi -->
-              <circle cx="430" cy="230" r="50" fill="#7a5544" opacity=".3"/>
-              <!-- Çatlak/desen -->
-              <path d="M400 220 Q430 210 460 220" fill="none" stroke="#c4973a" stroke-width="2" opacity=".4"/>
-              <path d="M410 235 Q430 225 450 235" fill="none" stroke="#d4aa55" stroke-width="1.5" opacity=".35"/>
-              <!-- 2. poğaça -->
-              <circle cx="540" cy="260" r="70" fill="#5c3d2e" stroke="#c4973a" stroke-width="2" opacity=".4"/>
-              <circle cx="540" cy="260" r="55" fill="#3d2010" opacity=".35"/>
-              <path d="M515 248 Q540 238 565 248" fill="none" stroke="#c4973a" stroke-width="2" opacity=".35"/>
-              <!-- 3. poğaça arkada -->
-              <circle cx="480" cy="310" r="75" fill="#3d2010" stroke="#c4973a" stroke-width="2" opacity=".3"/>
-              <!-- Susam noktaları -->
-              <circle cx="420" cy="225" r="3" fill="#c4973a" opacity=".5"/>
-              <circle cx="435" cy="215" r="3" fill="#d4aa55" opacity=".5"/>
-              <circle cx="450" cy="228" r="3" fill="#c4973a" opacity=".5"/>
-              <circle cx="428" cy="238" r="2.5" fill="#d4aa55" opacity=".45"/>
-              <circle cx="443" cy="232" r="2.5" fill="#c4973a" opacity=".45"/>
-              <circle cx="300" cy="250" r="200" fill="none" stroke="#c4973a" stroke-width="1" opacity=".15"/>
-            </svg>
-          </div>
-        </div>
-        <img src="IMG_POGACA" alt="Poğaça"
-             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:none"
-             onerror="this.style.display='none'">
-        <div class="ps-overlay"></div>
-        <div class="ps-caption">
-          <div class="ps-tag">🧁 Her Sabah Taze</div>
-          <div class="ps-title">Poğaça</div>
-          <div class="ps-sub">Talaş peynirli imza poğaçamız</div>
-        </div>
-      </div>
+    <div class="menu-column">
+      <h3>Espresso Bar</h3>
+      <ul>
+        <li>Shot Espresso <span>90 TL</span></li>
+        <li>Double Espresso <span>150 TL</span></li>
+        <li>Sütlü Espresso <span>180 TL</span></li>
+        <li>Americano <span>180 TL</span></li>
+        <li>Cappuccino <span>180 TL</span></li>
+        <li>Latte Macchiato <span>180 TL</span></li>
+        <li>Caffe Mocha <span>180 TL</span></li>
+      </ul>
+      <h3>Soğuk Kahveler</h3>
+      <ul>
+        <li>Soğuk Kahve (Sade) <span>180 TL</span></li>
+        <li>Soğuk Kahve (Sütlü) <span>180 TL</span></li>
+      </ul>
+      <h3>Çay & Su</h3>
+      <ul>
+        <li>Çay <span>35 TL</span></li>
+        <li>Su <span>20 TL</span></li>
+      </ul>
+      <h3>Soğuk İçecekler</h3>
+      <ul>
+        <li>Sade Soda <span>45 TL</span></li>
+        <li>Meyveli Soda <span>60 TL</span></li>
+        <li>Pepsi <span>100 TL</span></li>
+        <li>Gazoz <span>90 TL</span></li>
+        <li>Capri-Sun <span>60 TL</span></li>
+        <li>Ayran <span>50 TL</span></li>
+        <li>Meyve Suyu <span>60 TL</span></li>
+        <li>Go Up <span>90 TL</span></li>
+      </ul>
     </div>
 
-    <!-- Slider Controls -->
-    <div class="ps-dots" id="psDots">
-      <span class="ps-dot act" onclick="goSlide(0)"></span>
-      <span class="ps-dot" onclick="goSlide(1)"></span>
-      <span class="ps-dot" onclick="goSlide(2)"></span>
-      <span class="ps-dot" onclick="goSlide(3)"></span>
-      <span class="ps-dot" onclick="goSlide(4)"></span>
+    <div class="menu-column">
+      <h3>Türk Kahvesi & Özel Kahveler</h3>
+      <ul>
+        <li>Türk Kahvesi <span>150 TL</span></li>
+        <li>Sütlü Türk Kahvesi <span>130 TL</span></li>
+        <li>Dibek Kahvesi <span>160 TL</span></li>
+      </ul>
+      <h3>Sıcak İçecekler</h3>
+      <ul>
+        <li>Sıcak Çikolata <span>180 TL</span></li>
+        <li>Sütlü Çikolata <span>180 TL</span></li>
+        <li>Sütlü Nescafe <span>180 TL</span></li>
+      </ul>
+      <h3>Ferah İçecekler</h3>
+      <ul>
+        <li>Limonata <span>150 TL</span></li>
+        <li>Yaban Mersini İçeceği <span>180 TL</span></li>
+        <li>Churchill <span>90 TL</span></li>
+      </ul>
+      <h3>Atıştırmalıklar</h3>
+      <ul>
+        <li>Tost <span>180 TL</span></li>
+        <li>Soğuk Sandviç <span>150 TL</span></li>
+        <li>Patates Kızartması <span>100 TL</span></li>
+      </ul>
+      <h3>Kahvaltı & Sıcak Tabaklar</h3>
+      <ul>
+        <li>Gözleme <span>250 TL</span></li>
+        <li>Gözleme Menü <span>300 TL</span></li>
+        <li>Menemen <span>250 TL</span></li>
+        <li>Arnavut Böreği <span>170 TL</span></li>
+        <li>Poğaça Çeşitleri <span>40 TL</span></li>
+        <li>Su Böreği <span>150 TL</span></li>
+      </ul>
     </div>
-    <button class="ps-arr ps-prev" onclick="prevSlide()">&#8249;</button>
-    <button class="ps-arr ps-next" onclick="nextSlide()">&#8250;</button>
-
-    <!-- Hero overlay content -->
-    <div class="hero-over">
-      <div class="hero-eyebrow"><span class="tr">Bursa Nilpark AVM</span><span class="en" style="display:none">Bursa Nilpark Mall</span></div>
-      <h1><span class="tr">Saray<br><em>Patisserie</em></span><span class="en" style="display:none">Saray<br><em>Patisserie</em></span></h1>
-      <p class="hero-desc tr">Türk kahvesinin büyüsü, ev yapımı börekler ve taze poğaçalarla dolu sıcak bir yuva.</p>
-      <p class="hero-desc en" style="display:none">The magic of Turkish coffee, homemade pastries and fresh börek. A warm story in every sip.</p>
-      <div class="hero-btns">
-        <button class="btn-primary" onclick="goTo('menu')"><span class="tr">🍽️ Menüyü Gör</span><span class="en" style="display:none">🍽️ View Menu</span></button>
-        <button class="btn-outline" onclick="goTo('contact')"><span class="tr">📍 Yol Tarifi</span><span class="en" style="display:none">📍 Directions</span></button>
-      </div>
-      <div class="hero-badges">
-        <div class="hero-badge"><div class="hb-num">30+</div><div class="hb-lbl tr">Menü Çeşidi</div><div class="hb-lbl en" style="display:none">Menu Items</div></div>
-        <div class="hero-sep"></div>
-        <div class="hero-badge"><div class="hb-num">100%</div><div class="hb-lbl tr">Ev Yapımı</div><div class="hb-lbl en" style="display:none">Homemade</div></div>
-        <div class="hero-sep"></div>
-        <div class="hero-badge"><div class="hb-num">Her</div><div class="hb-lbl tr">Gün Taze</div><div class="hb-lbl en" style="display:none">Day Fresh</div></div>
-      </div>
-    </div>
-    <div class="scroll-ind"><div class="scroll-line"></div><span>scroll</span></div>
   </div>
+</section>
 
-  <section class="sec sec-dark">
-    <div class="sh fi">
-      <div class="sec-eyebrow tr">Neden Saray?</div><div class="sec-eyebrow en" style="display:none">Why Saray?</div>
-      <h2 class="sec-title light tr">Bir <span>Deneyim</span> Sunuyoruz</h2>
-      <h2 class="sec-title light en" style="display:none">We Offer an <span>Experience</span></h2>
+<section id="contact">
+  <h2>İletişim</h2>
+  <div class="contact-info">
+    <div class="contact-card">
+      <h3>Adres</h3>
+      <p>Karaman Mah. Kültür Cad. No:2/A<br />Nilpark AVM — Nilüfer / BURSA</p>
+      <h3>Telefon</h3>
+      <p><a href="tel:+905436475871">0 543 647 58 71</a></p>
+      <h3>WhatsApp</h3>
+      <p><a href="https://wa.me/905436475871" target="_blank" rel="noopener noreferrer">0 543 647 58 71</a></p>
+      <h3>Instagram</h3>
+      <p><a href="https://instagram.com/saraypatisserie16" target="_blank" rel="noopener noreferrer">@saraypatisserie16</a></p>
+      <h3>Çalışma Saatleri</h3>
+      <p>Her Gün 08:00 – 22:00</p>
     </div>
-    <div class="atm-grid">
-      <div class="atm-card fi"><span class="atm-icon">☕</span><div class="atm-title tr">Gerçek Türk Kahvesi</div><div class="atm-title en" style="display:none">Authentic Turkish Coffee</div><div class="atm-desc tr">Geleneksel yöntemlerle hazırlanan Türk kahvesi. Her fincanda ayrı bir sohbet gizli.</div><div class="atm-desc en" style="display:none">Turkish coffee prepared with traditional methods. A story hidden in every cup.</div></div>
-      <div class="atm-card fi"><span class="atm-icon">🥐</span><div class="atm-title tr">Taze Hamur İşleri</div><div class="atm-title en" style="display:none">Fresh Pastries</div><div class="atm-desc tr">Her sabah taze hazırlanan börek, poğaça ve gözlemeler. Annenizin elinden çıkmış gibi.</div><div class="atm-desc en" style="display:none">Freshly prepared börek, poğaça and gözleme every morning.</div></div>
-      <div class="atm-card fi"><span class="atm-icon">🏡</span><div class="atm-title tr">Sıcak Atmosfer</div><div class="atm-title en" style="display:none">Warm Atmosphere</div><div class="atm-desc tr">Ahşap dekorlar, sıcak ışıklar ve rahat köşelerle kendinizi evinizde hissedeceksiniz.</div><div class="atm-desc en" style="display:none">Wooden decors, warm lights and cozy corners — feel right at home.</div></div>
-    </div>
-  </section>
-
-  <section class="sec sec-mid" style="text-align:center">
-    <div class="fi">
-      <div class="sec-eyebrow tr">Sizi Bekliyoruz</div><div class="sec-eyebrow en" style="display:none">We Are Waiting</div>
-      <h2 class="sec-title tr">Bugün Bir <span>Kahve Molası</span> Verin</h2>
-      <h2 class="sec-title en" style="display:none">Take a <span>Coffee Break</span> Today</h2>
-      <p class="sec-desc" style="margin-bottom:32px"><span class="tr">Bursa Nilpark AVM'de, Karaman Mahallesi Kültür Caddesi No:2/A adresinde sizi bekliyoruz.</span><span class="en" style="display:none">We're waiting for you at Bursa Nilpark Mall, Karaman Mah. Kültür Cad. No:2/A.</span></p>
-      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
-        <button class="btn-primary" onclick="goTo('menu')"><span class="tr">🍽️ Menüye Bak</span><span class="en" style="display:none">🍽️ See Menu</span></button>
-        <a class="btn-outline" href="https://wa.me/905436475871" target="_blank" style="border-color:var(--brown);color:var(--brown)">💬 WhatsApp</a>
-      </div>
-    </div>
-  </section>
-</div>
-
-<!-- ══ MENU ══ -->
-<div class="pg" id="pg-menu">
-  <section class="sec" style="padding-top:130px">
-    <div class="sh fi">
-      <div class="sec-eyebrow tr">Lezzetlerimiz</div><div class="sec-eyebrow en" style="display:none">Our Flavours</div>
-      <h2 class="sec-title tr">Saray <span>Menüsü</span></h2><h2 class="sec-title en" style="display:none">Saray <span>Menu</span></h2>
-      <p class="sec-desc tr">Her gün taze hazırlanan ev yapımı lezzetler</p><p class="sec-desc en" style="display:none">Freshly prepared homemade flavours every day</p>
-    </div>
-    <div class="menu-cats">
-      <button class="mcat act" onclick="filterMenu('all',this)"><span class="tr">Tümü</span><span class="en" style="display:none">All</span></button>
-      <button class="mcat" onclick="filterMenu('sicak',this)"><span class="tr">☕ Sıcak İçecekler</span><span class="en" style="display:none">☕ Hot Drinks</span></button>
-      <button class="mcat" onclick="filterMenu('soguk',this)"><span class="tr">🧊 Soğuk İçecekler</span><span class="en" style="display:none">🧊 Cold Drinks</span></button>
-      <button class="mcat" onclick="filterMenu('borek',this)"><span class="tr">🥙 Börek & Gözleme</span><span class="en" style="display:none">🥙 Börek & Gözleme</span></button>
-      <button class="mcat" onclick="filterMenu('pogaca',this)"><span class="tr">🧁 Poğaça & Tost</span><span class="en" style="display:none">🧁 Poğaça & Toast</span></button>
-      <button class="mcat" onclick="filterMenu('diger',this)"><span class="tr">🍟 Diğer</span><span class="en" style="display:none">🍟 Other</span></button>
-    </div>
-    <div class="menu-grid" id="menuGrid">
-
-      <!-- SICAK -->
-      <div class="menu-item show" data-cat="sicak">
-        <div class="menu-img mi-kahve"><span>☕</span><div class="menu-img-label">Türk Kahvesi</div></div>
-        <div class="menu-body"><div class="item-name tr">Türk Kahvesi</div><div class="item-name en" style="display:none">Turkish Coffee</div><div class="item-desc tr">Geleneksel cezve ile hazırlanan, yanında lokum ve su servisi ile. Sade, az veya orta şekerli.</div><div class="item-desc en" style="display:none">Brewed in traditional cezve, served with lokum and water. Plain, semi-sweet or sweet.</div><div class="item-footer"><span class="item-tag tr">Klasik ☕</span><span class="item-tag en" style="display:none">Classic ☕</span></div></div>
-      </div>
-
-      <div class="menu-item show" data-cat="sicak">
-        <div class="menu-img mi-cay"><span>🍵</span><div class="menu-img-label">Çay</div></div>
-        <div class="menu-body"><div class="item-name tr">Çay</div><div class="item-name en" style="display:none">Turkish Tea</div><div class="item-desc tr">Demlik çay, ince bel bardakta servis edilir. Yanında şeker küpü ile. Bardak veya çaydanlık seçeneği.</div><div class="item-desc en" style="display:none">Brewed tea in the iconic tulip glass with sugar cubes.</div><div class="item-footer"><span class="item-tag tr">Klasik 🍵</span><span class="item-tag en" style="display:none">Classic 🍵</span></div></div>
-      </div>
-
-      <div class="menu-item show" data-cat="sicak">
-        <div class="menu-img mi-sicak-ciko"><span>🍫</span><div class="menu-img-label">Sıcak Çikolata</div></div>
-        <div class="menu-body"><div class="item-name tr">Sıcak Çikolata</div><div class="item-name en" style="display:none">Hot Chocolate</div><div class="item-desc tr">Kremalı, zengin bitter çikolatalı içecek. Üzeri marshmallow veya krema ile servis.</div><div class="item-desc en" style="display:none">Rich dark chocolate drink topped with marshmallow or cream.</div><div class="item-footer"><span class="item-tag tr">Popüler 🍫</span><span class="item-tag en" style="display:none">Popular 🍫</span></div></div>
-      </div>
-
-      <div class="menu-item show" data-cat="sicak">
-        <div class="menu-img mi-salep"><span>🥛</span><div class="menu-img-label">Salep</div></div>
-        <div class="menu-body"><div class="item-name tr">Salep</div><div class="item-name en" style="display:none">Salep</div><div class="item-desc tr">Geleneksel Osmanlı kış içeceği. Üzeri tarçın ve hindistan cevizi ile süslü. Sıcak servis.</div><div class="item-desc en" style="display:none">Traditional Ottoman winter drink topped with cinnamon and coconut.</div><div class="item-footer"><span class="item-tag tr">Geleneksel ❄️</span><span class="item-tag en" style="display:none">Traditional ❄️</span></div></div>
-      </div>
-
-      <div class="menu-item show" data-cat="sicak">
-        <div class="menu-img mi-menengi"><span>🌿</span><div class="menu-img-label">Bitki Çayları</div></div>
-        <div class="menu-body"><div class="item-name tr">Bitki Çayları</div><div class="item-name en" style="display:none">Herbal Teas</div><div class="item-desc tr">Ihlamur, adaçayı, kuşburnu, nane-limon. Taze demleme ile sağlıklı ve lezzetli.</div><div class="item-desc en" style="display:none">Linden, sage, rosehip, mint-lemon. Freshly brewed, healthy and delicious.</div><div class="item-footer"><span class="item-tag tr">Sağlıklı 🌿</span><span class="item-tag en" style="display:none">Healthy 🌿</span></div></div>
-      </div>
-
-      <!-- SOĞUK -->
-      <div class="menu-item show" data-cat="soguk">
-        <div class="menu-img mi-soguk-kahve"><span>🧊</span><div class="menu-img-label">Soğuk Kahve</div></div>
-        <div class="menu-body"><div class="item-name tr">Soğuk Kahve</div><div class="item-name en" style="display:none">Iced Coffee</div><div class="item-desc tr">Buz gibi soğuk, kremalı soğuk kahve. Karamel, fındık veya sade seçenekleri mevcut.</div><div class="item-desc en" style="display:none">Ice cold creamy iced coffee. Caramel, hazelnut or plain options available.</div><div class="item-footer"><span class="item-tag tr">Serin 🧊</span><span class="item-tag en" style="display:none">Cool 🧊</span></div></div>
-      </div>
-
-      <div class="menu-item show" data-cat="soguk">
-        <div class="menu-img mi-limonata"><span>🍋</span><div class="menu-img-label">Limonata</div></div>
-        <div class="menu-body"><div class="item-name tr">Ev Yapımı Limonata</div><div class="item-name en" style="display:none">Homemade Lemonade</div><div class="item-desc tr">Taze sıkılmış limon ile hazırlanan, naneli veya sade ev yapımı limonata.</div><div class="item-desc en" style="display:none">Homemade lemonade with freshly squeezed lemons, with mint or plain.</div><div class="item-footer"><span class="item-tag tr">Taze 🍋</span><span class="item-tag en" style="display:none">Fresh 🍋</span></div></div>
-      </div>
-
-      <div class="menu-item show" data-cat="soguk">
-        <div class="menu-img mi-portakal"><span>🍊</span><div class="menu-img-label">Taze Portakal Suyu</div></div>
-        <div class="menu-body"><div class="item-name tr">Taze Portakal Suyu</div><div class="item-name en" style="display:none">Fresh Orange Juice</div><div class="item-desc tr">Taze sıkılmış portakaldan hazırlanan vitamin deposu içecek. Günde taze.</div><div class="item-desc en" style="display:none">Freshly squeezed orange juice. Made fresh daily.</div><div class="item-footer"><span class="item-tag tr">Taze 🍊</span><span class="item-tag en" style="display:none">Fresh 🍊</span></div></div>
-      </div>
-
-      <div class="menu-item show" data-cat="soguk">
-        <div class="menu-img mi-ayran"><span>🫙</span><div class="menu-img-label">Ayran</div></div>
-        <div class="menu-body"><div class="item-name tr">Ayran</div><div class="item-name en" style="display:none">Ayran</div><div class="item-desc tr">Köpüklü, taze yapılmış soğuk ayran. Tuzlu veya tuzsuz. Her yemekle mükemmel uyum.</div><div class="item-desc en" style="display:none">Frothy, freshly made cold ayran. Salted or unsalted.</div><div class="item-footer"><span class="item-tag tr">Klasik 🫙</span><span class="item-tag en" style="display:none">Classic 🫙</span></div></div>
-      </div>
-
-      <!-- BÖREK -->
-      <div class="menu-item show" data-cat="borek">
-        <div class="menu-img mi-arnavut"><span>🥙</span><div class="menu-img-label">Arnavut Böreği</div></div>
-        <div class="menu-body"><div class="item-name tr">Arnavut Böreği</div><div class="item-name en" style="display:none">Arnavut Böreği</div><div class="item-desc tr">İnce yufkadan hazırlanan, içi beyaz peynirli çıtır börek. Fırından taze, her gün yapılır.</div><div class="item-desc en" style="display:none">Crispy thin pastry börek filled with white cheese. Fresh from the oven daily.</div><div class="item-footer"><span class="item-tag tr">Ev Yapımı 🏠</span><span class="item-tag en" style="display:none">Homemade 🏠</span></div></div>
-      </div>
-
-      <div class="menu-item show" data-cat="borek">
-        <div class="menu-img mi-su-boregi"><span>🌀</span><div class="menu-img-label">Su Böreği</div></div>
-        <div class="menu-body"><div class="item-name tr">Su Böreği</div><div class="item-name en" style="display:none">Su Böreği</div><div class="item-desc tr">Haşlanan yufkadan hazırlanan geleneksel su böreği. Beyaz peynirli veya kıymalı seçenek.</div><div class="item-desc en" style="display:none">Traditional water börek made with boiled pastry. Cheese or minced meat.</div><div class="item-footer"><span class="item-tag tr">Geleneksel 🌀</span><span class="item-tag en" style="display:none">Traditional 🌀</span></div></div>
-      </div>
-
-      <div class="menu-item show" data-cat="borek">
-        <div class="menu-img mi-sigara"><span>🥚</span><div class="menu-img-label">Sigara Böreği</div></div>
-        <div class="menu-body"><div class="item-name tr">Sigara Böreği</div><div class="item-name en" style="display:none">Sigara Böreği</div><div class="item-desc tr">İnce rulo şeklinde kızartılmış, içi peynirli veya kıymalı çıtır börek. Yanında çay ile harika.</div><div class="item-desc en" style="display:none">Thin crispy rolled börek, fried with cheese or minced meat filling.</div><div class="item-footer"><span class="item-tag tr">Çıtır 🔥</span><span class="item-tag en" style="display:none">Crispy 🔥</span></div></div>
-      </div>
-
-      <div class="menu-item show" data-cat="borek">
-        <div class="menu-img mi-gozleme"><span>🫓</span><div class="menu-img-label">Gözleme</div></div>
-        <div class="menu-body"><div class="item-name tr">Gözleme Çeşitleri</div><div class="item-name en" style="display:none">Gözleme Varieties</div><div class="item-desc tr">Sacda pişirilen ince hamur lavaş. Peynirli, ıspanaklı, patatesli veya kıymalı seçeneklerle.</div><div class="item-desc en" style="display:none">Thin dough on sac with cheese, spinach, potato or minced meat.</div><div class="item-footer"><span class="item-tag tr">Popüler 🫓</span><span class="item-tag en" style="display:none">Popular 🫓</span></div></div>
-      </div>
-
-      <!-- POĞAÇA & TOST -->
-      <div class="menu-item show" data-cat="pogaca">
-        <div class="menu-img mi-talaş"><span>🧁</span><div class="menu-img-label">Talaş Peynirli Poğaça</div></div>
-        <div class="menu-body"><div class="item-name tr">Talaş Peynirli Poğaça</div><div class="item-name en" style="display:none">Cheese Poğaça</div><div class="item-desc tr">Talaş peyniri ile hazırlanan imza poğaçamız. Her sabah taze pişirilir, ılık servis edilir.</div><div class="item-desc en" style="display:none">Our signature poğaça with talaş cheese. Freshly baked every morning.</div><div class="item-footer"><span class="item-tag tr">İmza ⭐</span><span class="item-tag en" style="display:none">Signature ⭐</span></div></div>
-      </div>
-
-      <div class="menu-item show" data-cat="pogaca">
-        <div class="menu-img mi-zeytinli"><span>🫒</span><div class="menu-img-label">Zeytinli Poğaça</div></div>
-        <div class="menu-body"><div class="item-name tr">Zeytinli Poğaça</div><div class="item-name en" style="display:none">Olive Poğaça</div><div class="item-desc tr">İçi siyah zeytinli, yumuşacık hamurlu poğaça. Kahvaltı ve çay saatlerinin vazgeçilmezi.</div><div class="item-desc en" style="display:none">Soft poğaça filled with black olives. Perfect for breakfast.</div><div class="item-footer"><span class="item-tag tr">Taze 🫒</span><span class="item-tag en" style="display:none">Fresh 🫒</span></div></div>
-      </div>
-
-      <div class="menu-item show" data-cat="pogaca">
-        <div class="menu-img mi-tost"><span>🍞</span><div class="menu-img-label">Tost Çeşitleri</div></div>
-        <div class="menu-body"><div class="item-name tr">Tost Çeşitleri</div><div class="item-name en" style="display:none">Toast Varieties</div><div class="item-desc tr">Kaşarlı, karışık (kaşar+sucuk), sebzeli tost. Çıtır ekmekte, ızgara baskılı servis.</div><div class="item-desc en" style="display:none">Cheese, mixed (cheese+sausage), veggie toast. Crispy pressed bread.</div><div class="item-footer"><span class="item-tag tr">Doyurucu 🍞</span><span class="item-tag en" style="display:none">Filling 🍞</span></div></div>
-      </div>
-
-      <!-- DİĞER -->
-      <div class="menu-item show" data-cat="diger">
-        <div class="menu-img mi-patates"><span>🍟</span><div class="menu-img-label">Patates Kızartması</div></div>
-        <div class="menu-body"><div class="item-name tr">Patates Kızartması</div><div class="item-name en" style="display:none">French Fries</div><div class="item-desc tr">Taze kesilmiş, çıtır patates kızartması. Yanında ketçap ve mayonez ile servis edilir.</div><div class="item-desc en" style="display:none">Freshly cut crispy french fries, served with ketchup and mayo.</div><div class="item-footer"><span class="item-tag tr">Atıştırmalık 🍟</span><span class="item-tag en" style="display:none">Snack 🍟</span></div></div>
-      </div>
-
-      <div class="menu-item show" data-cat="diger">
-        <div class="menu-img mi-karisik"><span>🥗</span><div class="menu-img-label">Karışık Tabak</div></div>
-        <div class="menu-body"><div class="item-name tr">Karışık Tabak</div><div class="item-name en" style="display:none">Mixed Plate</div><div class="item-desc tr">Günün seçme börek ve poğaçalarından oluşan karışık tabak. Kahve yanında ideal.</div><div class="item-desc en" style="display:none">Mixed plate of daily selected börek and poğaça. Ideal with coffee.</div><div class="item-footer"><span class="item-tag tr">Önerimiz 🌟</span><span class="item-tag en" style="display:none">Our Pick 🌟</span></div></div>
-      </div>
-
-    </div>
-  </section>
-</div>
-
-<!-- ══ GALLERY ══ -->
-<div class="pg" id="pg-gallery">
-  <section class="sec" style="padding-top:130px">
-    <div class="sh fi">
-      <div class="sec-eyebrow tr">Atmosferimiz</div><div class="sec-eyebrow en" style="display:none">Our Atmosphere</div>
-      <h2 class="sec-title tr">Saray'dan <span>Kareler</span></h2><h2 class="sec-title en" style="display:none">Moments from <span>Saray</span></h2>
-      <p class="sec-desc tr">Sıcak köşelerimiz ve lezzetli ürünlerimizden bir bakış</p><p class="sec-desc en" style="display:none">A glimpse of our cozy corners and delicious products</p>
-    </div>
-    <div class="gallery-grid fi">
-      <div class="gal-item g1"><div class="gal-item-inner" style="font-size:90px">☕</div><div class="gal-overlay"><div class="gal-lbl tr">Türk Kahvesi</div><div class="gal-lbl en" style="display:none">Turkish Coffee</div></div></div>
-      <div class="gal-item g2"><div class="gal-item-inner" style="font-size:64px">🥙</div><div class="gal-overlay"><div class="gal-lbl tr">Taze Börekler</div><div class="gal-lbl en" style="display:none">Fresh Börek</div></div></div>
-      <div class="gal-item g3"><div class="gal-item-inner" style="font-size:64px">🧁</div><div class="gal-overlay"><div class="gal-lbl tr">Poğaçalar</div><div class="gal-lbl en" style="display:none">Poğaça</div></div></div>
-      <div class="gal-item g4"><div class="gal-item-inner" style="font-size:64px">🏡</div><div class="gal-overlay"><div class="gal-lbl tr">Kafemiz</div><div class="gal-lbl en" style="display:none">Our Cafe</div></div></div>
-      <div class="gal-item g5"><div class="gal-item-inner" style="font-size:64px">🫓</div><div class="gal-overlay"><div class="gal-lbl tr">Gözleme</div><div class="gal-lbl en" style="display:none">Gözleme</div></div></div>
-    </div>
-    <div class="fi" style="text-align:center;margin-top:36px">
-      <p style="color:var(--gray);font-size:14px">📸 <span class="tr">Fotoğraflarınızı bizimle paylaşın →</span><span class="en" style="display:none">Share your photos with us →</span> <a href="https://instagram.com/saraypatisserie16" target="_blank" style="color:var(--brown);font-weight:600;text-decoration:none">@saraypatisserie16</a></p>
-    </div>
-  </section>
-</div>
-
-<!-- ══ REVIEWS ══ -->
-<div class="pg" id="pg-reviews">
-  <section class="sec" style="padding-top:130px">
-    <div class="sh fi">
-      <div class="sec-eyebrow tr">Müşteri Yorumları</div><div class="sec-eyebrow en" style="display:none">Customer Reviews</div>
-      <h2 class="sec-title tr">Onlar Ne <span>Dedi?</span></h2><h2 class="sec-title en" style="display:none">What Did They <span>Say?</span></h2>
-    </div>
-
-    <!-- Google Rating Summary -->
-    <div class="reviews-summary fi">
-      <div class="rs-score">4.8</div>
-      <div class="rs-right">
-        <div class="rs-stars">★★★★★</div>
-        <div class="rs-count tr">Google'da 127 yorum</div>
-        <div class="rs-count en" style="display:none">127 reviews on Google</div>
-        <div class="rs-google">
-          <svg viewBox="0 0 24 24" width="14" height="14"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-          <span>Google Reviews</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Google Reviews (sabit) -->
-    <div class="sh" style="margin-bottom:32px;margin-top:0">
-      <div class="sec-eyebrow tr">Google'dan Yorumlar</div><div class="sec-eyebrow en" style="display:none">From Google</div>
-    </div>
-    <div class="reviews-grid fi">
-      <div class="rev-card">
-        <div class="rev-header"><div class="rev-avatar" style="background:#fde8d8;color:#c4521a">AY</div><div><div class="rev-name">Ayşe Yılmaz</div><div class="rev-date tr">2 hafta önce</div><div class="rev-date en" style="display:none">2 weeks ago</div></div></div>
-        <div class="rev-stars">★★★★★</div>
-        <div class="rev-text tr">Türk kahvesi gerçekten enfes! Annemin yaptığı gibi tam kıvamında. Poğaçalar da her sabah taze, çok beğendim. Nilpark'ta en sevdiğim kafe oldu.</div>
-        <div class="rev-text en" style="display:none">The Turkish coffee is absolutely amazing! Just like my mother used to make. Freshly baked poğaça every morning. Became my favorite cafe in Nilpark.</div>
-        <div class="google-badge"><svg viewBox="0 0 24 24" width="14"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg><span>Google</span></div>
-      </div>
-      <div class="rev-card">
-        <div class="rev-header"><div class="rev-avatar" style="background:#d8f0e0;color:#1a7c3a">MK</div><div><div class="rev-name">Mehmet Kaya</div><div class="rev-date tr">1 ay önce</div><div class="rev-date en" style="display:none">1 month ago</div></div></div>
-        <div class="rev-stars">★★★★★</div>
-        <div class="rev-text tr">Su böreği harika! Ev yapımı tadında, hiç katkısız. Personel çok güler yüzlü ve hızlı servis yapıyorlar. Bursa'nın en iyi börekçisi bence.</div>
-        <div class="rev-text en" style="display:none">Amazing su böreği! Tastes homemade, no additives. Staff very friendly and fast service. Best börek place in Bursa in my opinion.</div>
-        <div class="google-badge"><svg viewBox="0 0 24 24" width="14"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg><span>Google</span></div>
-      </div>
-      <div class="rev-card">
-        <div class="rev-header"><div class="rev-avatar" style="background:#e8d8f5;color:#6b1a9c">ZD</div><div><div class="rev-name">Zeynep Demir</div><div class="rev-date tr">3 hafta önce</div><div class="rev-date en" style="display:none">3 weeks ago</div></div></div>
-        <div class="rev-stars">★★★★★</div>
-        <div class="rev-text tr">Sıcak çikolata tam isabet! Kışın içinizi ısıtıyor. Gözleme de taptaze, sacdan çıkmış gibi geliyor. Her hafta geliyorum artık.</div>
-        <div class="rev-text en" style="display:none">Hot chocolate is perfect! Warms you up in winter. Gözleme is super fresh too. I come every week now.</div>
-        <div class="google-badge"><svg viewBox="0 0 24 24" width="14"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg><span>Google</span></div>
-      </div>
-      <div class="rev-card">
-        <div class="rev-header"><div class="rev-avatar" style="background:#d8eaf5;color:#1a5c8c">HÖ</div><div><div class="rev-name">Hasan Öztürk</div><div class="rev-date tr">2 ay önce</div><div class="rev-date en" style="display:none">2 months ago</div></div></div>
-        <div class="rev-stars">★★★★☆</div>
-        <div class="rev-text tr">Talaş peynirli poğaça gerçekten imza ürün, başka yerde bulamıyorum. Fiyat performans mükemmel. Tek eksik, hafta sonları çok kalabalık oluyor.</div>
-        <div class="rev-text en" style="display:none">Talaş cheese poğaça is truly a signature item, can't find it anywhere else. Great value. Only downside is it gets crowded on weekends.</div>
-        <div class="google-badge"><svg viewBox="0 0 24 24" width="14"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg><span>Google</span></div>
-      </div>
-      <div class="rev-card">
-        <div class="rev-header"><div class="rev-avatar" style="background:#f5e8d8;color:#8c4a1a">FŞ</div><div><div class="rev-name">Fatma Şahin</div><div class="rev-date tr">1 hafta önce</div><div class="rev-date en" style="display:none">1 week ago</div></div></div>
-        <div class="rev-stars">★★★★★</div>
-        <div class="rev-text tr">Arnavut böreği muhteşem! Sabahın 8'inde taze çıkıyor ve öğlene kadar tükeniyor. Erken gelin tavsiyem. Salep de çok güzeldi.</div>
-        <div class="rev-text en" style="display:none">Arnavut böreği is magnificent! Fresh at 8am and sold out by noon. My advice: come early. Salep was also wonderful.</div>
-        <div class="google-badge"><svg viewBox="0 0 24 24" width="14"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg><span>Google</span></div>
-      </div>
-      <div class="rev-card">
-        <div class="rev-header"><div class="rev-avatar" style="background:#d8f5e8;color:#1a7c4a">EK</div><div><div class="rev-name">Emre Koç</div><div class="rev-date tr">5 gün önce</div><div class="rev-date en" style="display:none">5 days ago</div></div></div>
-        <div class="rev-stars">★★★★★</div>
-        <div class="rev-text tr">İş yerinin altında olduğu için her gün uğruyorum. Çay fiyatı çok uygun, poğaçalar taze. Personel her gün aynı sıcaklıkta karşılıyor. Tavsiye ederim.</div>
-        <div class="rev-text en" style="display:none">I stop by every day since it's below my office. Tea is very affordable, poğaça fresh. Staff always greets you warmly. Highly recommend.</div>
-        <div class="google-badge"><svg viewBox="0 0 24 24" width="14"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg><span>Google</span></div>
-      </div>
-      <div class="rev-card">
-        <div class="rev-header"><div class="rev-avatar" style="background:#f5d8e8;color:#8c1a4a">NA</div><div><div class="rev-name">Neslihan Arslan</div><div class="rev-date tr">3 ay önce</div><div class="rev-date en" style="display:none">3 months ago</div></div></div>
-        <div class="rev-stars">★★★★★</div>
-        <div class="rev-text tr">Kızımla birlikte geldik, çocuğa sıcak çikolata aldık. Çok memnun kaldı. Atmosfer gerçekten sıcak ve samimi. AVM içinde bu kadar ev sıcaklığı bulmak zor.</div>
-        <div class="rev-text en" style="display:none">Came with my daughter, got her hot chocolate. She loved it. The atmosphere is truly warm and genuine. Hard to find this homey feeling in a mall.</div>
-        <div class="google-badge"><svg viewBox="0 0 24 24" width="14"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg><span>Google</span></div>
-      </div>
-      <div class="rev-card">
-        <div class="rev-header"><div class="rev-avatar" style="background:#e8f5d8;color:#4a7c1a">BY</div><div><div class="rev-name">Berk Yıldız</div><div class="rev-date tr">6 gün önce</div><div class="rev-date en" style="display:none">6 days ago</div></div></div>
-        <div class="rev-stars">★★★★★</div>
-        <div class="rev-text tr">Sigara böreği çıtır çıtır, tam kıvamında. Yanına bir çay aldım, mükemmel ikili. Fiyatları da gayet makul. Bursa'ya gelenlere kesinlikle öneririm.</div>
-        <div class="rev-text en" style="display:none">Sigara böreği perfectly crispy. Had it with tea, a perfect combo. Prices are very reasonable. I definitely recommend to anyone visiting Bursa.</div>
-        <div class="google-badge"><svg viewBox="0 0 24 24" width="14"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg><span>Google</span></div>
-      </div>
-    </div>
-
-    <!-- Kullanıcı Yorumları -->
-    <div class="sh" style="margin-top:80px;margin-bottom:40px">
-      <div class="sec-eyebrow tr">Siz de Paylaşın</div><div class="sec-eyebrow en" style="display:none">Share Yours</div>
-      <h2 class="sec-title tr">Deneyiminizi <span>Yazın</span></h2><h2 class="sec-title en" style="display:none">Write Your <span>Experience</span></h2>
-    </div>
-
-    <div class="user-reviews-wrap">
-      <!-- Kullanıcı yorum listesi -->
-      <div id="userRevList" class="user-rev-list"></div>
-
-      <!-- Yorum formu -->
-      <div class="rev-form fi">
-        <div class="rf-title tr">Yorum Yap</div><div class="rf-title en" style="display:none">Leave a Review</div>
-        <div class="rf-sub tr">Deneyiminizi diğer müşterilerle paylaşın</div><div class="rf-sub en" style="display:none">Share your experience with other customers</div>
-        <div class="rf-row">
-          <div class="rf-group">
-            <label class="tr">Adınız</label><label class="en" style="display:none">Your Name</label>
-            <input type="text" id="revName" placeholder="Ad Soyad">
-          </div>
-          <div class="rf-group">
-            <label class="tr">Ne Denediniz?</label><label class="en" style="display:none">What Did You Try?</label>
-            <input type="text" id="revItem" placeholder="Türk Kahvesi, Börek...">
-          </div>
-        </div>
-        <div class="rf-group">
-          <label class="tr">Puanınız</label><label class="en" style="display:none">Your Rating</label>
-          <div class="star-pick" id="starPick">
-            <button class="star-btn" data-v="1" onclick="setStar(1)">⭐</button>
-            <button class="star-btn" data-v="2" onclick="setStar(2)">⭐</button>
-            <button class="star-btn" data-v="3" onclick="setStar(3)">⭐</button>
-            <button class="star-btn" data-v="4" onclick="setStar(4)">⭐</button>
-            <button class="star-btn" data-v="5" onclick="setStar(5)">⭐</button>
-          </div>
-        </div>
-        <div class="rf-group">
-          <label class="tr">Yorumunuz</label><label class="en" style="display:none">Your Comment</label>
-          <textarea id="revText" placeholder="Deneyiminizi paylaşın..." rows="3"></textarea>
-        </div>
-        <button class="rf-btn" onclick="submitReview()"><span class="tr">Yorumu Gönder ✨</span><span class="en" style="display:none">Submit Review ✨</span></button>
-      </div>
-    </div>
-  </section>
-</div>
-
-<!-- ══ CONTACT ══ -->
-<div class="pg" id="pg-contact">
-  <section style="padding:130px 5% 60px">
-    <div class="sh fi">
-      <div class="sec-eyebrow tr">Bize Ulaşın</div><div class="sec-eyebrow en" style="display:none">Find Us</div>
-      <h1 class="sec-title tr">Sizi <span>Ağırlamaktan</span> Mutluluk Duyarız</h1>
-      <h1 class="sec-title en" style="display:none">We'd Love to <span>Welcome You</span></h1>
-    </div>
-    <div class="contact-grid">
-      <div class="contact-info fi">
-        <h3 class="tr">İletişim Bilgileri</h3><h3 class="en" style="display:none">Contact Information</h3>
-        <p class="tr">Bursa Nilpark AVM'de her gün sizi ağırlamaktan mutluluk duyarız.</p>
-        <p class="en" style="display:none">We'd be happy to welcome you every day at Bursa Nilpark Mall.</p>
-        <div class="contact-items">
-          <div class="contact-item">
-            <div class="ci-ico">📍</div>
-            <div>
-              <div class="ci-lbl tr">Adres</div><div class="ci-lbl en" style="display:none">Address</div>
-              <div class="ci-val">Karaman Mah. Kültür Cad. No:2/A</div>
-              <div class="ci-sub">Nilpark AVM — Nilüfer / BURSA</div>
-            </div>
-          </div>
-          <div class="contact-item">
-            <div class="ci-ico">📞</div>
-            <div>
-              <div class="ci-lbl tr">Telefon</div><div class="ci-lbl en" style="display:none">Phone</div>
-              <div class="ci-val"><a href="tel:05436475871">0 543 647 58 71</a></div>
-            </div>
-          </div>
-          <div class="contact-item">
-            <div class="ci-ico">💬</div>
-            <div>
-              <div class="ci-lbl">WhatsApp</div>
-              <div class="ci-val"><a href="https://wa.me/905436475871" target="_blank">0 543 647 58 71</a></div>
-            </div>
-          </div>
-          <div class="contact-item">
-            <div class="ci-ico">📸</div>
-            <div>
-              <div class="ci-lbl">Instagram</div>
-              <div class="ci-val"><a href="https://instagram.com/saraypatisserie16" target="_blank">@saraypatisserie16</a></div>
-            </div>
-          </div>
-          <div class="contact-item">
-            <div class="ci-ico">🕐</div>
-            <div>
-              <div class="ci-lbl tr">Çalışma Saatleri</div><div class="ci-lbl en" style="display:none">Opening Hours</div>
-              <div class="ci-val tr">Her Gün 08:00 – 22:00</div><div class="ci-val en" style="display:none">Every Day 08:00 – 22:00</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="contact-form fi">
-        <div class="cf-title tr">Mesaj Gönder</div><div class="cf-title en" style="display:none">Send a Message</div>
-        <div class="cf-sub tr">En kısa sürede geri dönüş yapacağız</div><div class="cf-sub en" style="display:none">We'll get back to you shortly</div>
-        <div class="cf-row">
-          <div class="cf-group"><label class="tr">Ad Soyad</label><label class="en" style="display:none">Full Name</label><input type="text" placeholder="Adınız"></div>
-          <div class="cf-group"><label class="tr">Telefon</label><label class="en" style="display:none">Phone</label><input type="tel" placeholder="0 5XX XXX XX XX"></div>
-        </div>
-        <div class="cf-group">
-          <label class="tr">Konu</label><label class="en" style="display:none">Subject</label>
-          <select>
-            <option class="tr">Rezervasyon</option>
-            <option class="tr">Menü Hakkında</option>
-            <option class="tr">Özel Etkinlik</option>
-            <option class="tr">Diğer</option>
-          </select>
-        </div>
-        <div class="cf-group"><label class="tr">Mesajınız</label><label class="en" style="display:none">Message</label><textarea placeholder="..."></textarea></div>
-        <button class="cf-btn" onclick="submitForm(this)"><span class="tr">Gönder →</span><span class="en" style="display:none">Send →</span></button>
-      </div>
-    </div>
-  </section>
-
-  <!-- OpenStreetMap + Google Maps Yönlendirme -->
-  <div style="margin:0 5% 80px">
-    <div style="border-radius:18px;overflow:hidden;border:1px solid var(--warm);box-shadow:0 8px 32px rgba(61,43,31,.12)">
+    <div class="contact-card" style="flex:2 1 600px;">
       <iframe
-        src="https://www.openstreetmap.org/export/embed.html?bbox=28.9829%2C40.2077%2C29.0029%2C40.2177&layer=mapnik&marker=40.2127%2C28.9929"
-        width="100%" height="380" style="border:none;display:block"
-        loading="lazy" allowfullscreen>
-      </iframe>
-    </div>
-    <div style="display:flex;gap:12px;justify-content:center;margin-top:16px;flex-wrap:wrap">
-      <a href="https://www.google.com/maps/search/Nilpark+AVM+Bursa/@40.2127,28.9929,16z" target="_blank"
-         style="display:inline-flex;align-items:center;gap:8px;background:var(--brown);color:var(--cream);padding:12px 24px;border-radius:10px;text-decoration:none;font-size:14px;font-weight:600;transition:.2s"
-         onmouseover="this.style.background='#5c3d2e'" onmouseout="this.style.background='var(--brown)'">
-        🗺️ <span class="tr">Google Maps'te Aç</span><span class="en" style="display:none">Open in Google Maps</span>
-      </a>
-      <a href="https://waze.com/ul?ll=40.2127,28.9929&navigate=yes" target="_blank"
-         style="display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:var(--brown);padding:12px 24px;border-radius:10px;text-decoration:none;font-size:14px;font-weight:600;transition:.2s"
-         onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
-        🚗 <span class="tr">Waze ile Git</span><span class="en" style="display:none">Navigate with Waze</span>
-      </a>
+        class="map"
+        src="https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q=Karaman+Mahallesi+Kültür+Caddesi+Nilpark+Avm+Nilüfer+Bursa"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
     </div>
   </div>
-</div>
+</section>
 
-<!-- FOOTER -->
+<section id="reviews">
+  <h2>Müşteri Yorumları</h2>
+  <form id="review-form">
+    <input type="text" id="name" placeholder="Adınız" required />
+    <textarea id="comment" rows="4" placeholder="Yorumunuz" required></textarea>
+    <button type="submit">Gönder</button>
+  </form>
+  <div class="reviews-list" id="reviews-list">
+    <!-- Yorumlar buraya eklenecek -->
+  </div>
+</section>
+
 <footer>
-  <div class="foot-grid">
-    <div>
-      <div class="logo-wrap" style="cursor:default">
-        <div class="logo-icon">☕</div>
-        <div class="logo-text">
-          <div class="logo-name">Saray Patisserie</div>
-          <div class="logo-sub">Bursa Nilpark — Est. 2020</div>
-        </div>
-      </div>
-      <p class="foot-desc tr">Bursa Nilpark AVM'de sıcak bir yuva. Geleneksel lezzetler, samimi hizmet, her gün taze.</p>
-      <p class="foot-desc en" style="display:none">A warm home at Bursa Nilpark Mall. Traditional flavours, sincere service, fresh every day.</p>
-      <div class="foot-soc">
-        <a class="fsoc" href="https://instagram.com/saraypatisserie16" target="_blank">📸</a>
-        <a class="fsoc" href="https://wa.me/905436475871" target="_blank">💬</a>
-        <a class="fsoc" href="tel:05436475871">📞</a>
-      </div>
-    </div>
-    <div class="foot-col">
-      <h4 class="tr">Sayfalar</h4><h4 class="en" style="display:none">Pages</h4>
-      <a onclick="goTo('home')" class="tr">Anasayfa</a>
-      <a onclick="goTo('menu')" class="tr">Menü</a>
-      <a onclick="goTo('gallery')" class="tr">Galeri</a>
-      <a onclick="goTo('reviews')" class="tr">Yorumlar</a>
-      <a onclick="goTo('contact')" class="tr">İletişim</a>
-    </div>
-    <div class="foot-col">
-      <h4 class="tr">İletişim</h4><h4 class="en" style="display:none">Contact</h4>
-      <a href="tel:05436475871">📞 0 543 647 58 71</a>
-      <a href="https://wa.me/905436475871" target="_blank">💬 WhatsApp</a>
-      <a href="https://instagram.com/saraypatisserie16" target="_blank">📸 @saraypatisserie16</a>
-      <a>📍 Nilpark AVM, Nilüfer / Bursa</a>
-      <a class="tr">🕐 Her Gün 08:00–22:00</a>
-    </div>
-  </div>
-  <div class="foot-bot">
-    <span>© 2026 <span class="foot-gold">Saray Patisserie</span>. <span class="tr">Tüm Hakları Saklıdır.</span><span class="en" style="display:none">All Rights Reserved.</span></span>
-    <span class="tr">Bursa Nilpark AVM'nin Sıcak Köşesi 🤎</span>
-  </div>
+  <p>© 2026 Saray Patisserie. Tüm hakları saklıdır.</p>
 </footer>
 
 <script>
-// ROUTER
-function goTo(p){
-  document.querySelectorAll('.pg').forEach(x=>x.classList.remove('act'));
-  document.getElementById('pg-'+p).classList.add('act');
-  document.querySelectorAll('.nav-links a').forEach(x=>x.classList.remove('act'));
-  const na=document.getElementById('na-'+p);if(na)na.classList.add('act');
-  window.scrollTo({top:0,behavior:'smooth'});
-  setTimeout(initObs,100);
-  if(p==='reviews')loadUserReviews();
-}
+  // Basit yorum ekleme (sayfa yenilendiğinde silinir)
+  const form = document.getElementById("review-form");
+  const reviewsList = document.getElementById("reviews-list");
 
-// NAV SCROLL
-window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',scrollY>40));
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-// MOB MENU
-function toggleMob(){document.getElementById('mobMenu').classList.toggle('op')}
+    const name = document.getElementById("name").value.trim();
+    const comment = document.getElementById("comment").value.trim();
 
-// LANG
-let lang='tr';
-function toggleLang(){
-  lang=lang==='tr'?'en':'tr';
-  document.getElementById('langBtn').textContent=lang==='tr'?'🇬🇧 EN':'🇹🇷 TR';
-  document.querySelectorAll('.tr').forEach(e=>e.style.display=lang==='tr'?'':'none');
-  document.querySelectorAll('.en').forEach(e=>e.style.display=lang==='en'?'':'none');
-  document.documentElement.lang=lang;
-}
+    if (!name || !comment) {
+      alert("Lütfen adınızı ve yorumunuzu yazınız.");
+      return;
+    }
 
-// MENU FILTER
-function filterMenu(cat,btn){
-  document.querySelectorAll('.mcat').forEach(b=>b.classList.remove('act'));
-  btn.classList.add('act');
-  document.querySelectorAll('.menu-item').forEach(item=>{
-    item.classList.toggle('show',cat==='all'||item.dataset.cat===cat);
+    const reviewItem = document.createElement("div");
+    reviewItem.className = "review-item";
+    const now = new Date();
+    const dateString = now.toLocaleDateString("tr-TR") + " " + now.toLocaleTimeString("tr-TR");
+
+    reviewItem.innerHTML = `
+      <strong>${escapeHtml(name)}</strong>
+      <em>${dateString}</em>
+      <p>${escapeHtml(comment)}</p>
+    `;
+
+    reviewsList.prepend(reviewItem);
+
+    form.reset();
   });
-}
 
-// FADE IN
-function initObs(){
-  const obs=new IntersectionObserver((es)=>{
-    es.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('vis'),i*80)});
-  },{threshold:0.08});
-  document.querySelectorAll('.fi').forEach(e=>obs.observe(e));
-}
-initObs();
-
-// FORM
-function submitForm(btn){
-  const orig=btn.innerHTML;
-  btn.innerHTML='✅ Mesajınız alındı, teşekkürler!';
-  btn.style.background='linear-gradient(135deg,#059669,#10b981)';
-  btn.style.color='#fff';
-  setTimeout(()=>{btn.innerHTML=orig;btn.style.background='';btn.style.color='';},4000);
-}
-
-// ── STAR RATING ──
-let selectedStar=5;
-setStar(5);
-function setStar(v){
-  selectedStar=v;
-  document.querySelectorAll('.star-btn').forEach(b=>{
-    b.classList.toggle('active',parseInt(b.dataset.v)<=v);
-  });
-}
-
-// ── USER REVIEWS (localStorage) ──
-function loadUserReviews(){
-  const list=document.getElementById('userRevList');
-  let reviews=[];
-  try{reviews=JSON.parse(localStorage.getItem('saray_reviews')||'[]');}catch(e){}
-  if(reviews.length===0){
-    list.innerHTML=`<div class="empty-revs">Henüz yorum yok. İlk yorumu siz yapın! 🌟</div>`;
-    return;
+  // XSS önlemek için basit kaçış fonksiyonu
+  function escapeHtml(text) {
+    const map = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;",
+    };
+    return text.replace(/[&<>"']/g, function (m) {
+      return map[m];
+    });
   }
-  list.innerHTML=reviews.slice().reverse().map(r=>`
-    <div class="user-rev-item">
-      <div class="uri-header">
-        <div class="uri-info">
-          <div class="uri-avatar">${r.name.substring(0,2).toUpperCase()}</div>
-          <div>
-            <div class="uri-name">${escHtml(r.name)}</div>
-            <div class="uri-date">${r.date}</div>
-          </div>
-        </div>
-        <div class="uri-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</div>
-      </div>
-      ${r.item?`<div style="font-size:12px;color:var(--gold);margin-bottom:6px;font-weight:600">🍽️ ${escHtml(r.item)}</div>`:''}
-      <div class="uri-text">${escHtml(r.text)}</div>
-    </div>
-  `).join('');
-}
-
-function escHtml(t){
-  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-function submitReview(){
-  const name=document.getElementById('revName').value.trim();
-  const item=document.getElementById('revItem').value.trim();
-  const text=document.getElementById('revText').value.trim();
-  if(!name||!text){
-    alert('Lütfen adınızı ve yorumunuzu yazın.');return;
-  }
-  const reviews=JSON.parse(localStorage.getItem('saray_reviews')||'[]');
-  const now=new Date();
-  reviews.push({
-    name,item,text,stars:selectedStar,
-    date:now.toLocaleDateString('tr-TR',{day:'numeric',month:'long',year:'numeric'})
-  });
-  localStorage.setItem('saray_reviews',JSON.stringify(reviews));
-  document.getElementById('revName').value='';
-  document.getElementById('revItem').value='';
-  document.getElementById('revText').value='';
-  setStar(5);
-  loadUserReviews();
-  // scroll to list
-  document.getElementById('userRevList').scrollIntoView({behavior:'smooth',block:'start'});
-}
-
-// ── PHOTO SLIDER ──
-let curSlide=0,slTotal=5,slAuto;
-function goSlide(n){
-  const track=document.getElementById('psTrack');
-  const slides=track.querySelectorAll('.ps-slide');
-  const dots=document.querySelectorAll('.ps-dot');
-  slides[curSlide].classList.remove('act');
-  curSlide=(n+slTotal)%slTotal;
-  slides[curSlide].classList.add('act');
-  dots.forEach((d,i)=>d.classList.toggle('act',i===curSlide));
-  track.style.transform=`translateX(-${curSlide*100}%)`;
-}
-function nextSlide(){goSlide(curSlide+1)}
-function prevSlide(){goSlide(curSlide-1)}
-function startSliderAuto(){slAuto=setInterval(nextSlide,4500)}
-function stopSliderAuto(){clearInterval(slAuto)}
-
-// init slider
-document.addEventListener('DOMContentLoaded',()=>{
-  const slides=document.querySelectorAll('.ps-slide');
-  if(slides.length)slides[0].classList.add('act');
-  startSliderAuto();
-  const sl=document.getElementById('photoSlider');
-  if(sl){
-    sl.addEventListener('mouseenter',stopSliderAuto);
-    sl.addEventListener('mouseleave',startSliderAuto);
-    // touch swipe
-    let tx=0;
-    sl.addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
-    sl.addEventListener('touchend',e=>{const dx=tx-e.changedTouches[0].clientX;if(dx>40)nextSlide();else if(dx<-40)prevSlide()},{passive:true});
-  }
-});
-
-// HASH
-const h=location.hash.replace('#','');
-if(['menu','gallery','reviews','contact'].includes(h))goTo(h);
 </script>
 </body>
 </html>
