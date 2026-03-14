@@ -279,6 +279,13 @@ footer{background:var(--brown);border-top:1px solid rgba(196,151,58,.15);padding
 .hero-over .hero-btns{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:36px}
 .hero-over .hero-badges{display:flex;gap:24px;flex-wrap:wrap}
 
+.ps-bg{position:absolute;inset:0;z-index:0}
+.ps-art{position:absolute;inset:0;overflow:hidden}
+.ps-bg-1{background:radial-gradient(ellipse at 70% 50%, #3d1800 0%, #1a0800 40%, #0d0400 100%)}
+.ps-bg-2{background:radial-gradient(ellipse at 70% 50%, #1a3010 0%, #0d1a08 40%, #050d03 100%)}
+.ps-bg-3{background:radial-gradient(ellipse at 70% 50%, #2d1a08 0%, #1a1005 40%, #0d0803 100%)}
+.ps-bg-4{background:radial-gradient(ellipse at 70% 50%, #2d200f 0%, #1a1208 40%, #0d0904 100%)}
+.ps-bg-5{background:radial-gradient(ellipse at 70% 50%, #2d2008 0%, #1a1505 40%, #0d0a03 100%)}
 /* RESPONSIVE */
 @media(max-width:1100px){.menu-grid{grid-template-columns:repeat(2,1fr)}.reviews-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:900px){.gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}.gal-item:first-child{grid-row:span 1}.atm-grid{grid-template-columns:1fr}.contact-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr 1fr}.rf-row{grid-template-columns:1fr}.cf-row{grid-template-columns:1fr}}
@@ -321,11 +328,34 @@ footer{background:var(--brown);border-top:1px solid rgba(196,151,58,.15);padding
   <!-- PHOTO SLIDER -->
   <div class="photo-slider" id="photoSlider">
     <div class="ps-track" id="psTrack">
-      <!-- Slayt 1: Türk Kahvesi — yucar studios, verified ID: qdFxL5PoQhE -->
+      <!-- Slayt 1: Türk Kahvesi -->
       <div class="ps-slide">
-        <div class="ps-bg" style="background:linear-gradient(135deg,#1a0800,#3d1800);position:absolute;inset:0"></div>
-        <img src="https://images.unsplash.com/photo-1506619216599-9d16d0903dfd?w=1400&auto=format&fit=crop&q=90"
-             alt="Türk Kahvesi" loading="eager" onerror="this.style.display='none'">
+        <div class="ps-bg ps-bg-1">
+          <div class="ps-art">
+            <svg viewBox="0 0 600 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;inset:0;opacity:.18">
+              <!-- Kahve fincanı dekoratif arka plan -->
+              <circle cx="500" cy="250" r="220" fill="none" stroke="#c4973a" stroke-width="1" opacity=".4"/>
+              <circle cx="500" cy="250" r="160" fill="none" stroke="#c4973a" stroke-width="1" opacity=".3"/>
+              <circle cx="500" cy="250" r="100" fill="none" stroke="#c4973a" stroke-width="1" opacity=".2"/>
+              <!-- Steam lines -->
+              <path d="M460 180 Q450 160 460 140 Q470 120 460 100" fill="none" stroke="#d4aa55" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+              <path d="M500 175 Q490 155 500 135 Q510 115 500 95" fill="none" stroke="#d4aa55" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+              <path d="M540 180 Q530 160 540 140 Q550 120 540 100" fill="none" stroke="#d4aa55" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+              <!-- Fincan gövdesi -->
+              <ellipse cx="500" cy="270" rx="80" ry="15" fill="#c4973a" opacity=".3"/>
+              <path d="M420 200 Q420 270 430 285 Q500 310 570 285 Q580 270 580 200 Z" fill="#3d2010" stroke="#c4973a" stroke-width="2" opacity=".4"/>
+              <ellipse cx="500" cy="200" rx="80" ry="18" fill="#1a0800" stroke="#c4973a" stroke-width="2" opacity=".5"/>
+              <!-- Tabak -->
+              <ellipse cx="500" cy="295" rx="110" ry="20" fill="none" stroke="#c4973a" stroke-width="2" opacity=".3"/>
+              <!-- Lokum -->
+              <rect x="600" y="260" width="30" height="30" rx="5" fill="#c4973a" opacity=".25"/>
+              <rect x="636" y="260" width="30" height="30" rx="5" fill="#d4aa55" opacity=".2"/>
+            </svg>
+          </div>
+        </div>
+        <img src="IMG_TURK_KAHVESI" alt="Türk Kahvesi"
+             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:none"
+             onerror="this.style.display='none'">
         <div class="ps-overlay"></div>
         <div class="ps-caption">
           <div class="ps-tag">☕ İmza Lezzetimiz</div>
@@ -334,11 +364,33 @@ footer{background:var(--brown);border-top:1px solid rgba(196,151,58,.15);padding
         </div>
       </div>
 
-      <!-- Slayt 2: Çay — ince bel bardak -->
+      <!-- Slayt 2: Çay -->
       <div class="ps-slide">
-        <div class="ps-bg" style="background:linear-gradient(135deg,#0d1a05,#1a3010);position:absolute;inset:0"></div>
-        <img src="https://images.unsplash.com/photo-1563826904577-6b72c5d75e53?w=1400&auto=format&fit=crop&q=90"
-             alt="Türk Çayı" loading="lazy" onerror="this.style.display='none'">
+        <div class="ps-bg ps-bg-2">
+          <div class="ps-art">
+            <svg viewBox="0 0 600 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;inset:0;opacity:.18">
+              <circle cx="500" cy="250" r="220" fill="none" stroke="#4ade80" stroke-width="1" opacity=".3"/>
+              <circle cx="500" cy="250" r="160" fill="none" stroke="#4ade80" stroke-width="1" opacity=".2"/>
+              <!-- Çay bardağı -->
+              <path d="M440 160 Q435 260 445 290 Q500 320 555 290 Q565 260 560 160 Z" fill="#2d1a05" stroke="#c4973a" stroke-width="2" opacity=".4"/>
+              <ellipse cx="500" cy="160" rx="60" ry="14" fill="#8b1a1a" opacity=".6"/>
+              <!-- Çayın kırmızı rengi -->
+              <path d="M442 170 Q437 260 447 288 Q500 315 553 288 Q563 260 558 170" fill="#6b1010" opacity=".4"/>
+              <!-- Buhar -->
+              <path d="M470 150 Q465 130 472 110 Q479 90 474 70" fill="none" stroke="#c4973a" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>
+              <path d="M500 145 Q495 125 502 105 Q509 85 504 65" fill="none" stroke="#c4973a" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>
+              <path d="M530 150 Q525 130 532 110 Q539 90 534 70" fill="none" stroke="#c4973a" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>
+              <!-- Tabak -->
+              <ellipse cx="500" cy="300" rx="90" ry="16" fill="none" stroke="#c4973a" stroke-width="1.5" opacity=".3"/>
+              <!-- Şeker küpleri -->
+              <rect x="600" cy="265" width="25" height="25" rx="3" fill="#f5efe6" opacity=".2"/>
+              <rect x="628" cy="265" width="25" height="25" rx="3" fill="#f5efe6" opacity=".15"/>
+            </svg>
+          </div>
+        </div>
+        <img src="IMG_CAY" alt="Türk Çayı"
+             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:none"
+             onerror="this.style.display='none'">
         <div class="ps-overlay"></div>
         <div class="ps-caption">
           <div class="ps-tag">🍵 Klasik</div>
@@ -347,11 +399,36 @@ footer{background:var(--brown);border-top:1px solid rgba(196,151,58,.15);padding
         </div>
       </div>
 
-      <!-- Slayt 3: Gözleme — flatbread/gözleme -->
+      <!-- Slayt 3: Gözleme -->
       <div class="ps-slide">
-        <div class="ps-bg" style="background:linear-gradient(135deg,#1a1005,#2d1a08);position:absolute;inset:0"></div>
-        <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=1400&auto=format&fit=crop&q=90"
-             alt="Gözleme" loading="lazy" onerror="this.style.display='none'">
+        <div class="ps-bg ps-bg-3">
+          <div class="ps-art">
+            <svg viewBox="0 0 600 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;inset:0;opacity:.18">
+              <!-- Gözleme yuvarlak/oval -->
+              <ellipse cx="500" cy="260" rx="180" ry="120" fill="#5c3d2e" stroke="#c4973a" stroke-width="2" opacity=".4"/>
+              <ellipse cx="500" cy="260" rx="160" ry="104" fill="#3d2010" opacity=".5"/>
+              <!-- Izgara izleri -->
+              <line x1="340" y1="220" x2="660" y2="220" stroke="#7a5544" stroke-width="2" opacity=".4"/>
+              <line x1="340" y1="240" x2="660" y2="240" stroke="#7a5544" stroke-width="2" opacity=".4"/>
+              <line x1="340" y1="260" x2="660" y2="260" stroke="#7a5544" stroke-width="2" opacity=".4"/>
+              <line x1="340" y1="280" x2="660" y2="280" stroke="#7a5544" stroke-width="2" opacity=".4"/>
+              <line x1="340" y1="300" x2="660" y2="300" stroke="#7a5544" stroke-width="2" opacity=".4"/>
+              <!-- Sac izgara -->
+              <line x1="400" y1="160" x2="400" y2="360" stroke="#c4973a" stroke-width="1" opacity=".25"/>
+              <line x1="440" y1="150" x2="440" y2="370" stroke="#c4973a" stroke-width="1" opacity=".25"/>
+              <line x1="480" y1="145" x2="480" y2="375" stroke="#c4973a" stroke-width="1" opacity=".25"/>
+              <line x1="520" y1="145" x2="520" y2="375" stroke="#c4973a" stroke-width="1" opacity=".25"/>
+              <line x1="560" y1="150" x2="560" y2="370" stroke="#c4973a" stroke-width="1" opacity=".25"/>
+              <line x1="600" y1="160" x2="600" y2="360" stroke="#c4973a" stroke-width="1" opacity=".25"/>
+              <!-- İç dolgu -->
+              <ellipse cx="500" cy="260" rx="120" ry="70" fill="#c4973a" opacity=".15"/>
+              <circle cx="500" cy="250" r="200" fill="none" stroke="#c4973a" stroke-width="1" opacity=".2"/>
+            </svg>
+          </div>
+        </div>
+        <img src="IMG_GOZLEME" alt="Gözleme"
+             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:none"
+             onerror="this.style.display='none'">
         <div class="ps-overlay"></div>
         <div class="ps-caption">
           <div class="ps-tag">🫓 Sacdan Taze</div>
@@ -360,11 +437,33 @@ footer{background:var(--brown);border-top:1px solid rgba(196,151,58,.15);padding
         </div>
       </div>
 
-      <!-- Slayt 4: Su Böreği — katmanlı börek görseli -->
+      <!-- Slayt 4: Su Böreği -->
       <div class="ps-slide">
-        <div class="ps-bg" style="background:linear-gradient(135deg,#1a1208,#2d200f);position:absolute;inset:0"></div>
-        <img src="https://images.unsplash.com/photo-1590947132387-155cc02f3212?w=1400&auto=format&fit=crop&q=90"
-             alt="Su Böreği" loading="lazy" onerror="this.style.display='none'">
+        <div class="ps-bg ps-bg-4">
+          <div class="ps-art">
+            <svg viewBox="0 0 600 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;inset:0;opacity:.18">
+              <!-- Katmanlı börek -->
+              <rect x="320" y="200" width="300" height="160" rx="8" fill="#3d2010" stroke="#c4973a" stroke-width="2" opacity=".4"/>
+              <!-- Katmanlar -->
+              <line x1="320" y1="228" x2="620" y2="228" stroke="#c4973a" stroke-width="2" opacity=".4"/>
+              <line x1="320" y1="248" x2="620" y2="248" stroke="#d4aa55" stroke-width="1.5" opacity=".35"/>
+              <line x1="320" y1="268" x2="620" y2="268" stroke="#c4973a" stroke-width="2" opacity=".4"/>
+              <line x1="320" y1="288" x2="620" y2="288" stroke="#d4aa55" stroke-width="1.5" opacity=".35"/>
+              <line x1="320" y1="308" x2="620" y2="308" stroke="#c4973a" stroke-width="2" opacity=".4"/>
+              <line x1="320" y1="328" x2="620" y2="328" stroke="#d4aa55" stroke-width="1.5" opacity=".35"/>
+              <!-- Üst peynirli görünüm -->
+              <rect x="320" y="200" width="300" height="28" rx="8" fill="#c4973a" opacity=".2"/>
+              <!-- Kesim -->
+              <line x1="470" y1="200" x2="470" y2="360" stroke="#c4973a" stroke-width="1.5" opacity=".3"/>
+              <!-- Bıçak gölgesi -->
+              <circle cx="470" cy="180" r="60" fill="none" stroke="#c4973a" stroke-width="1" opacity=".15"/>
+              <circle cx="300" cy="250" r="180" fill="none" stroke="#c4973a" stroke-width="1" opacity=".2"/>
+            </svg>
+          </div>
+        </div>
+        <img src="IMG_SU_BOREGI" alt="Su Böreği"
+             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:none"
+             onerror="this.style.display='none'">
         <div class="ps-overlay"></div>
         <div class="ps-caption">
           <div class="ps-tag">🥙 Ev Yapımı</div>
@@ -373,11 +472,38 @@ footer{background:var(--brown);border-top:1px solid rgba(196,151,58,.15);padding
         </div>
       </div>
 
-      <!-- Slayt 5: Poğaça — baked bun/roll -->
+      <!-- Slayt 5: Poğaça -->
       <div class="ps-slide">
-        <div class="ps-bg" style="background:linear-gradient(135deg,#1a1205,#2d2008);position:absolute;inset:0"></div>
-        <img src="https://images.unsplash.com/photo-1568471173242-461f0a730452?w=1400&auto=format&fit=crop&q=90"
-             alt="Poğaça" loading="lazy" onerror="this.style.display='none'">
+        <div class="ps-bg ps-bg-5">
+          <div class="ps-art">
+            <svg viewBox="0 0 600 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;inset:0;opacity:.18">
+              <!-- 3 poğaça -->
+              <circle cx="430" cy="240" r="80" fill="#5c3d2e" stroke="#c4973a" stroke-width="2" opacity=".5"/>
+              <circle cx="430" cy="240" r="65" fill="#3d2010" opacity=".4"/>
+              <!-- Pişme rengi -->
+              <circle cx="430" cy="230" r="50" fill="#7a5544" opacity=".3"/>
+              <!-- Çatlak/desen -->
+              <path d="M400 220 Q430 210 460 220" fill="none" stroke="#c4973a" stroke-width="2" opacity=".4"/>
+              <path d="M410 235 Q430 225 450 235" fill="none" stroke="#d4aa55" stroke-width="1.5" opacity=".35"/>
+              <!-- 2. poğaça -->
+              <circle cx="540" cy="260" r="70" fill="#5c3d2e" stroke="#c4973a" stroke-width="2" opacity=".4"/>
+              <circle cx="540" cy="260" r="55" fill="#3d2010" opacity=".35"/>
+              <path d="M515 248 Q540 238 565 248" fill="none" stroke="#c4973a" stroke-width="2" opacity=".35"/>
+              <!-- 3. poğaça arkada -->
+              <circle cx="480" cy="310" r="75" fill="#3d2010" stroke="#c4973a" stroke-width="2" opacity=".3"/>
+              <!-- Susam noktaları -->
+              <circle cx="420" cy="225" r="3" fill="#c4973a" opacity=".5"/>
+              <circle cx="435" cy="215" r="3" fill="#d4aa55" opacity=".5"/>
+              <circle cx="450" cy="228" r="3" fill="#c4973a" opacity=".5"/>
+              <circle cx="428" cy="238" r="2.5" fill="#d4aa55" opacity=".45"/>
+              <circle cx="443" cy="232" r="2.5" fill="#c4973a" opacity=".45"/>
+              <circle cx="300" cy="250" r="200" fill="none" stroke="#c4973a" stroke-width="1" opacity=".15"/>
+            </svg>
+          </div>
+        </div>
+        <img src="IMG_POGACA" alt="Poğaça"
+             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:none"
+             onerror="this.style.display='none'">
         <div class="ps-overlay"></div>
         <div class="ps-caption">
           <div class="ps-tag">🧁 Her Sabah Taze</div>
