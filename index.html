@@ -159,52 +159,82 @@ body::after {
 .slide {
   min-width: 100%; height: 100%;
   position: relative; flex-shrink: 0; overflow: hidden;
+  display: flex; align-items: stretch;
 }
-.slide-img {
+/* Each slide has a unique background - visible when image is loading or fails */
+.slide-bg {
   position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
+  background-size: cover; background-position: center;
   transition: transform 7s ease;
-  transform: scale(1.08);
+  transform: scale(1.06);
+  will-change: transform;
 }
-.slide.active .slide-img { transform: scale(1); }
-
-/* SLIDE PLACEHOLDER — görseller yüklenemezse */
-.slide-placeholder {
-  position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 120px;
-  opacity: .12;
-}
+.slide.active .slide-bg { transform: scale(1); }
 .slide-grad {
   position: absolute; inset: 0;
   background: linear-gradient(
     105deg,
-    rgba(8,8,8,.88) 0%,
-    rgba(8,8,8,.55) 40%,
-    rgba(8,8,8,.15) 100%
+    rgba(5,5,5,.92) 0%,
+    rgba(5,5,5,.6) 38%,
+    rgba(5,5,5,.18) 100%
   );
   z-index: 2;
 }
 .slide-label {
   position: absolute;
-  bottom: 100px; left: 6%;
+  bottom: 108px; left: 6%;
   z-index: 4;
-  max-width: 480px;
+  max-width: 400px;
 }
 .slide-cat {
-  display: inline-flex; align-items: center; gap: 8px;
+  display: inline-flex; align-items: center; gap: 10px;
   font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
   color: var(--gold); margin-bottom: 14px; font-weight: 600;
 }
 .slide-cat::before { content: ''; width: 24px; height: 1px; background: var(--gold); }
 .slide-name {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(36px, 5vw, 64px);
-  font-weight: 700; line-height: 1.05;
+  font-size: clamp(38px, 5vw, 68px);
+  font-weight: 700; line-height: 1.0;
   color: var(--white); margin-bottom: 10px;
+  text-shadow: 0 4px 24px rgba(0,0,0,.5);
 }
-.slide-desc { font-size: 15px; color: rgba(250,248,244,.6); font-weight: 300; }
+.slide-desc {
+  font-size: 15px; color: rgba(250,248,244,.65); font-weight: 300;
+  letter-spacing: .3px;
+}
+
+/* ── SLIDE BACKGROUNDS ── */
+.sl-kahve .slide-bg {
+  background-image:
+    url('images/turk-kahvesi.jpg'),
+    url('https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=1600&auto=format&fit=crop&q=85'),
+    linear-gradient(135deg, #1a0d00 0%, #3d1a05 40%, #5c2a0a 100%);
+}
+.sl-cay .slide-bg {
+  background-image:
+    url('images/cay.jpg'),
+    url('https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=1600&auto=format&fit=crop&q=85'),
+    linear-gradient(135deg, #0a1a05 0%, #152b0a 40%, #1e3d10 100%);
+}
+.sl-gozleme .slide-bg {
+  background-image:
+    url('images/gozleme.jpg'),
+    url('https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=1600&auto=format&fit=crop&q=85'),
+    linear-gradient(135deg, #1a1005 0%, #2d1c08 40%, #3d260c 100%);
+}
+.sl-borek .slide-bg {
+  background-image:
+    url('images/su-boregi.jpg'),
+    url('https://images.unsplash.com/photo-1559847844-5315695dadae?w=1600&auto=format&fit=crop&q=85'),
+    linear-gradient(135deg, #1a1208 0%, #2d2010 40%, #3d2c14 100%);
+}
+.sl-pogaca .slide-bg {
+  background-image:
+    url('images/pogaca.jpg'),
+    url('https://images.unsplash.com/photo-1549931319-a545dcf3bc7c?w=1600&auto=format&fit=crop&q=85'),
+    linear-gradient(135deg, #1a1508 0%, #2d2510 40%, #3d3018 100%);
+}
 
 /* Hero main content */
 .hero-center {
@@ -740,12 +770,8 @@ footer {
   <div class="slide-track" id="slTrack">
 
     <!-- Slayt 1: Türk Kahvesi -->
-    <div class="slide active" id="sl0">
-      <div class="slide-placeholder">☕</div>
-      <img class="slide-img"
-        src="images/turk-kahvesi.jpg"
-        onerror="this.style.display='none'"
-        alt="Türk Kahvesi">
+    <div class="slide active sl-kahve" id="sl0">
+      <div class="slide-bg"></div>
       <div class="slide-grad"></div>
       <div class="slide-label">
         <div class="slide-cat">İmza İçeceğimiz</div>
@@ -755,12 +781,8 @@ footer {
     </div>
 
     <!-- Slayt 2: Çay -->
-    <div class="slide" id="sl1">
-      <div class="slide-placeholder">🍵</div>
-      <img class="slide-img"
-        src="images/cay.jpg"
-        onerror="this.style.display='none'"
-        alt="Çay">
+    <div class="slide sl-cay" id="sl1">
+      <div class="slide-bg"></div>
       <div class="slide-grad"></div>
       <div class="slide-label">
         <div class="slide-cat">Klasik Lezzet</div>
@@ -770,12 +792,8 @@ footer {
     </div>
 
     <!-- Slayt 3: Gözleme -->
-    <div class="slide" id="sl2">
-      <div class="slide-placeholder">🫓</div>
-      <img class="slide-img"
-        src="images/gozleme.jpg"
-        onerror="this.style.display='none'"
-        alt="Gözleme">
+    <div class="slide sl-gozleme" id="sl2">
+      <div class="slide-bg"></div>
       <div class="slide-grad"></div>
       <div class="slide-label">
         <div class="slide-cat">Sacdan Taze</div>
@@ -785,12 +803,8 @@ footer {
     </div>
 
     <!-- Slayt 4: Su Böreği -->
-    <div class="slide" id="sl3">
-      <div class="slide-placeholder">🥙</div>
-      <img class="slide-img"
-        src="images/su-boregi.jpg"
-        onerror="this.style.display='none'"
-        alt="Su Böreği">
+    <div class="slide sl-borek" id="sl3">
+      <div class="slide-bg"></div>
       <div class="slide-grad"></div>
       <div class="slide-label">
         <div class="slide-cat">Ev Yapımı</div>
@@ -800,12 +814,8 @@ footer {
     </div>
 
     <!-- Slayt 5: Poğaça -->
-    <div class="slide" id="sl4">
-      <div class="slide-placeholder">🧁</div>
-      <img class="slide-img"
-        src="images/pogaca.jpg"
-        onerror="this.style.display='none'"
-        alt="Poğaça">
+    <div class="slide sl-pogaca" id="sl4">
+      <div class="slide-bg"></div>
       <div class="slide-grad"></div>
       <div class="slide-label">
         <div class="slide-cat">Her Sabah Taze</div>
