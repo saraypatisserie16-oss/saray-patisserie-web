@@ -342,7 +342,7 @@ const FNAMES={vanilla:'Vanilya',chocolate:'Çikolata',strawberry:'Çilek',pistac
 const DNAMES={roses:'🌹 Güller',berries:'🫐 Meyveler',gold_leaf:'✨ Altın Varak',candles:'🕯️ Mumlar',macarons:'🍬 Makaronlar',flowers:'🌸 Çiçekler'};
 
 let currentView='sf',rendererReady=false;
-let renderer,scene,camera,controls,cakeRoot,decoRoot,animQ=[];
+let renderer,scene,camera,controls,cakeRoot,decoRoot,animQ=[],envMap=null;
 
 function switchView(v){
   currentView=v;
@@ -368,7 +368,7 @@ function initThree(){
   const sz=256,data=new Uint8Array(sz*sz*4);
   for(let y=0;y<sz;y++)for(let x=0;x<sz;x++){const i=(y*sz+x)*4,ny=y/sz,hot=(x/sz>0.6&&x/sz<0.9&&ny>0.3&&ny<0.7);data[i]=Math.min(255,28+ny*18+(hot?200:0));data[i+1]=Math.min(255,20+ny*12+(hot?158:0));data[i+2]=Math.min(255,12+ny*6+(hot?78:0));data[i+3]=255;}
   const dt=new THREE.DataTexture(data,sz,sz,THREE.RGBAFormat);dt.needsUpdate=true;
-  const env=pmrem.fromEquirectangular(dt).texture;scene.environment=env;pmrem.dispose();
+  envMap=pmrem.fromEquirectangular(dt).texture;scene.environment=envMap;pmrem.dispose();
   const key=new THREE.DirectionalLight(0xFFEDD5,2.2);key.position.set(3,12,6);key.castShadow=true;key.shadow.mapSize.set(2048,2048);key.shadow.bias=-0.0005;key.shadow.normalBias=0.02;key.shadow.camera.top=key.shadow.camera.right=8;key.shadow.camera.bottom=key.shadow.camera.left=-8;scene.add(key);
   const fill=new THREE.DirectionalLight(0xC8D8F8,.45);fill.position.set(-6,5,-4);scene.add(fill);
   const rim=new THREE.DirectionalLight(0xFFCA70,.8);rim.position.set(0,2,-8);scene.add(rim);
@@ -381,7 +381,7 @@ function initThree(){
   window._inscCanvas=document.createElement('canvas');window._inscCanvas.width=window._inscCanvas.height=1024;
   window._inscTex=new THREE.CanvasTexture(window._inscCanvas);window._inscTex.colorSpace=THREE.SRGBColorSpace;
   cakeRoot=new THREE.Group();decoRoot=new THREE.Group();scene.add(cakeRoot);scene.add(decoRoot);
-  buildCake(env);
+  buildCake(envMap);
   window.addEventListener('resize',()=>{const w=wrap.clientWidth,h=wrap.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
   (function loop(now=0){requestAnimationFrame(loop);controls.update();processAnim(now);decoRoot.traverse(o=>{if(o.userData.flicker!==undefined){o.userData.flicker+=.08;const s=1+Math.sin(o.userData.flicker)*.14;o.scale.set(s,2*s,s);}});renderer.render(scene,camera);})();
 }
@@ -419,14 +419,14 @@ function buildMacs(ty,tr,env){const mc=[0xF4A7B4,0xB8A4D4,0x9DCFB8,0xF5D97A,0x90
 function buildFlowers(ty,tr){const pm=[new THREE.MeshStandardMaterial({color:0xFFE0F0,roughness:.7,side:THREE.DoubleSide}),new THREE.MeshStandardMaterial({color:0xF0D8E8,roughness:.7,side:THREE.DoubleSide})];[[0,tr*.6],[tr*.55,tr*.3],[-tr*.55,tr*.3],[tr*.55,-tr*.3],[-tr*.55,-tr*.3]].forEach(([fx,fz],fi)=>{const g=new THREE.Group();for(let p=0;p<5;p++){const a=(p/5)*Math.PI*2,geo=new THREE.SphereGeometry(.12,8,6);geo.scale(1,.25,2);const m=new THREE.Mesh(geo,pm[fi%2]);m.position.set(Math.cos(a)*.1,0,Math.sin(a)*.1);m.rotation.y=a;g.add(m);}g.add(new THREE.Mesh(new THREE.SphereGeometry(.065,10,10),new THREE.MeshStandardMaterial({color:0xF5D020,roughness:.4,metalness:.1})));g.rotation.x=Math.PI/2;g.position.set(fx,ty+.04,fz);g.scale.setScalar(.01);pushAnim(g.scale,'scalar',.01,1,360,fi*80);decoRoot.add(g);});}
 function pushAnim(obj,key,from,to,dur,delay=0){animQ.push({obj,key,from,to,dur,delay,start:performance.now()+delay});}
 function processAnim(now){for(let i=animQ.length-1;i>=0;i--){const a=animQ[i];if(now<a.start)continue;const t=Math.min((now-a.start)/a.dur,1),e=1-Math.pow(1-t,3),v=a.from+(a.to-a.from)*e;if(a.key==='scalar')a.obj.setScalar(v);else a.obj[a.key]=v;if(t>=1)animQ.splice(i,1);}}
-function setTiers(n,el){document.querySelectorAll('.tier-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');S.tiers=n;if(rendererReady)buildCake(scene.environment);updatePrice();}
+function setTiers(n,el){document.querySelectorAll('.tier-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');S.tiers=n;if(rendererReady)buildCake(envMap);updatePrice();}
 function setFlav(f,el){document.querySelectorAll('.flav').forEach(b=>b.classList.remove('active'));el.classList.add('active');S.flavor=f;updatePrice();}
-function togDeco(d,el){S.decos.has(d)?(S.decos.delete(d),el.classList.remove('active')):(S.decos.add(d),el.classList.add('active'));if(rendererReady)buildCake(scene.environment);updatePrice();}
+function togDeco(d,el){S.decos.has(d)?(S.decos.delete(d),el.classList.remove('active')):(S.decos.add(d),el.classList.add('active'));if(rendererReady)buildCake(envMap);updatePrice();}
 function handleMsg(v){S.msg=v;const pt=document.getElementById('prev-txt');pt.textContent=v||'Mesajınız burada görünecek...';pt.style.fontFamily=S.font;pt.style.color=S.icingColor;pt.style.fontSize=Math.max(12,S.fontSize*.38)+'px';drawInscription();}
 function handleFont(v){S.font=v;document.getElementById('prev-txt').style.fontFamily=v;drawInscription();}
 function handleIcing(v){S.icingColor=v;document.getElementById('prev-txt').style.color=v;drawInscription();}
 function handleSize(v){S.fontSize=parseInt(v);document.getElementById('sVal').textContent=v;drawInscription();}
-function buildPalette(){const pal=document.getElementById('palette');COLORS.forEach((c,i)=>{const sw=document.createElement('div');sw.className='csw'+(i===0?' active':'');sw.style.background=c.hex;sw.title=c.name;sw.onclick=()=>{document.querySelectorAll('.csw').forEach(s=>s.classList.remove('active'));sw.classList.add('active');S.colorIdx=i;document.getElementById('colName').textContent=`— ${c.name} —`;if(rendererReady)buildCake(scene.environment);updatePrice();};pal.appendChild(sw);});}
+function buildPalette(){const pal=document.getElementById('palette');COLORS.forEach((c,i)=>{const sw=document.createElement('div');sw.className='csw'+(i===0?' active':'');sw.style.background=c.hex;sw.title=c.name;sw.onclick=()=>{document.querySelectorAll('.csw').forEach(s=>s.classList.remove('active'));sw.classList.add('active');S.colorIdx=i;document.getElementById('colName').textContent=`— ${c.name} —`;if(rendererReady)buildCake(envMap);updatePrice();};pal.appendChild(sw);});}
 function updatePrice(){let p=350+S.tiers*100+(FPRICE[S.flavor]||0);S.decos.forEach(d=>p+=DPRICE[d]||0);if(S.msg)p+=20;document.getElementById('pVal').textContent='₺ '+p.toLocaleString('tr-TR');return p;}
 function openModal(){const dl=[...S.decos].map(d=>DNAMES[d]).join(', ')||'—';document.getElementById('mDetail').innerHTML=`<b>Kat:</b> ${S.tiers} · <b>Renk:</b> ${COLORS[S.colorIdx].name}<br><b>Lezzet:</b> ${FNAMES[S.flavor]}<br><b>Süsleme:</b> ${dl}<br><b>Yazı:</b> ${S.msg||'—'}<br><b>Toplam:</b> ${document.getElementById('pVal').textContent}`;document.getElementById('modal').classList.add('open');}
 
