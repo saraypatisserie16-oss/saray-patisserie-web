@@ -5,195 +5,214 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Saray Patisserie — Cake Studio</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@200;300;400;500;600&family=Dancing+Script:wght@400;600;700&family=Great+Vibes&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@200;300;400;500;600&family=Dancing+Script:wght@400;600;700&family=Great+Vibes&family=Pinyon+Script&family=Pacifico&family=Sacramento&family=Satisfy&family=Yellowtail&family=Lobster&family=Kaushan+Script&family=Alex+Brush&family=Allura&family=Italianno&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
-:root {
-  --obsidian:#07050A; --deep:#0F0B10; --surface:#18121A; --panel:#1E1520;
-  --border:#3A2840; --border-hi:#5A4060;
-  --gold:#C9A96E; --gold-hi:#E8C98E; --gold-dim:#7A6035;
-  --gold-glow:rgba(201,169,110,0.18); --gold-soft:rgba(201,169,110,0.07);
-  --rose:#D4889A; --rose-deep:#A85868;
-  --cream:#F2E8D5; --text-hi:#EEE0CC; --text:#C0A888;
-  --text-muted:#7A6050; --text-dim:#4A3530;
-  --panel-w:390px;
+:root{
+  --obsidian:#07050A;--surface:#18121A;--panel:#1E1520;--card:#241C28;
+  --border:#3A2840;--border-hi:#5A4060;
+  --gold:#C9A96E;--gold-hi:#E8C98E;--gold-dim:#7A6035;
+  --gold-glow:rgba(201,169,110,0.18);
+  --rose:#D4889A;--text-hi:#EEE0CC;--text:#C0A888;--text-muted:#7A6050;--text-dim:#4A3530;
+  --panel-w:420px;--bar-h:48px;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100%;height:100%;overflow:hidden;background:var(--obsidian);font-family:'Jost',sans-serif;color:var(--text)}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
 
-/* BACK BAR */
-#back-bar{position:fixed;top:0;left:0;right:0;z-index:300;height:44px;background:rgba(10,7,12,0.97);border-bottom:1px solid var(--border);backdrop-filter:blur(16px);display:flex;align-items:center;padding:0 20px;gap:16px}
-#back-bar a{display:flex;align-items:center;gap:7px;color:var(--gold-dim);font-size:12px;font-family:'Jost',sans-serif;font-weight:500;letter-spacing:.08em;text-decoration:none;transition:color .2s}
-#back-bar a:hover{color:var(--gold)}
-#back-bar a svg{width:15px;height:15px;flex-shrink:0}
-#back-bar .bar-title{font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:400;color:var(--gold-hi);letter-spacing:.2em;text-transform:uppercase}
+/* ── TOP BAR ── */
+#topbar{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--bar-h);background:rgba(10,7,12,.97);border-bottom:1px solid var(--border);backdrop-filter:blur(16px);display:flex;align-items:center;padding:0 20px;gap:16px}
+.tb-back{display:flex;align-items:center;gap:7px;color:var(--gold-dim);font-size:12px;font-weight:500;letter-spacing:.08em;text-decoration:none;transition:color .2s;flex-shrink:0}
+.tb-back:hover{color:var(--gold)}
+.tb-back svg{width:15px;height:15px}
+.tb-logo{font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:400;color:var(--gold-hi);letter-spacing:.22em;text-transform:uppercase;flex:1;text-align:center}
+.tb-save{display:flex;align-items:center;gap:6px;background:var(--gold-dim);color:var(--obsidian);border:none;border-radius:20px;padding:6px 14px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;font-family:'Jost',sans-serif;transition:background .2s;flex-shrink:0}
+.tb-save:hover{background:var(--gold)}
 
-/* LAYOUT */
-#app{display:flex;width:100vw;height:100vh;padding-top:44px}
+/* ── LAYOUT ── */
+#app{display:flex;width:100vw;height:100vh;padding-top:var(--bar-h)}
 
-/* VIEWER */
-#viewer-col{flex:1;position:relative;overflow:hidden;background:radial-gradient(ellipse 100% 100% at 50% 40%,#1A0E1E 0%,var(--obsidian) 100%);display:flex;flex-direction:column}
-.brand{position:absolute;top:28px;left:36px;z-index:20;pointer-events:none}
-.brand h1{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:var(--gold-hi);letter-spacing:.22em;text-transform:uppercase}
-.brand p{font-size:.58rem;letter-spacing:.32em;color:var(--gold-dim);text-transform:uppercase;margin-top:3px}
-.view-tabs{position:absolute;top:26px;left:50%;transform:translateX(-50%);z-index:20;display:flex;background:rgba(30,21,32,.85);border:1px solid var(--border);border-radius:30px;padding:4px;backdrop-filter:blur(12px);gap:2px}
-.vtab{padding:7px 18px;border-radius:24px;font-size:.7rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;color:var(--text-muted);transition:all .3s;border:none;background:transparent;font-family:'Jost',sans-serif}
+/* ── VIEWER ── */
+#viewer{flex:1;position:relative;overflow:hidden;background:radial-gradient(ellipse 100% 100% at 50% 40%,#1A0E1E 0%,var(--obsidian) 100%)}
+.brand{position:absolute;top:20px;left:24px;z-index:20;pointer-events:none}
+.brand h1{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:300;color:var(--gold-hi);letter-spacing:.22em;text-transform:uppercase}
+.brand p{font-size:.52rem;letter-spacing:.3em;color:var(--gold-dim);text-transform:uppercase;margin-top:2px}
+.view-tabs{position:absolute;top:18px;left:50%;transform:translateX(-50%);z-index:20;display:flex;background:rgba(30,21,32,.9);border:1px solid var(--border);border-radius:30px;padding:3px;backdrop-filter:blur(12px);gap:2px}
+.vtab{padding:6px 16px;border-radius:24px;font-size:.65rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;color:var(--text-muted);transition:all .3s;border:none;background:transparent;font-family:'Jost',sans-serif;white-space:nowrap}
 .vtab.active{background:var(--gold-dim);color:var(--obsidian);box-shadow:0 2px 12px var(--gold-glow)}
-#sketchfab-wrap{position:absolute;inset:0;z-index:5;transition:opacity .5s ease}
-#sketchfab-wrap iframe{width:100%;height:100%;border:none;display:block}
-#sketchfab-wrap.hidden{opacity:0;pointer-events:none}
-.sfab-credit{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:30;background:rgba(30,21,32,.8);border:1px solid var(--border);border-radius:20px;padding:6px 16px;font-size:.65rem;color:var(--text-muted);letter-spacing:.08em;backdrop-filter:blur(8px);display:flex;align-items:center;gap:6px;pointer-events:none}
-.sfab-credit a{color:var(--gold-dim);text-decoration:none;pointer-events:all}
-#canvas-wrap{position:absolute;inset:0;z-index:4;transition:opacity .5s ease}
+#sf-wrap{position:absolute;inset:0;z-index:5;transition:opacity .5s}
+#sf-wrap iframe{width:100%;height:100%;border:none;display:block}
+#sf-wrap.hidden{opacity:0;pointer-events:none}
+#canvas-wrap{position:absolute;inset:0;z-index:4;transition:opacity .5s}
 #canvas-wrap.hidden{opacity:0;pointer-events:none}
 #canvas-wrap canvas{width:100%!important;height:100%!important;display:block}
-#viewer-col::after{content:'';position:absolute;inset:0;z-index:6;pointer-events:none;background:radial-gradient(ellipse 85% 85% at 50% 50%,transparent 40%,rgba(7,5,10,.5) 100%)}
-.rot-hint{position:absolute;bottom:56px;left:50%;transform:translateX(-50%);z-index:30;pointer-events:none;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-dim);display:flex;align-items:center;gap:10px;opacity:0;animation:fadeHint 3.5s 2s ease forwards}
-@keyframes fadeHint{0%{opacity:0}20%{opacity:1}80%{opacity:1}100%{opacity:0}}
-.rot-hint::before,.rot-hint::after{content:'';display:block;width:26px;height:1px;background:var(--gold-dim)}
-.hero-cta{position:absolute;bottom:70px;right:40px;z-index:30}
-.btn-studio{display:flex;align-items:center;gap:12px;padding:0;background:none;border:none;cursor:pointer;text-decoration:none;position:relative}
-.btn-studio-inner{display:flex;align-items:center;gap:14px;padding:16px 28px 16px 20px;background:linear-gradient(135deg,rgba(201,169,110,.12),rgba(201,169,110,.06));border:1px solid rgba(201,169,110,.35);border-radius:50px;backdrop-filter:blur(16px);transition:all .4s cubic-bezier(.2,0,.2,1);position:relative;overflow:hidden}
-.btn-studio-inner::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,169,110,.22),rgba(201,169,110,.08));opacity:0;transition:opacity .3s}
-.btn-studio:hover .btn-studio-inner{border-color:rgba(201,169,110,.7);box-shadow:0 8px 40px rgba(201,169,110,.2),0 0 0 1px rgba(201,169,110,.2);transform:translateY(-2px)}
-.btn-studio:hover .btn-studio-inner::before{opacity:1}
-.btn-studio-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--gold-dim),var(--gold));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;box-shadow:0 4px 16px rgba(201,169,110,.3);transition:transform .3s;position:relative;z-index:1;flex-shrink:0}
-.btn-studio:hover .btn-studio-icon{transform:rotate(15deg) scale(1.05)}
-.btn-studio-text{position:relative;z-index:1;text-align:left}
-.btn-studio-text .bst-top{display:block;font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:600;color:var(--gold-hi);letter-spacing:.06em;line-height:1;margin-bottom:2px}
-.btn-studio-text .bst-sub{display:block;font-size:.6rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-dim)}
-.btn-studio-arrow{position:relative;z-index:1;color:var(--gold-dim);font-size:.8rem;transition:transform .3s,color .3s}
-.btn-studio:hover .btn-studio-arrow{transform:translateX(4px);color:var(--gold-hi)}
-.btn-studio::after{content:'';position:absolute;inset:-6px;border:1px solid rgba(201,169,110,.2);border-radius:56px;animation:pulseRing 2.5s ease-in-out infinite}
-@keyframes pulseRing{0%,100%{opacity:0;transform:scale(1)}50%{opacity:1;transform:scale(1.04)}}
+#viewer::after{content:'';position:absolute;inset:0;z-index:6;pointer-events:none;background:radial-gradient(ellipse 85% 85% at 50% 50%,transparent 40%,rgba(7,5,10,.5) 100%)}
+.sfab-credit{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);z-index:30;background:rgba(30,21,32,.82);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:.6rem;color:var(--text-muted);display:flex;align-items:center;gap:5px;pointer-events:none;backdrop-filter:blur(8px)}
+.sfab-credit a{color:var(--gold-dim);text-decoration:none;pointer-events:all}
+.rot-hint{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);z-index:30;pointer-events:none;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-dim);display:none;align-items:center;gap:10px}
+.rot-hint.show{display:flex}
+.rot-hint::before,.rot-hint::after{content:'';display:block;width:22px;height:1px;background:var(--gold-dim)}
 
-/* PANEL */
-#panel{width:var(--panel-w);background:var(--panel);border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;z-index:20;box-shadow:-20px 0 60px rgba(0,0,0,.4)}
-.panel-head{padding:26px 28px 18px;border-bottom:1px solid var(--border);flex-shrink:0;background:linear-gradient(180deg,rgba(201,169,110,.04),transparent)}
-.panel-head h2{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;color:var(--gold-hi);letter-spacing:.14em;text-transform:uppercase}
-.panel-head p{font-size:.68rem;color:var(--text-muted);margin-top:4px;letter-spacing:.07em}
-.view-indicator{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim)}
-.vi-dot{width:6px;height:6px;border-radius:50%;background:var(--gold-dim)}
-#vi-label{color:var(--gold-dim)}
-.panel-body{flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
-.panel-body::-webkit-scrollbar{width:3px}
-.panel-body::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-.sec{padding:18px 28px;border-bottom:1px solid var(--border)}
-.sec:last-child{border-bottom:none}
-.sec-lbl{font-size:.57rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:13px;display:flex;align-items:center;gap:8px}
-.sec-lbl::after{content:'';flex:1;height:1px;background:var(--border)}
-.tier-row{display:flex;gap:8px}
-.tier-btn{flex:1;padding:13px 6px;text-align:center;cursor:pointer;background:var(--surface);border:1px solid var(--border);border-radius:10px;transition:all .25s;position:relative;overflow:hidden}
-.tier-btn::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(201,169,110,.1),transparent 70%);opacity:0;transition:opacity .25s}
-.tier-btn:hover::before{opacity:1}
-.tier-btn.active{border-color:var(--gold);background:#281D08;box-shadow:0 0 20px var(--gold-glow),inset 0 1px 0 rgba(201,169,110,.15)}
-.tier-btn .t-n{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--text-muted);display:block;margin-bottom:3px;transition:color .25s}
-.tier-btn.active .t-n{color:var(--gold-hi)}
-.tier-btn .t-l{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);transition:color .25s}
-.tier-btn.active .t-l{color:var(--gold-dim)}
-.pal{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:10px}
-.csw{width:30px;height:30px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;transition:all .2s}
-.csw:hover{transform:scale(1.1)}
-.csw.active{border-color:var(--gold-hi);transform:scale(1.15);box-shadow:0 0 14px var(--gold-glow)}
-.col-name{font-size:.66rem;color:var(--text-muted);letter-spacing:.05em;margin-top:2px}
-.flav-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.flav{padding:9px 10px;background:var(--surface);border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:7px;font-size:.73rem;color:var(--text-muted)}
-.flav:hover{border-color:var(--border-hi);color:var(--text)}
-.flav.active{border-color:var(--gold-dim);background:#241808;color:var(--gold)}
-.flav .fi{font-size:.95rem}
-.insc-preview{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;min-height:68px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;position:relative;overflow:hidden}
-.insc-preview::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(201,169,110,.04),transparent)}
-#prev-txt{position:relative;z-index:1;color:var(--gold-hi);text-align:center;max-width:100%;word-break:break-word;transition:all .3s;font-size:1.1rem}
-.inp{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 13px;font-family:'Jost',sans-serif;font-size:.83rem;color:var(--text-hi);outline:none;transition:border-color .2s,box-shadow .2s;margin-bottom:9px}
-.inp:focus{border-color:var(--gold-dim);box-shadow:0 0 0 3px rgba(201,169,110,.08)}
-.inp::placeholder{color:var(--text-dim);font-style:italic}
-.ctrl{display:flex;align-items:center;gap:8px;margin-bottom:9px}
-.clbl{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);min-width:44px;flex-shrink:0}
-select.inp{margin-bottom:0;cursor:pointer;flex:1;padding:8px 12px;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%237A6035'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
-input[type=range]{flex:1;height:2px;-webkit-appearance:none;background:var(--border);border-radius:1px;outline:none;cursor:pointer}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;background:var(--gold);border:2px solid var(--panel);box-shadow:0 0 8px var(--gold-glow);cursor:pointer}
-input[type=color]{width:34px;height:28px;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer;padding:2px;flex-shrink:0}
-.rval{font-size:.68rem;color:var(--gold-dim);min-width:26px;text-align:right;flex-shrink:0}
-.deco-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.deco-card{padding:11px 6px;background:var(--surface);border:1px solid var(--border);border-radius:9px;cursor:pointer;text-align:center;transition:all .22s;position:relative}
-.deco-card:hover{border-color:var(--border-hi)}
-.deco-card.active{border-color:var(--rose);background:#200F14;box-shadow:0 0 16px rgba(212,136,154,.1)}
-.deco-card .di{font-size:1.25rem;display:block;margin-bottom:3px}
-.deco-card .dl{font-size:.58rem;color:var(--text-muted);letter-spacing:.05em}
-.deco-card.active .dl{color:var(--rose)}
-.dchk{position:absolute;top:4px;right:4px;width:13px;height:13px;background:var(--rose);border-radius:50%;font-size:.5rem;color:#fff;display:none;align-items:center;justify-content:center}
-.deco-card.active .dchk{display:flex}
-.panel-foot{padding:18px 28px 22px;border-top:1px solid var(--border);background:linear-gradient(0deg,rgba(201,169,110,.03),transparent);flex-shrink:0}
-.price-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
-.price-lbl{font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)}
-.price-val{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:400;color:var(--gold-hi)}
-.btn-order{width:100%;padding:0;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative}
-.btn-order-inner{width:100%;padding:14px 20px;background:linear-gradient(135deg,#6A4818,var(--gold),#B88030);background-size:200% 100%;background-position:100% 0;border-radius:10px;display:flex;align-items:center;justify-content:center;gap:10px;transition:background-position .5s ease,box-shadow .3s,transform .2s;box-shadow:0 4px 24px rgba(201,169,110,.22)}
-.btn-order:hover .btn-order-inner{background-position:0 0;box-shadow:0 8px 40px rgba(201,169,110,.38);transform:translateY(-2px)}
-.btn-order-inner span{font-family:'Jost',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--obsidian)}
+/* Viewer bottom CTA */
+.viewer-cta{position:absolute;bottom:52px;right:24px;z-index:30}
+.btn-customize{display:flex;align-items:center;gap:10px;padding:12px 20px 12px 14px;background:linear-gradient(135deg,rgba(201,169,110,.14),rgba(201,169,110,.06));border:1px solid rgba(201,169,110,.4);border-radius:50px;backdrop-filter:blur(16px);cursor:pointer;transition:all .35s;font-family:'Jost',sans-serif}
+.btn-customize:hover{border-color:rgba(201,169,110,.8);transform:translateY(-2px);box-shadow:0 8px 32px rgba(201,169,110,.18)}
+.btn-customize .ico{width:30px;height:30px;background:linear-gradient(135deg,var(--gold-dim),var(--gold));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
+.btn-customize .txt .t{display:block;font-size:.82rem;font-weight:500;color:var(--gold-hi);font-family:'Cormorant Garamond',serif;letter-spacing:.06em}
+.btn-customize .txt .s{display:block;font-size:.55rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-dim)}
 
-/* MODAL */
-.modal-bg{display:none;position:fixed;inset:0;z-index:999;background:rgba(7,5,10,.82);backdrop-filter:blur(12px);align-items:center;justify-content:center}
-.modal-bg.open{display:flex}
-.modal{background:var(--panel);border:1px solid var(--gold-dim);border-radius:22px;padding:44px 36px;max-width:420px;width:90%;text-align:center;animation:mIn .4s cubic-bezier(.2,0,.2,1);box-shadow:0 40px 100px rgba(0,0,0,.7),0 0 60px rgba(201,169,110,.07)}
-@keyframes mIn{from{opacity:0;transform:scale(.88) translateY(24px)}to{opacity:1;transform:none}}
-.m-ico{font-size:3rem;margin-bottom:14px}
-.modal h3{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:400;color:var(--gold-hi);margin-bottom:10px}
-.modal p{font-size:.82rem;color:var(--text-muted);line-height:1.9;margin-bottom:22px}
-.m-detail{background:var(--surface);border-radius:10px;padding:14px 16px;text-align:left;font-size:.78rem;color:var(--text-muted);line-height:2.1;margin-bottom:22px;border:1px solid var(--border)}
-.m-detail b{color:var(--text);font-weight:400}
-.btn-mclose{background:var(--gold-dim);border:none;border-radius:8px;padding:11px 28px;color:var(--obsidian);font-family:'Jost',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
-
-/* LOADING */
-#loading{position:absolute;inset:0;z-index:100;background:var(--obsidian);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;transition:opacity .8s ease}
+/* Loading */
+#loading{position:absolute;inset:0;z-index:100;background:var(--obsidian);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:opacity .8s}
 #loading.gone{opacity:0;pointer-events:none}
-.ld-logo{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--gold);letter-spacing:.35em;text-transform:uppercase}
-.ld-bar-w{width:160px;height:1px;background:var(--border);border-radius:1px;overflow:hidden}
-.ld-bar{height:100%;background:var(--gold);width:0%;transition:width .3s ease}
-.ld-lbl{font-size:.62rem;letter-spacing:.28em;color:var(--text-dim);text-transform:uppercase}
+.ld-logo{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--gold);letter-spacing:.35em;text-transform:uppercase}
+.ld-bar-w{width:140px;height:1px;background:var(--border);border-radius:1px;overflow:hidden}
+.ld-bar{height:100%;background:var(--gold);width:0%;transition:width .3s}
+.ld-lbl{font-size:.58rem;letter-spacing:.28em;color:var(--text-dim);text-transform:uppercase}
+
+/* ── PANEL ── */
+#panel{width:var(--panel-w);background:var(--panel);border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;z-index:20;box-shadow:-16px 0 50px rgba(0,0,0,.4)}
+
+/* Panel tabs */
+.panel-tabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;background:var(--obsidian)}
+.ptab{flex:1;padding:12px 6px;text-align:center;font-size:.58rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;transition:all .25s;border-bottom:2px solid transparent;background:none;border-top:none;border-left:none;border-right:none;font-family:'Jost',sans-serif}
+.ptab.active{color:var(--gold);border-bottom-color:var(--gold);background:rgba(201,169,110,.04)}
+
+/* Panel pages */
+.ppage{display:none;flex:1;overflow-y:auto;overflow-x:hidden;flex-direction:column}
+.ppage.active{display:flex}
+
+.sec{padding:14px 20px;border-bottom:1px solid var(--border)}
+.sec:last-child{border-bottom:none}
+.sec-lbl{font-size:.53rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sec-lbl::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* Button grid — yan yana */
+.btn-grid{display:flex;flex-wrap:wrap;gap:6px}
+.opt-btn{padding:7px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:.68rem;color:var(--text-muted);cursor:pointer;transition:all .2s;font-family:'Jost',sans-serif;white-space:nowrap}
+.opt-btn:hover{border-color:var(--border-hi);color:var(--text)}
+.opt-btn.active{border-color:var(--gold);background:#281D08;color:var(--gold-hi)}
+.opt-btn.rose-active{border-color:var(--rose);background:#200F14;color:var(--rose)}
+
+/* Color swatches */
+.pal{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:6px}
+.csw{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;transition:all .2s;position:relative}
+.csw:hover{transform:scale(1.12)}
+.csw.active{border-color:var(--gold-hi);transform:scale(1.18);box-shadow:0 0 12px var(--gold-glow)}
+.col-name{font-size:.6rem;color:var(--text-muted);letter-spacing:.05em;margin-top:2px}
+
+/* Inscription */
+.insc-preview{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;min-height:62px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;overflow:hidden;position:relative}
+.insc-preview::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(201,169,110,.04),transparent)}
+#prev-txt{position:relative;z-index:1;color:var(--gold-hi);text-align:center;max-width:100%;word-break:break-word;transition:all .3s;font-size:1rem}
+.inp{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-family:'Jost',sans-serif;font-size:.8rem;color:var(--text-hi);outline:none;transition:border-color .2s;margin-bottom:8px}
+.inp:focus{border-color:var(--gold-dim);box-shadow:0 0 0 2px rgba(201,169,110,.08)}
+.inp::placeholder{color:var(--text-dim);font-style:italic}
+.ctrl{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.clbl{font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);min-width:42px;flex-shrink:0}
+select.inp{margin-bottom:0;cursor:pointer;flex:1;padding:7px 10px;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%237A6035'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center}
+input[type=range].rng{flex:1;height:2px;-webkit-appearance:none;background:var(--border);border-radius:1px;outline:none;cursor:pointer}
+input[type=range].rng::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;background:var(--gold);border:2px solid var(--panel);box-shadow:0 0 8px var(--gold-glow);cursor:pointer}
+input[type=color]{width:32px;height:27px;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer;padding:2px;flex-shrink:0}
+.rval{font-size:.64rem;color:var(--gold-dim);min-width:28px;text-align:right;flex-shrink:0}
+
+/* Image upload */
+.upload-zone{background:var(--surface);border:1px dashed var(--border-hi);border-radius:10px;padding:20px;text-align:center;cursor:pointer;transition:all .25s;margin-bottom:8px}
+.upload-zone:hover{border-color:var(--gold-dim);background:rgba(201,169,110,.04)}
+.upload-zone .uz-ico{font-size:1.8rem;margin-bottom:6px}
+.upload-zone .uz-txt{font-size:.7rem;color:var(--text-muted);line-height:1.5}
+.upload-zone .uz-sub{font-size:.58rem;color:var(--text-dim);margin-top:3px}
+#imgPreview{width:100%;height:80px;object-fit:cover;border-radius:8px;margin-bottom:8px;display:none}
+.img-controls{display:none;gap:6px;margin-bottom:8px}
+.img-controls.show{display:flex}
+.img-btn{flex:1;padding:7px;background:var(--surface);border:1px solid var(--border);border-radius:7px;font-size:.62rem;color:var(--text-muted);cursor:pointer;text-align:center;transition:all .2s;font-family:'Jost',sans-serif}
+.img-btn:hover{border-color:var(--gold-dim);color:var(--gold)}
+.img-btn.danger:hover{border-color:#ef4444;color:#ef4444}
+
+/* Deco placement */
+.deco-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.deco-card{padding:8px 4px;background:var(--surface);border:1px solid var(--border);border-radius:8px;cursor:pointer;text-align:center;transition:all .22s;position:relative}
+.deco-card:hover{border-color:var(--border-hi)}
+.deco-card.active{border-color:var(--rose);background:#200F14}
+.deco-card .di{font-size:1.1rem;display:block;margin-bottom:2px}
+.deco-card .dl{font-size:.52rem;color:var(--text-muted)}
+.deco-card.active .dl{color:var(--rose)}
+.dchk{position:absolute;top:3px;right:3px;width:11px;height:11px;background:var(--rose);border-radius:50%;font-size:.44rem;color:#fff;display:none;align-items:center;justify-content:center}
+.deco-card.active .dchk{display:flex}
+
+/* Deco placement area */
+.placement-info{font-size:.62rem;color:var(--text-muted);text-align:center;padding:8px;background:var(--surface);border-radius:8px;margin-top:8px;line-height:1.5}
+
+/* Panel footer */
+.panel-foot{padding:14px 20px 18px;border-top:1px solid var(--border);background:linear-gradient(0deg,rgba(201,169,110,.03),transparent);flex-shrink:0}
+.price-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.price-lbl{font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)}
+.price-val{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:400;color:var(--gold-hi)}
+.btn-order{width:100%;padding:13px;background:linear-gradient(135deg,#6A4818,var(--gold),#B88030);background-size:200% 100%;background-position:100% 0;border:none;border-radius:10px;font-family:'Jost',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--obsidian);cursor:pointer;transition:background-position .5s,box-shadow .3s,transform .2s;box-shadow:0 4px 24px rgba(201,169,110,.2)}
+.btn-order:hover{background-position:0 0;box-shadow:0 8px 40px rgba(201,169,110,.35);transform:translateY(-2px)}
+
+/* ── ORDER MODAL ── */
+.modal-bg{display:none;position:fixed;inset:0;z-index:9999;background:rgba(7,5,10,.88);backdrop-filter:blur(14px);align-items:center;justify-content:center;padding:16px}
+.modal-bg.open{display:flex}
+.modal{background:var(--panel);border:1px solid var(--gold-dim);border-radius:20px;padding:32px 28px;max-width:460px;width:100%;max-height:90vh;overflow-y:auto;animation:mIn .4s cubic-bezier(.2,0,.2,1)}
+@keyframes mIn{from{opacity:0;transform:scale(.9) translateY(20px)}to{opacity:1;transform:none}}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.modal-head h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--gold-hi)}
+.modal-close{background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;padding:4px;line-height:1}
+.modal-close:hover{color:var(--text-hi)}
+.order-summary{background:var(--surface);border-radius:10px;padding:12px 14px;font-size:.76rem;color:var(--text-muted);line-height:2.1;margin-bottom:18px;border:1px solid var(--border)}
+.order-summary b{color:var(--text-hi);font-weight:500}
+.order-form .fg{margin-bottom:12px}
+.order-form label{display:block;font-size:.55rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);margin-bottom:5px}
+.order-form input,.order-form textarea,.order-form select{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-family:'Jost',sans-serif;font-size:.82rem;color:var(--text-hi);outline:none;transition:border-color .2s}
+.order-form input:focus,.order-form textarea:focus{border-color:var(--gold-dim)}
+.order-form textarea{resize:vertical;min-height:70px}
+.order-form select{appearance:none;cursor:pointer}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn-wa{width:100%;padding:13px;background:linear-gradient(135deg,#1a7a3a,#25D366);border:none;border-radius:10px;font-family:'Jost',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:transform .2s,box-shadow .2s;margin-top:4px;box-shadow:0 4px 20px rgba(37,211,102,.25)}
+.btn-wa:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(37,211,102,.4)}
+.btn-wa svg{width:18px;height:18px;fill:#fff;flex-shrink:0}
 
 @media(max-width:768px){
   #app{flex-direction:column}
-  #viewer-col{height:55vw;min-height:280px;flex:none}
-  #panel{width:100%;--panel-w:100%}
+  #viewer{height:50vw;min-height:260px;flex:none}
+  #panel{width:100%;flex:1;overflow-y:auto;--panel-w:100%}
 }
 </style>
 </head>
 <body>
 
-<div id="back-bar">
-  <a href="index.html">
+<div id="topbar">
+  <a class="tb-back" href="index.html">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
     Geri Dön
   </a>
-  <span class="bar-title">Saray Patisserie · Cake Studio</span>
+  <div class="tb-logo">Saray · Cake Studio</div>
+  <button class="tb-save" onclick="saveImage()">📸 Kaydet</button>
 </div>
 
 <div id="app">
 
-  <div id="viewer-col">
+  <!-- VIEWER -->
+  <div id="viewer">
     <div class="brand"><h1>Saray</h1><p>Patisserie · Cake Studio</p></div>
     <div class="view-tabs">
       <button class="vtab active" id="tab-sf"    onclick="switchView('sf')">🎂 Model</button>
-      <button class="vtab"        id="tab-three" onclick="switchView('three')">✦ Özelleştir</button>
+      <button class="vtab"        id="tab-three" onclick="switchView('three')">✦ 3D Özelleştir</button>
     </div>
-    <div id="sketchfab-wrap">
+    <div id="sf-wrap">
       <iframe title="Wedding Cake" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true"
         src="https://sketchfab.com/models/69be5c0c0d404113a227d9ba19d78447/embed?autostart=1&autospin=0.3&ui_theme=dark&ui_color=c9a96e&ui_controls=1&ui_infos=0&ui_stop=0&ui_watermark=0&dnt=1&camera=0&transparent=1&scrollwheel=1&double_click=1"></iframe>
     </div>
     <div id="canvas-wrap" class="hidden"></div>
     <div class="sfab-credit" id="sfab-credit">
-      <span>3D Model:</span>
+      <span>3D:</span>
       <a href="https://sketchfab.com/3d-models/wedding-cake-69be5c0c0d404113a227d9ba19d78447" target="_blank">Wedding Cake</a>
       <span>·</span><a href="https://sketchfab.com/Mekokishvili" target="_blank">Mekokishvili</a><span>· CC-BY</span>
     </div>
     <div class="rot-hint" id="rotHint">Sürükle &amp; Döndür</div>
-    <div class="hero-cta">
-      <button class="btn-studio" onclick="switchView('three')">
-        <div class="btn-studio-inner">
-          <div class="btn-studio-icon">🎂</div>
-          <div class="btn-studio-text"><span class="bst-top">Pastanı Tasarla</span><span class="bst-sub">3D Özelleştirici · Saray Studio</span></div>
-          <div class="btn-studio-arrow">›</div>
-        </div>
+    <div class="viewer-cta">
+      <button class="btn-customize" onclick="switchView('three')">
+        <div class="ico">🎨</div>
+        <div class="txt"><span class="t">Pastanı Özelleştir</span><span class="s">3D Tasarım Stüdyosu</span></div>
       </button>
     </div>
     <div id="loading">
@@ -203,64 +222,194 @@ input[type=color]{width:34px;height:28px;border:1px solid var(--border);border-r
     </div>
   </div>
 
+  <!-- PANEL -->
   <div id="panel">
-    <div class="panel-head">
-      <h2>Cake Studio</h2>
-      <p>Gerçek zamanlı 3D pasta özelleştirici</p>
-      <div class="view-indicator"><div class="vi-dot"></div><span>Görünüm:</span><span id="vi-label">Sketchfab Modeli</span></div>
+
+    <!-- Panel tab navigation -->
+    <div class="panel-tabs">
+      <button class="ptab active" onclick="showPage('p-pasta')">🎂 Pasta</button>
+      <button class="ptab" onclick="showPage('p-yazi')">✍️ Yazı</button>
+      <button class="ptab" onclick="showPage('p-gorsel')">🖼 Görsel</button>
+      <button class="ptab" onclick="showPage('p-sus')">🌹 Süs</button>
+      <button class="ptab" onclick="showPage('p-siparis')">🛍 Sipariş</button>
     </div>
-    <div class="panel-body">
+
+    <!-- PAGE 1: PASTA -->
+    <div class="ppage active" id="p-pasta">
+
+      <!-- Tema Şablonları -->
       <div class="sec">
-        <div class="sec-lbl">Kat Sayısı</div>
-        <div class="tier-row">
-          <div class="tier-btn active" onclick="setTiers(1,this)"><span class="t-n">I</span><span class="t-l">Tek</span></div>
-          <div class="tier-btn"        onclick="setTiers(2,this)"><span class="t-n">II</span><span class="t-l">İki</span></div>
-          <div class="tier-btn"        onclick="setTiers(3,this)"><span class="t-n">III</span><span class="t-l">Üç</span></div>
+        <div class="sec-lbl">Hazır Tema</div>
+        <div class="btn-grid" id="theme-btns">
+          <button class="opt-btn" onclick="applyTheme('wedding',this)">💍 Düğün</button>
+          <button class="opt-btn" onclick="applyTheme('birthday',this)">🎂 Doğum Günü</button>
+          <button class="opt-btn" onclick="applyTheme('baby',this)">👶 Baby Shower</button>
+          <button class="opt-btn" onclick="applyTheme('anniversary',this)">💕 Yıldönümü</button>
+          <button class="opt-btn" onclick="applyTheme('graduation',this)">🎓 Mezuniyet</button>
+          <button class="opt-btn" onclick="applyTheme('custom',this)">✨ Özel</button>
         </div>
       </div>
+
+      <!-- Kat Sayısı -->
+      <div class="sec">
+        <div class="sec-lbl">Kat Sayısı</div>
+        <div class="btn-grid">
+          <button class="opt-btn active" onclick="setTiers(1,this)">I — Tek Kat</button>
+          <button class="opt-btn" onclick="setTiers(2,this)">II — İki Kat</button>
+          <button class="opt-btn" onclick="setTiers(3,this)">III — Üç Kat</button>
+        </div>
+      </div>
+
+      <!-- Boyut -->
+      <div class="sec">
+        <div class="sec-lbl">Boyut & Kişi Sayısı</div>
+        <div class="btn-grid" id="size-btns">
+          <button class="opt-btn" onclick="setSize(10,this)">10cm · 4 kişi</button>
+          <button class="opt-btn active" onclick="setSize(15,this)">15cm · 8 kişi</button>
+          <button class="opt-btn" onclick="setSize(20,this)">20cm · 16 kişi</button>
+          <button class="opt-btn" onclick="setSize(25,this)">25cm · 25 kişi</button>
+          <button class="opt-btn" onclick="setSize(30,this)">30cm · 40 kişi</button>
+        </div>
+      </div>
+
+      <!-- Kaplama Rengi -->
       <div class="sec">
         <div class="sec-lbl">Kaplama Rengi</div>
         <div class="pal" id="palette"></div>
         <div class="col-name" id="colName">— Pembe Fondan —</div>
       </div>
+
+      <!-- Lezzet -->
       <div class="sec">
         <div class="sec-lbl">Lezzet</div>
-        <div class="flav-grid">
-          <div class="flav active" onclick="setFlav('vanilla',this)"><span class="fi">🤍</span>Vanilya</div>
-          <div class="flav"        onclick="setFlav('chocolate',this)"><span class="fi">🍫</span>Çikolata</div>
-          <div class="flav"        onclick="setFlav('strawberry',this)"><span class="fi">🍓</span>Çilek</div>
-          <div class="flav"        onclick="setFlav('pistachio',this)"><span class="fi">🌿</span>Fıstık</div>
-          <div class="flav"        onclick="setFlav('lemon',this)"><span class="fi">🍋</span>Limon</div>
-          <div class="flav"        onclick="setFlav('red_velvet',this)"><span class="fi">❤️</span>Red Velvet</div>
+        <div class="btn-grid" id="flav-btns">
+          <button class="opt-btn active" onclick="setFlav('vanilla',this)">🤍 Vanilya</button>
+          <button class="opt-btn" onclick="setFlav('chocolate',this)">🍫 Çikolata</button>
+          <button class="opt-btn" onclick="setFlav('strawberry',this)">🍓 Çilek</button>
+          <button class="opt-btn" onclick="setFlav('pistachio',this)">🌿 Antep Fıstığı</button>
+          <button class="opt-btn" onclick="setFlav('lemon',this)">🍋 Limon</button>
+          <button class="opt-btn" onclick="setFlav('red_velvet',this)">❤️ Red Velvet</button>
+          <button class="opt-btn" onclick="setFlav('caramel',this)">🍮 Karamel</button>
+          <button class="opt-btn" onclick="setFlav('hazelnut',this)">🌰 Fındık</button>
+          <button class="opt-btn" onclick="setFlav('coconut',this)">🥥 Hindistan Cevizi</button>
+          <button class="opt-btn" onclick="setFlav('mango',this)">🥭 Mango</button>
+          <button class="opt-btn" onclick="setFlav('blueberry',this)">🫐 Yaban Mersini</button>
+          <button class="opt-btn" onclick="setFlav('matcha',this)">🍵 Matcha</button>
+          <button class="opt-btn" onclick="setFlav('tiramisu',this)">☕ Tiramisu</button>
+          <button class="opt-btn" onclick="setFlav('blackforest',this)">🍒 Orman Meyveli</button>
+          <button class="opt-btn" onclick="setFlav('orange',this)">🍊 Portakal</button>
+          <button class="opt-btn" onclick="setFlav('rose',this)">🌹 Gül Suyu</button>
+          <button class="opt-btn" onclick="setFlav('banana',this)">🍌 Muz</button>
+          <button class="opt-btn" onclick="setFlav('peanut',this)">🥜 Yer Fıstığı</button>
+          <button class="opt-btn" onclick="setFlav('lavender',this)">💜 Lavanta</button>
+          <button class="opt-btn" onclick="setFlav('mixed',this)">🎨 Karma</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- PAGE 2: YAZI -->
+    <div class="ppage" id="p-yazi">
+      <div class="sec">
+        <div class="sec-lbl">Pasta Yazısı</div>
+        <div class="insc-preview">
+          <span id="prev-txt" style="font-family:'Dancing Script',cursive">Mesajınız burada görünecek...</span>
+        </div>
+        <input class="inp" type="text" id="cakeMsg" maxlength="40"
+               placeholder="Örn: İyi ki doğdun Ayşe! 🌹"
+               oninput="handleMsg(this.value)">
+      </div>
+      <div class="sec">
+        <div class="sec-lbl">Font Seçimi</div>
+        <div class="btn-grid" id="font-btns">
+          <button class="opt-btn active" onclick="setFont(\"'Dancing Script',cursive\",'Dancing Script',this)" style="font-family:'Dancing Script',cursive;font-size:.85rem">Dancing Script</button>
+          <button class="opt-btn" onclick="setFont(\"'Great Vibes',cursive\",'Great Vibes',this)" style="font-family:'Great Vibes',cursive;font-size:.85rem">Great Vibes</button>
+          <button class="opt-btn" onclick="setFont(\"'Pinyon Script',cursive\",'Pinyon Script',this)" style="font-family:'Pinyon Script',cursive;font-size:.85rem">Pinyon Script</button>
+          <button class="opt-btn" onclick="setFont(\"'Sacramento',cursive\",'Sacramento',this)" style="font-family:'Sacramento',cursive;font-size:.85rem">Sacramento</button>
+          <button class="opt-btn" onclick="setFont(\"'Allura',cursive\",'Allura',this)" style="font-family:'Allura',cursive;font-size:.85rem">Allura</button>
+          <button class="opt-btn" onclick="setFont(\"'Alex Brush',cursive\",'Alex Brush',this)" style="font-family:'Alex Brush',cursive;font-size:.85rem">Alex Brush</button>
+          <button class="opt-btn" onclick="setFont(\"'Satisfy',cursive\",'Satisfy',this)" style="font-family:'Satisfy',cursive;font-size:.85rem">Satisfy</button>
+          <button class="opt-btn" onclick="setFont(\"'Kaushan Script',cursive\",'Kaushan Script',this)" style="font-family:'Kaushan Script',cursive;font-size:.85rem">Kaushan Script</button>
+          <button class="opt-btn" onclick="setFont(\"'Pacifico',cursive\",'Pacifico',this)" style="font-family:'Pacifico',cursive;font-size:.85rem">Pacifico</button>
+          <button class="opt-btn" onclick="setFont(\"'Lobster',cursive\",'Lobster',this)" style="font-family:'Lobster',cursive;font-size:.85rem">Lobster</button>
+          <button class="opt-btn" onclick="setFont(\"'Yellowtail',cursive\",'Yellowtail',this)" style="font-family:'Yellowtail',cursive;font-size:.85rem">Yellowtail</button>
+          <button class="opt-btn" onclick="setFont(\"'Italianno',cursive\",'Italianno',this)" style="font-family:'Italianno',cursive;font-size:1rem">Italianno</button>
+          <button class="opt-btn" onclick="setFont(\"'Playfair Display',serif\",'Playfair Display',this)" style="font-family:'Playfair Display',serif">Playfair Display</button>
+          <button class="opt-btn" onclick="setFont(\"'Cormorant Garamond',serif\",'Cormorant Garamond',this)" style="font-family:'Cormorant Garamond',serif">Cormorant Garamond</button>
+          <button class="opt-btn" onclick="setFont(\"'Libre Baskerville',serif\",'Libre Baskerville',this)" style="font-family:'Libre Baskerville',serif;font-size:.75rem">Libre Baskerville</button>
         </div>
       </div>
       <div class="sec">
-        <div class="sec-lbl">Pasta Yazısı</div>
-        <div class="insc-preview"><span id="prev-txt" style="font-family:'Dancing Script',cursive">Mesajınız burada görünecek...</span></div>
-        <input class="inp" type="text" id="cakeMsg" maxlength="30" placeholder="Örn: İyi ki doğdun Ayşe! 🌹" oninput="handleMsg(this.value)">
-        <div class="ctrl">
-          <span class="clbl">Font</span>
-          <select class="inp" id="fontSel" onchange="handleFont(this.value)">
-            <option value="'Dancing Script',cursive">Dancing Script</option>
-            <option value="'Great Vibes',cursive">Great Vibes</option>
-            <option value="'Pinyon Script',cursive">Pinyon Script</option>
-            <option value="'Playfair Display',serif">Playfair Display</option>
-            <option value="'Cormorant Garamond',serif">Cormorant Garamond</option>
-          </select>
-        </div>
+        <div class="sec-lbl">Yazı Ayarları</div>
         <div class="ctrl">
           <span class="clbl">Renk</span>
           <input type="color" id="icingCol" value="#C9A96E" oninput="handleIcing(this.value)">
-          <span style="font-size:.68rem;color:var(--text-muted);margin-left:8px;flex:1">Krema rengi</span>
+          <span style="font-size:.62rem;color:var(--text-muted);margin-left:8px;flex:1">Krema rengi</span>
         </div>
         <div class="ctrl">
           <span class="clbl">Boyut</span>
-          <input type="range" id="fSize" min="26" max="72" value="46" oninput="handleSize(this.value)">
+          <input type="range" class="rng" id="fSize" min="18" max="96" value="46" oninput="handleSize(this.value)">
           <span class="rval" id="sVal">46</span>
         </div>
+        <div class="ctrl">
+          <span class="clbl">Konum X</span>
+          <input type="range" class="rng" id="txtX" min="200" max="824" value="512" oninput="handleTxtPos()">
+        </div>
+        <div class="ctrl">
+          <span class="clbl">Konum Y</span>
+          <input type="range" class="rng" id="txtY" min="200" max="824" value="512" oninput="handleTxtPos()">
+        </div>
+        <div class="sec-lbl" style="margin-top:8px">Gölge</div>
+        <div class="btn-grid">
+          <button class="opt-btn active" id="shadow-btn" onclick="toggleShadow(this)">✦ Gölge Açık</button>
+        </div>
       </div>
+    </div>
+
+    <!-- PAGE 3: GÖRSEL -->
+    <div class="ppage" id="p-gorsel">
       <div class="sec">
-        <div class="sec-lbl">Süsleme</div>
+        <div class="sec-lbl">Pasta Görseli</div>
+        <img id="imgPreview" src="" alt="Önizleme">
+        <div class="upload-zone" id="uploadZone" onclick="document.getElementById('imgInput').click()">
+          <div class="uz-ico">🖼️</div>
+          <div class="uz-txt">Fotoğraf veya görsel yükle</div>
+          <div class="uz-sub">Düğün fotoğrafı, logo, bebek resmi...<br>PNG, JPG desteklenir</div>
+        </div>
+        <input type="file" id="imgInput" accept="image/*" style="display:none" onchange="handleImageUpload(this)">
+        <div class="img-controls" id="imgControls">
+          <button class="img-btn" onclick="document.getElementById('imgInput').click()">🔄 Değiştir</button>
+          <button class="img-btn danger" onclick="removeImage()">🗑 Kaldır</button>
+        </div>
+      </div>
+      <div class="sec" id="img-adjust-sec" style="display:none">
+        <div class="sec-lbl">Görsel Ayarları</div>
+        <div class="ctrl">
+          <span class="clbl">Boyut</span>
+          <input type="range" class="rng" id="imgScale" min="10" max="100" value="60" oninput="handleImgAdjust()">
+          <span class="rval" id="imgScaleVal">60%</span>
+        </div>
+        <div class="ctrl">
+          <span class="clbl">Şeffaflık</span>
+          <input type="range" class="rng" id="imgOpacity" min="20" max="100" value="85" oninput="handleImgAdjust()">
+          <span class="rval" id="imgOpacityVal">85%</span>
+        </div>
+        <div class="ctrl">
+          <span class="clbl">Konum X</span>
+          <input type="range" class="rng" id="imgX" min="0" max="100" value="50" oninput="handleImgAdjust()">
+        </div>
+        <div class="ctrl">
+          <span class="clbl">Konum Y</span>
+          <input type="range" class="rng" id="imgY" min="0" max="100" value="50" oninput="handleImgAdjust()">
+        </div>
+        <div class="placement-info">💡 Görsel pastanın üst yüzeyine yerleştirilir. Boyut ve konumu yukarıdan ayarlayabilirsiniz.</div>
+      </div>
+    </div>
+
+    <!-- PAGE 4: SÜS -->
+    <div class="ppage" id="p-sus">
+      <div class="sec">
+        <div class="sec-lbl">Süsleme Seç</div>
         <div class="deco-grid">
           <div class="deco-card" onclick="togDeco('roses',this)"><span class="di">🌹</span><span class="dl">Güller</span><span class="dchk">✓</span></div>
           <div class="deco-card" onclick="togDeco('berries',this)"><span class="di">🫐</span><span class="dl">Meyveler</span><span class="dchk">✓</span></div>
@@ -268,39 +417,100 @@ input[type=color]{width:34px;height:28px;border:1px solid var(--border);border-r
           <div class="deco-card" onclick="togDeco('candles',this)"><span class="di">🕯️</span><span class="dl">Mumlar</span><span class="dchk">✓</span></div>
           <div class="deco-card" onclick="togDeco('macarons',this)"><span class="di">🍬</span><span class="dl">Makaronlar</span><span class="dchk">✓</span></div>
           <div class="deco-card" onclick="togDeco('flowers',this)"><span class="di">🌸</span><span class="dl">Çiçekler</span><span class="dchk">✓</span></div>
+          <div class="deco-card" onclick="togDeco('pearls',this)"><span class="di">⚪</span><span class="dl">İnciler</span><span class="dchk">✓</span></div>
+          <div class="deco-card" onclick="togDeco('butterflies',this)"><span class="di">🦋</span><span class="dl">Kelebekler</span><span class="dchk">✓</span></div>
+          <div class="deco-card" onclick="togDeco('stars',this)"><span class="di">⭐</span><span class="dl">Yıldızlar</span><span class="dchk">✓</span></div>
+          <div class="deco-card" onclick="togDeco('leaves',this)"><span class="di">🍃</span><span class="dl">Yapraklar</span><span class="dchk">✓</span></div>
+          <div class="deco-card" onclick="togDeco('hearts',this)"><span class="di">💛</span><span class="dl">Kalpler</span><span class="dchk">✓</span></div>
+          <div class="deco-card" onclick="togDeco('ribbons',this)"><span class="di">🎀</span><span class="dl">Kurdeleler</span><span class="dchk">✓</span></div>
+        </div>
+      </div>
+      <div class="sec">
+        <div class="sec-lbl">Süs Yoğunluğu</div>
+        <div class="btn-grid" id="density-btns">
+          <button class="opt-btn" onclick="setDensity('az',this)">Az</button>
+          <button class="opt-btn active" onclick="setDensity('orta',this)">Orta</button>
+          <button class="opt-btn" onclick="setDensity('cok',this)">Çok</button>
+        </div>
+      </div>
+      <div class="sec">
+        <div class="sec-lbl">Kenar Süslemesi</div>
+        <div class="btn-grid" id="border-btns">
+          <button class="opt-btn active" onclick="setBorderDeco('none',this)">Yok</button>
+          <button class="opt-btn" onclick="setBorderDeco('pearls',this)">İnci Şerit</button>
+          <button class="opt-btn" onclick="setBorderDeco('gold',this)">Altın Şerit</button>
+          <button class="opt-btn" onclick="setBorderDeco('flowers',this)">Çiçek Şerit</button>
+          <button class="opt-btn" onclick="setBorderDeco('ruffles',this)">Fırfır</button>
         </div>
       </div>
     </div>
+
+    <!-- PAGE 5: SİPARİŞ -->
+    <div class="ppage" id="p-siparis">
+      <div class="sec">
+        <div class="sec-lbl">Sipariş Özeti</div>
+        <div class="order-summary" id="orderSummaryPanel">
+          Henüz seçim yapılmadı.
+        </div>
+      </div>
+      <div class="sec">
+        <div class="sec-lbl">Fiyat Detayı</div>
+        <div style="font-size:.72rem;color:var(--text-muted);line-height:2.2" id="priceDetail">—</div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
     <div class="panel-foot">
       <div class="price-row">
         <span class="price-lbl">Tahmini Fiyat</span>
         <span class="price-val" id="pVal">₺ 450</span>
       </div>
-      <button class="btn-order" onclick="openModal()">
-        <div class="btn-order-inner"><span class="ico">🛍</span><span>Sipariş Ver</span></div>
-      </button>
+      <button class="btn-order" onclick="openOrderModal()">🛍 Sipariş Ver & Satın Al</button>
     </div>
-  </div>
 
+  </div>
 </div>
 
-<div class="modal-bg" id="modal">
+<!-- ORDER MODAL -->
+<div class="modal-bg" id="orderModal">
   <div class="modal">
-    <div class="m-ico">🎂</div>
-    <h3>Siparişiniz Alındı</h3>
-    <p>Saray Patisserie ekibi en kısa sürede sizi arayacak. Pastanız özenle hazırlanacaktır.</p>
-    <div class="m-detail" id="mDetail"></div>
-    <p style="font-size:.72rem;margin-bottom:18px">Teslim süresi: <b style="color:var(--gold)">3–5 iş günü</b></p>
-    <button class="btn-mclose" onclick="document.getElementById('modal').classList.remove('open')">Tamam</button>
+    <div class="modal-head">
+      <h3>🎂 Sipariş Ver</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="order-summary" id="modalSummary"></div>
+    <div class="order-form">
+      <div class="form-row">
+        <div class="fg"><label>Ad Soyad</label><input type="text" id="oName" placeholder="Adınız Soyadınız"></div>
+        <div class="fg"><label>Telefon</label><input type="tel" id="oPhone" placeholder="0 5XX XXX XX XX"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Teslim Tarihi</label><input type="date" id="oDate"></div>
+        <div class="fg"><label>Teslim Saati</label>
+          <select id="oTime">
+            <option>10:00</option><option>11:00</option><option>12:00</option>
+            <option>13:00</option><option>14:00</option><option>15:00</option>
+            <option>16:00</option><option>17:00</option><option>18:00</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg"><label>Teslimat Adresi</label><input type="text" id="oAddr" placeholder="Adres veya mağazadan teslim"></div>
+      <div class="fg"><label>Ek Notlar</label><textarea id="oNote" placeholder="Özel istekleriniz..."></textarea></div>
+      <div style="font-size:.72rem;color:var(--text-muted);text-align:center;margin:10px 0 14px">
+        Siparişiniz WhatsApp üzerinden gönderilecek. Saray Patisserie ekibi sizinle iletişime geçecektir.
+      </div>
+      <button class="btn-wa" onclick="sendWhatsApp()">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp ile Sipariş Gönder
+      </button>
+    </div>
   </div>
 </div>
 
 <script>
 THREE.OrbitControls=function(cam,dom){
-  this.cam=cam;this.dom=dom;this.enableDamping=true;this.dampingFactor=0.06;
-  this.enablePan=false;this.minPolarAngle=0.2;this.maxPolarAngle=Math.PI*0.54;
-  this.minDistance=4;this.maxDistance=15;this.autoRotate=true;this.autoRotateSpeed=0.45;
-  this.target=new THREE.Vector3(0,1.8,0);
+  this.target=new THREE.Vector3(0,1.8,0);this.dampingFactor=0.06;this.autoRotateSpeed=0.45;
+  this.minPolarAngle=0.2;this.maxPolarAngle=Math.PI*0.54;this.minDistance=4;this.maxDistance=15;
   const sph=new THREE.Spherical(),dSph=new THREE.Spherical(),off=new THREE.Vector3();
   off.copy(cam.position).sub(this.target);sph.setFromVector3(off);
   let drag=false,px=0,py=0;const me=this;
@@ -311,7 +521,7 @@ THREE.OrbitControls=function(cam,dom){
   dom.addEventListener('touchend',()=>drag=false);
   dom.addEventListener('touchmove',e=>{if(!drag)return;dSph.theta-=(e.touches[0].clientX-px)/dom.clientHeight*1.8;dSph.phi-=(e.touches[0].clientY-py)/dom.clientHeight*1.2;px=e.touches[0].clientX;py=e.touches[0].clientY;e.preventDefault();},{passive:false});
   this.update=function(){
-    if(me.autoRotate&&!drag)dSph.theta-=me.autoRotateSpeed*Math.PI/180*0.016;
+    if(!drag)dSph.theta-=me.autoRotateSpeed*Math.PI/180*0.016;
     sph.theta+=dSph.theta*me.dampingFactor;sph.phi+=dSph.phi*me.dampingFactor;
     dSph.theta*=(1-me.dampingFactor);dSph.phi*=(1-me.dampingFactor);
     sph.phi=Math.max(me.minPolarAngle,Math.min(me.maxPolarAngle,sph.phi));
@@ -323,40 +533,131 @@ THREE.OrbitControls=function(cam,dom){
 
 <script>
 'use strict';
-const S={tiers:1,colorIdx:0,flavor:'vanilla',decos:new Set(),msg:'',font:"'Dancing Script',cursive",icingColor:'#C9A96E',fontSize:46};
-const COLORS=[
-  {name:'Pembe Fondan',hex:'#F2B4BE',glaze:0xF2B4BE,sponge:0xE08890},
-  {name:'İnci Beyaz',hex:'#F2EDE6',glaze:0xF2EDE6,sponge:0xD4C4A8},
-  {name:'Bitter Çikolata',hex:'#5A3820',glaze:0x5A3820,sponge:0x3A2010},
-  {name:'Lavanta',hex:'#C4B0D8',glaze:0xC4B0D8,sponge:0x9A7EC0},
-  {name:'Pistache',hex:'#A8C8A0',glaze:0xA8C8A0,sponge:0x78A870},
-  {name:'Limon Sarısı',hex:'#F2D878',glaze:0xF2D878,sponge:0xD8B840},
-  {name:'Gece Mavisi',hex:'#7888B8',glaze:0x7888B8,sponge:0x485888},
-  {name:'Altın Krem',hex:'#D8C090',glaze:0xD8C090,sponge:0xB89860},
-  {name:'Kırmızı Kadife',hex:'#C05060',glaze:0xC05060,sponge:0x901830},
-  {name:'Mint',hex:'#98D8C8',glaze:0x98D8C8,sponge:0x58A890},
+
+// ── STATE ──
+const S = {
+  tiers:1, colorIdx:0, flavor:'vanilla', size:15,
+  decos:new Set(), msg:'', font:"'Dancing Script',cursive",
+  icingColor:'#C9A96E', fontSize:46, shadow:true,
+  txtX:512, txtY:512,
+  imgData:null, imgScale:60, imgOpacity:85, imgX:50, imgY:50,
+  density:'orta', borderDeco:'none',
+};
+
+const COLORS = [
+  {name:'Pembe Fondan',    hex:'#F2B4BE', glaze:0xF2B4BE, sponge:0xE08890},
+  {name:'İnci Beyaz',      hex:'#F2EDE6', glaze:0xF2EDE6, sponge:0xD4C4A8},
+  {name:'Krem',            hex:'#F5E6C8', glaze:0xF5E6C8, sponge:0xD4B888},
+  {name:'Bitter Çikolata', hex:'#5A3820', glaze:0x5A3820, sponge:0x3A2010},
+  {name:'Sütlü Çikolata',  hex:'#9B6B3A', glaze:0x9B6B3A, sponge:0x7A4A20},
+  {name:'Lavanta',         hex:'#C4B0D8', glaze:0xC4B0D8, sponge:0x9A7EC0},
+  {name:'Mor',             hex:'#8B5E9B', glaze:0x8B5E9B, sponge:0x6A3E7A},
+  {name:'Pistache',        hex:'#A8C8A0', glaze:0xA8C8A0, sponge:0x78A870},
+  {name:'Orman Yeşili',    hex:'#4A7A58', glaze:0x4A7A58, sponge:0x2A5A38},
+  {name:'Limon Sarısı',    hex:'#F2D878', glaze:0xF2D878, sponge:0xD8B840},
+  {name:'Turuncu',         hex:'#F0A050', glaze:0xF0A050, sponge:0xD07030},
+  {name:'Gece Mavisi',     hex:'#7888B8', glaze:0x7888B8, sponge:0x485888},
+  {name:'Bebek Mavisi',    hex:'#A8D0E8', glaze:0xA8D0E8, sponge:0x78A8C8},
+  {name:'Altın Krem',      hex:'#D8C090', glaze:0xD8C090, sponge:0xB89860},
+  {name:'Kırmızı Kadife',  hex:'#C05060', glaze:0xC05060, sponge:0x901830},
+  {name:'Şampanya',        hex:'#E8D8A8', glaze:0xE8D8A8, sponge:0xC8B080},
+  {name:'Gül Kurusu',      hex:'#D4A0A8', glaze:0xD4A0A8, sponge:0xB47888},
+  {name:'Mint',            hex:'#98D8C8', glaze:0x98D8C8, sponge:0x58A890},
+  {name:'Koyu Kırmızı',    hex:'#8B2020', glaze:0x8B2020, sponge:0x6B1010},
+  {name:'Siyah',           hex:'#2A2020', glaze:0x2A2020, sponge:0x180808},
+  {name:'Gümüş',           hex:'#C8C8D0', glaze:0xC8C8D0, sponge:0xA0A0B0},
+  {name:'Mercan',          hex:'#E88070', glaze:0xE88070, sponge:0xC86050},
+  {name:'Turkuaz',         hex:'#60C8C0', glaze:0x60C8C0, sponge:0x309888},
+  {name:'Toz Pembe',       hex:'#F0C8D0', glaze:0xF0C8D0, sponge:0xD0A0A8},
+  {name:'Bronz',           hex:'#A07840', glaze:0xA07840, sponge:0x805820},
 ];
-const FPRICE={vanilla:0,chocolate:50,strawberry:30,pistachio:80,lemon:20,red_velvet:60};
-const DPRICE={roses:40,berries:50,gold_leaf:120,candles:30,macarons:70,flowers:45};
-const FNAMES={vanilla:'Vanilya',chocolate:'Çikolata',strawberry:'Çilek',pistachio:'Antep Fıstığı',lemon:'Limon',red_velvet:'Red Velvet'};
-const DNAMES={roses:'🌹 Güller',berries:'🫐 Meyveler',gold_leaf:'✨ Altın Varak',candles:'🕯️ Mumlar',macarons:'🍬 Makaronlar',flowers:'🌸 Çiçekler'};
 
-let currentView='sf',rendererReady=false;
-let renderer,scene,camera,controls,cakeRoot,decoRoot,animQ=[],envMap=null;
+const FPRICE = {vanilla:0,chocolate:50,strawberry:30,pistachio:80,lemon:20,red_velvet:60,caramel:40,hazelnut:60,coconut:50,mango:70,blueberry:60,matcha:80,tiramisu:70,blackforest:60,orange:30,rose:90,banana:30,peanut:50,lavender:90,mixed:100};
+const DPRICE = {roses:40,berries:50,gold_leaf:120,candles:30,macarons:70,flowers:45,pearls:80,butterflies:60,stars:40,leaves:35,hearts:45,ribbons:55};
+const SIZEPRICE = {10:0,15:100,20:200,25:350,30:500};
+const FNAMES = {vanilla:'Vanilya',chocolate:'Çikolata',strawberry:'Çilek',pistachio:'Antep Fıstığı',lemon:'Limon',red_velvet:'Red Velvet',caramel:'Karamel',hazelnut:'Fındık',coconut:'Hindistan Cevizi',mango:'Mango',blueberry:'Yaban Mersini',matcha:'Matcha',tiramisu:'Tiramisu',blackforest:'Orman Meyveli',orange:'Portakal',rose:'Gül Suyu',banana:'Muz',peanut:'Yer Fıstığı',lavender:'Lavanta',mixed:'Karma'};
+const DNAMES = {roses:'🌹 Güller',berries:'🫐 Meyveler',gold_leaf:'✨ Altın Varak',candles:'🕯️ Mumlar',macarons:'🍬 Makaronlar',flowers:'🌸 Çiçekler',pearls:'⚪ İnciler',butterflies:'🦋 Kelebekler',stars:'⭐ Yıldızlar',leaves:'🍃 Yapraklar',hearts:'💛 Kalpler',ribbons:'🎀 Kurdeleler'};
 
-function switchView(v){
-  currentView=v;
-  const sf=document.getElementById('sketchfab-wrap'),cw=document.getElementById('canvas-wrap');
-  const cr=document.getElementById('sfab-credit'),rh=document.getElementById('rotHint');
-  const ts=document.getElementById('tab-sf'),tt=document.getElementById('tab-three'),vl=document.getElementById('vi-label');
-  if(v==='sf'){sf.classList.remove('hidden');cw.classList.add('hidden');cr.style.display='flex';ts.classList.add('active');tt.classList.remove('active');vl.textContent='Sketchfab Modeli';}
-  else{sf.classList.add('hidden');cw.classList.remove('hidden');cr.style.display='none';ts.classList.remove('active');tt.classList.add('active');vl.textContent='3D Özelleştirici';if(!rendererReady)initThree();}
+const THEMES = {
+  wedding:   {colorIdx:1, flavor:'rose',     decos:['roses','gold_leaf','pearls'],    msg:'Ömür Boyu Mutluluklar'},
+  birthday:  {colorIdx:0, flavor:'vanilla',  decos:['candles','flowers','macarons'],  msg:'İyi ki Doğdun!'},
+  baby:      {colorIdx:13,flavor:'vanilla',  decos:['stars','hearts','butterflies'],  msg:'Hoş Geldin Bebek!'},
+  anniversary:{colorIdx:14,flavor:'red_velvet',decos:['roses','ribbons','hearts'],   msg:'Nice Yıllara!'},
+  graduation:{colorIdx:9, flavor:'pistachio',decos:['stars','gold_leaf','macarons'], msg:'Tebrikler!'},
+  custom:    {colorIdx:0, flavor:'vanilla',  decos:[], msg:''},
+};
+
+let currentView='sf', rendererReady=false;
+let renderer, scene, camera, controls, cakeRoot, decoRoot, animQ=[], envMap=null;
+
+// ── PANEL NAVIGATION ──
+function showPage(id) {
+  document.querySelectorAll('.ppage').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  if(id==='p-siparis') updateOrderSummary();
 }
 
+// ── VIEW SWITCH ──
+function switchView(v) {
+  currentView=v;
+  const sf=document.getElementById('sf-wrap'),cw=document.getElementById('canvas-wrap');
+  const cr=document.getElementById('sfab-credit'),rh=document.getElementById('rotHint');
+  const ts=document.getElementById('tab-sf'),tt=document.getElementById('tab-three');
+  if(v==='sf'){
+    sf.classList.remove('hidden');cw.classList.add('hidden');cr.style.display='flex';
+    rh.classList.remove('show');ts.classList.add('active');tt.classList.remove('active');
+  } else {
+    sf.classList.add('hidden');cw.classList.remove('hidden');cr.style.display='none';
+    rh.classList.add('show');ts.classList.remove('active');tt.classList.add('active');
+    if(!rendererReady) initThree();
+  }
+}
+
+// ── THEME ──
+function applyTheme(name, el) {
+  document.querySelectorAll('#theme-btns .opt-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  const t = THEMES[name]; if(!t) return;
+  // color
+  S.colorIdx = t.colorIdx;
+  document.querySelectorAll('.csw').forEach((s,i)=>s.classList.toggle('active',i===t.colorIdx));
+  document.getElementById('colName').textContent=`— ${COLORS[t.colorIdx].name} —`;
+  // flavor
+  setFlavByKey(t.flavor);
+  // decos
+  S.decos.clear();
+  document.querySelectorAll('.deco-card').forEach(c=>c.classList.remove('active'));
+  t.decos.forEach(d=>{
+    S.decos.add(d);
+    document.querySelectorAll('.deco-card').forEach(c=>{
+      if(c.getAttribute('onclick')&&c.getAttribute('onclick').includes(`'${d}'`)) c.classList.add('active');
+    });
+  });
+  // msg
+  if(t.msg){
+    S.msg=t.msg;
+    document.getElementById('cakeMsg').value=t.msg;
+    handleMsg(t.msg);
+  }
+  if(rendererReady) buildCake(envMap);
+  updatePrice();
+}
+
+function setFlavByKey(key){
+  S.flavor=key;
+  document.querySelectorAll('#flav-btns .opt-btn').forEach(b=>{
+    const active=b.getAttribute('onclick')&&b.getAttribute('onclick').includes(`'${key}'`);
+    b.classList.toggle('active',active);
+  });
+}
+
+// ── THREE.JS ──
 function initThree(){
-  if(rendererReady)return;rendererReady=true;
+  if(rendererReady)return; rendererReady=true;
   const wrap=document.getElementById('canvas-wrap'),W=wrap.clientWidth,H=wrap.clientHeight;
-  renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});
+  renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,preserveDrawingBuffer:true,powerPreference:'high-performance'});
   renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));renderer.setSize(W,H);
   renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
   renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;
@@ -364,79 +665,416 @@ function initThree(){
   scene=new THREE.Scene();scene.fog=new THREE.FogExp2(0x07050A,0.04);
   camera=new THREE.PerspectiveCamera(36,W/H,0.1,60);camera.position.set(0,5.5,10.5);
   controls=new THREE.OrbitControls(camera,renderer.domElement);
+  // Env
   const pmrem=new THREE.PMREMGenerator(renderer);pmrem.compileEquirectangularShader();
   const sz=256,data=new Uint8Array(sz*sz*4);
-  for(let y=0;y<sz;y++)for(let x=0;x<sz;x++){const i=(y*sz+x)*4,ny=y/sz,hot=(x/sz>0.6&&x/sz<0.9&&ny>0.3&&ny<0.7);data[i]=Math.min(255,28+ny*18+(hot?200:0));data[i+1]=Math.min(255,20+ny*12+(hot?158:0));data[i+2]=Math.min(255,12+ny*6+(hot?78:0));data[i+3]=255;}
+  for(let y=0;y<sz;y++)for(let x=0;x<sz;x++){
+    const i=(y*sz+x)*4,ny=y/sz,hot=(x/sz>.6&&x/sz<.9&&ny>.3&&ny<.7);
+    data[i]=Math.min(255,28+ny*18+(hot?200:0));data[i+1]=Math.min(255,20+ny*12+(hot?158:0));
+    data[i+2]=Math.min(255,12+ny*6+(hot?78:0));data[i+3]=255;
+  }
   const dt=new THREE.DataTexture(data,sz,sz,THREE.RGBAFormat);dt.needsUpdate=true;
   envMap=pmrem.fromEquirectangular(dt).texture;scene.environment=envMap;pmrem.dispose();
-  const key=new THREE.DirectionalLight(0xFFEDD5,2.2);key.position.set(3,12,6);key.castShadow=true;key.shadow.mapSize.set(2048,2048);key.shadow.bias=-0.0005;key.shadow.normalBias=0.02;key.shadow.camera.top=key.shadow.camera.right=8;key.shadow.camera.bottom=key.shadow.camera.left=-8;scene.add(key);
+  // Lights
+  const key=new THREE.DirectionalLight(0xFFEDD5,2.2);key.position.set(3,12,6);key.castShadow=true;
+  key.shadow.mapSize.set(2048,2048);key.shadow.bias=-.0005;key.shadow.normalBias=.02;
+  key.shadow.camera.top=key.shadow.camera.right=8;key.shadow.camera.bottom=key.shadow.camera.left=-8;scene.add(key);
   const fill=new THREE.DirectionalLight(0xC8D8F8,.45);fill.position.set(-6,5,-4);scene.add(fill);
   const rim=new THREE.DirectionalLight(0xFFCA70,.8);rim.position.set(0,2,-8);scene.add(rim);
-  const bnc=new THREE.DirectionalLight(0xF0C880,.22);bnc.position.set(0,-4,3);scene.add(bnc);
   scene.add(new THREE.HemisphereLight(0x2A1808,0x07050A,.4));
-  const mc=document.createElement('canvas');mc.width=mc.height=512;const mctx=mc.getContext('2d');mctx.fillStyle='#EDE4D5';mctx.fillRect(0,0,512,512);
+  // Board
+  const mc=document.createElement('canvas');mc.width=mc.height=512;const mctx=mc.getContext('2d');
+  mctx.fillStyle='#EDE4D5';mctx.fillRect(0,0,512,512);
   for(let v=0;v<18;v++){mctx.beginPath();mctx.moveTo(Math.random()*512,Math.random()*512);for(let p=0;p<8;p++)mctx.lineTo(Math.random()*512,Math.random()*512);mctx.strokeStyle=`rgba(${160+Math.random()*40|0},${148+Math.random()*30|0},${120+Math.random()*30|0},${.12+Math.random()*.18})`;mctx.lineWidth=.5+Math.random()*1.5;mctx.stroke();}
-  const board=new THREE.Mesh(new THREE.CylinderGeometry(3.2,3.2,.1,80),new THREE.MeshStandardMaterial({map:new THREE.CanvasTexture(mc),roughness:.18,metalness:.05,envMap:env,envMapIntensity:.6}));board.receiveShadow=true;board.position.y=-.05;scene.add(board);
+  const board=new THREE.Mesh(new THREE.CylinderGeometry(3.2,3.2,.1,80),new THREE.MeshStandardMaterial({map:new THREE.CanvasTexture(mc),roughness:.18,metalness:.05,envMap:envMap,envMapIntensity:.6}));
+  board.receiveShadow=true;board.position.y=-.05;scene.add(board);
   const sg=new THREE.Mesh(new THREE.PlaneGeometry(20,20),new THREE.ShadowMaterial({opacity:.32,color:0x1A0808}));sg.rotation.x=-Math.PI/2;sg.position.y=-.06;sg.receiveShadow=true;scene.add(sg);
+  // Inscription canvas
   window._inscCanvas=document.createElement('canvas');window._inscCanvas.width=window._inscCanvas.height=1024;
   window._inscTex=new THREE.CanvasTexture(window._inscCanvas);window._inscTex.colorSpace=THREE.SRGBColorSpace;
   cakeRoot=new THREE.Group();decoRoot=new THREE.Group();scene.add(cakeRoot);scene.add(decoRoot);
   buildCake(envMap);
   window.addEventListener('resize',()=>{const w=wrap.clientWidth,h=wrap.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
-  (function loop(now=0){requestAnimationFrame(loop);controls.update();processAnim(now);decoRoot.traverse(o=>{if(o.userData.flicker!==undefined){o.userData.flicker+=.08;const s=1+Math.sin(o.userData.flicker)*.14;o.scale.set(s,2*s,s);}});renderer.render(scene,camera);})();
+  (function loop(){
+    requestAnimationFrame(loop);controls.update();procAnim(performance.now());
+    decoRoot.traverse(o=>{if(o.userData.flicker!==undefined){o.userData.flicker+=.08;const s=1+Math.sin(o.userData.flicker)*.14;o.scale.set(s,2*s,s);}});
+    renderer.render(scene,camera);
+  })();
 }
 
-function drawInscription(){if(!window._inscCanvas)return;const c=window._inscCanvas,ctx=c.getContext('2d');ctx.clearRect(0,0,1024,1024);if(!S.msg){window._inscTex.needsUpdate=true;return;}ctx.save();ctx.shadowColor='rgba(0,0,0,.4)';ctx.shadowBlur=10;ctx.shadowOffsetX=2;ctx.shadowOffsetY=3;ctx.fillStyle=S.icingColor;ctx.font=`${S.fontSize}px ${S.font}`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(S.msg,512,512);ctx.restore();window._inscTex.needsUpdate=true;}
-function glazeMat(c,env){return new THREE.MeshPhysicalMaterial({color:c,roughness:.07,metalness:0,reflectivity:.9,clearcoat:1,clearcoatRoughness:.05,envMap:env,envMapIntensity:1.3});}
-function spongeMat(c,env){const nc=document.createElement('canvas');nc.width=nc.height=256;const nx=nc.getContext('2d');nx.fillStyle='#8080FF';nx.fillRect(0,0,256,256);for(let i=0;i<2000;i++){const vv=120+Math.random()*60|0;nx.beginPath();nx.arc(Math.random()*256,Math.random()*256,1+Math.random()*3,0,Math.PI*2);nx.fillStyle=`rgb(${vv},${vv},255)`;nx.fill();}const nm=new THREE.CanvasTexture(nc);nm.wrapS=nm.wrapT=THREE.RepeatWrapping;nm.repeat.set(3,3);return new THREE.MeshStandardMaterial({color:c,roughness:.87,normalMap:nm,normalScale:new THREE.Vector2(.6,.6),envMap:env,envMapIntensity:.3});}
-function topMat(c,env){return new THREE.MeshPhysicalMaterial({color:c,roughness:.05,metalness:0,clearcoat:1,clearcoatRoughness:.04,envMap:env,envMapIntensity:1.5,map:window._inscTex||null});}
-const TD=[{r:1.62,h:1},{r:1.16,h:.92},{r:.78,h:.84}];
+// ── INSCRIPTION ──
+function drawInscription(){
+  if(!window._inscCanvas)return;
+  const c=window._inscCanvas,ctx=c.getContext('2d');
+  ctx.clearRect(0,0,1024,1024);
+  // Draw uploaded image first
+  if(S.imgData){
+    const img=new Image();
+    img.onload=()=>{
+      const sc=S.imgScale/100;
+      const size=1024*sc;
+      const ix=(S.imgX/100)*(1024-size);
+      const iy=(S.imgY/100)*(1024-size);
+      ctx.globalAlpha=S.imgOpacity/100;
+      ctx.drawImage(img,ix,iy,size,size);
+      ctx.globalAlpha=1;
+      drawTextOnCanvas(ctx);
+      window._inscTex.needsUpdate=true;
+    };
+    img.src=S.imgData;
+  } else {
+    drawTextOnCanvas(ctx);
+    window._inscTex.needsUpdate=true;
+  }
+}
+
+function drawTextOnCanvas(ctx){
+  if(!S.msg)return;
+  // Scale font size relative to canvas (1024) — bigger canvas = bigger text
+  const scaledSize = Math.round(S.fontSize * (1024/460));
+  ctx.save();
+  if(S.shadow){ctx.shadowColor='rgba(0,0,0,0.45)';ctx.shadowBlur=14;ctx.shadowOffsetX=3;ctx.shadowOffsetY=4;}
+  ctx.fillStyle=S.icingColor;
+  ctx.font=`${scaledSize}px ${S.font}`;
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText(S.msg,S.txtX,S.txtY);
+  ctx.restore();
+}
+
+// ── MATERIALS ──
+function glazeMat(c){return new THREE.MeshPhysicalMaterial({color:c,roughness:.07,metalness:0,reflectivity:.9,clearcoat:1,clearcoatRoughness:.05,envMap:envMap,envMapIntensity:1.3});}
+function spongeMat(c){
+  const nc=document.createElement('canvas');nc.width=nc.height=256;const nx=nc.getContext('2d');nx.fillStyle='#8080FF';nx.fillRect(0,0,256,256);
+  for(let i=0;i<2000;i++){const vv=120+Math.random()*60|0;nx.beginPath();nx.arc(Math.random()*256,Math.random()*256,1+Math.random()*3,0,Math.PI*2);nx.fillStyle=`rgb(${vv},${vv},255)`;nx.fill();}
+  const nm=new THREE.CanvasTexture(nc);nm.wrapS=nm.wrapT=THREE.RepeatWrapping;nm.repeat.set(3,3);
+  return new THREE.MeshStandardMaterial({color:c,roughness:.87,normalMap:nm,normalScale:new THREE.Vector2(.6,.6),envMap:envMap,envMapIntensity:.3});
+}
+function topMat(c){return new THREE.MeshPhysicalMaterial({color:c,roughness:.05,metalness:0,clearcoat:1,clearcoatRoughness:.04,envMap:envMap,envMapIntensity:1.5,map:window._inscTex||null});}
+
+const TD=[{r:1.62,h:1.0},{r:1.16,h:.92},{r:.78,h:.84}];
+
 function clearGrp(g){while(g.children.length){const c=g.children[0];if(c.geometry)c.geometry.dispose();if(c.material){Array.isArray(c.material)?c.material.forEach(m=>m.dispose()):c.material.dispose();}g.remove(c);}}
 function blendHex(a,b,t){return new THREE.Color(a).lerp(new THREE.Color(b),t).getHex();}
 
 function buildCake(env){
-  if(!cakeRoot)return;clearGrp(cakeRoot);clearGrp(decoRoot);animQ.length=0;
+  if(!cakeRoot)return;
+  clearGrp(cakeRoot);clearGrp(decoRoot);animQ.length=0;
   const col=COLORS[S.colorIdx],gc=col.glaze,sc=col.sponge,frost=blendHex(gc,0xFFFFFF,.5);
   let yOff=0;
   for(let i=0;i<S.tiers;i++){
     const{r,h}=TD[i],isTop=(i===S.tiers-1),lH=h*.285;
-    [sc,blendHex(sc,0xF5E8C8,.45),sc].forEach((lc,li)=>{const lm=new THREE.Mesh(new THREE.CylinderGeometry(r-.02,r-.02,lH,64),spongeMat(lc,env));lm.castShadow=lm.receiveShadow=true;lm.position.y=yOff+lH*li+lH/2;cakeRoot.add(lm);});
-    const shell=new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,80,1,true),glazeMat(gc,env));shell.castShadow=true;shell.position.y=yOff+h/2;shell.scale.y=.01;pushAnim(shell.scale,'y',.01,1,500,i*150);cakeRoot.add(shell);
-    const tface=new THREE.Mesh(new THREE.CircleGeometry(r,80),isTop?topMat(frost,env):glazeMat(frost,env));tface.rotation.x=-Math.PI/2;tface.position.y=yOff+h+.001;tface.receiveShadow=true;cakeRoot.add(tface);
-    for(let d=0;d<22;d++){const ang=(d/22)*Math.PI*2+(Math.random()-.5)*.28,dH=.08+Math.random()*.26,dR=.038+Math.random()*.022;const drip=new THREE.Mesh(new THREE.CylinderGeometry(dR*.55,dR,dH,8),glazeMat(frost,env));drip.position.set(Math.cos(ang)*r,yOff+h-dH/2-.02,Math.sin(ang)*r);drip.castShadow=true;cakeRoot.add(drip);const blob=new THREE.Mesh(new THREE.SphereGeometry(dR*1.1,8,8),glazeMat(frost,env));blob.position.set(Math.cos(ang)*r,yOff+h-dH-.04,Math.sin(ang)*r);cakeRoot.add(blob);}
-    if(i<S.tiers-1){const sep=new THREE.Mesh(new THREE.CylinderGeometry(r+.05,r+.05,.06,64),new THREE.MeshStandardMaterial({color:0xEDE4D0,roughness:.15,metalness:.1,envMap:env,envMapIntensity:.5}));sep.position.y=yOff+h+.03;sep.receiveShadow=true;cakeRoot.add(sep);}
+    [sc,blendHex(sc,0xF5E8C8,.45),sc].forEach((lc,li)=>{
+      const lm=new THREE.Mesh(new THREE.CylinderGeometry(r-.02,r-.02,lH,64),spongeMat(lc));
+      lm.castShadow=lm.receiveShadow=true;lm.position.y=yOff+lH*li+lH/2;cakeRoot.add(lm);
+    });
+    const shell=new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,80,1,true),glazeMat(gc));
+    shell.castShadow=true;shell.position.y=yOff+h/2;shell.scale.y=.01;
+    pushAnim(shell.scale,'y',.01,1,500,i*150);cakeRoot.add(shell);
+    const tface=new THREE.Mesh(new THREE.CircleGeometry(r,80),isTop?topMat(frost):glazeMat(frost));
+    tface.rotation.x=-Math.PI/2;tface.position.y=yOff+h+.001;tface.receiveShadow=true;cakeRoot.add(tface);
+    // Drips
+    const dripCount = S.density==='az'?12:S.density==='cok'?30:22;
+    for(let d=0;d<dripCount;d++){
+      const ang=(d/dripCount)*Math.PI*2+(Math.random()-.5)*.28,dH=.08+Math.random()*.26,dR=.038+Math.random()*.022;
+      const drip=new THREE.Mesh(new THREE.CylinderGeometry(dR*.55,dR,dH,8),glazeMat(frost));
+      drip.position.set(Math.cos(ang)*r,yOff+h-dH/2-.02,Math.sin(ang)*r);drip.castShadow=true;cakeRoot.add(drip);
+      const blob=new THREE.Mesh(new THREE.SphereGeometry(dR*1.1,8,8),glazeMat(frost));
+      blob.position.set(Math.cos(ang)*r,yOff+h-dH-.04,Math.sin(ang)*r);cakeRoot.add(blob);
+    }
+    if(i<S.tiers-1){
+      const sep=new THREE.Mesh(new THREE.CylinderGeometry(r+.05,r+.05,.06,64),new THREE.MeshStandardMaterial({color:0xEDE4D0,roughness:.15,metalness:.1,envMap:envMap,envMapIntensity:.5}));
+      sep.position.y=yOff+h+.03;sep.receiveShadow=true;cakeRoot.add(sep);
+    }
     yOff+=h+(i<S.tiers-1?.06:0);
   }
-  buildDecos(yOff,TD[S.tiers-1].r,env);drawInscription();
+  buildDecos(yOff,TD[S.tiers-1].r);
+  drawInscription();
 }
-function buildDecos(ty,tr,env){if(S.decos.has('roses'))buildRoses(ty,tr,env);if(S.decos.has('berries'))buildBerries(ty,tr,env);if(S.decos.has('gold_leaf'))buildGold(ty,tr,env);if(S.decos.has('candles'))buildCandles(ty,tr);if(S.decos.has('macarons'))buildMacs(ty,tr,env);if(S.decos.has('flowers'))buildFlowers(ty,tr);}
+
+function buildDecos(ty,tr){
+  const mult=S.density==='az'?.6:S.density==='cok'?1.6:1;
+  if(S.decos.has('roses'))    buildRoses(ty,tr,mult);
+  if(S.decos.has('berries'))  buildBerries(ty,tr,mult);
+  if(S.decos.has('gold_leaf'))buildGold(ty,tr,mult);
+  if(S.decos.has('candles'))  buildCandles(ty,tr);
+  if(S.decos.has('macarons')) buildMacs(ty,tr,mult);
+  if(S.decos.has('flowers'))  buildFlowers(ty,tr,mult);
+  if(S.decos.has('pearls'))   buildPearls(ty,tr,mult);
+  if(S.decos.has('stars'))    buildStars(ty,tr,mult);
+  if(S.decos.has('hearts'))   buildHearts(ty,tr,mult);
+}
+
 function sadd(m,d=0){m.scale.setScalar(.01);pushAnim(m.scale,'scalar',.01,1,400,d);decoRoot.add(m);}
-function buildRoses(ty,tr,env){const pos=[[0,0],[tr*.5,0],[-tr*.5,0],[0,tr*.5],[0,-tr*.5],[tr*.4,tr*.4],[-tr*.4,-tr*.4]];pos.forEach(([rx,rz],pi)=>{const g=new THREE.Group();const pm=new THREE.MeshPhysicalMaterial({color:0xC04060,roughness:.55,clearcoat:.3,envMap:env,envMapIntensity:.6});for(let p=0;p<9;p++){const a=(p/9)*Math.PI*2,sp=.07+p*.008;const geo=new THREE.SphereGeometry(.075,8,6);geo.scale(1.6,.5,1);const m=new THREE.Mesh(geo,pm);m.position.set(Math.cos(a)*sp,p*.007,Math.sin(a)*sp);m.rotation.y=a;g.add(m);}g.add(new THREE.Mesh(new THREE.SphereGeometry(.06,10,10),new THREE.MeshStandardMaterial({color:0x901830,roughness:.7})));g.position.set(rx,ty+.08,rz);g.scale.setScalar(.01);pushAnim(g.scale,'scalar',.01,1,380,pi*70);decoRoot.add(g);});}
-function buildBerries(ty,tr,env){const mB=new THREE.MeshPhysicalMaterial({color:0x2A1855,roughness:.25,clearcoat:.8,envMap:env,envMapIntensity:1});const mR=new THREE.MeshPhysicalMaterial({color:0xC0204A,roughness:.35,clearcoat:.6,envMap:env,envMapIntensity:.8});for(let b=0;b<16;b++){const a=(b/16)*Math.PI*2,rad=tr*(.55+(b%3)*.08);const m=new THREE.Mesh(new THREE.SphereGeometry(.09+Math.random()*.04,12,12),b%3===0?mR:mB);m.position.set(Math.cos(a)*rad,ty+.06+Math.random()*.04,Math.sin(a)*rad);m.castShadow=true;sadd(m,b*30);}}
-function buildGold(ty,tr,env){const gm=new THREE.MeshStandardMaterial({color:0xD4A020,roughness:.04,metalness:.96,envMap:env,envMapIntensity:2});for(let g=0;g<12;g++){const a=Math.random()*Math.PI*2,r=Math.random()*tr*.8;const m=new THREE.Mesh(new THREE.PlaneGeometry(.18,.12),gm);m.rotation.x=-Math.PI/2+(Math.random()-.5)*.3;m.rotation.z=Math.random()*Math.PI;m.position.set(Math.cos(a)*r,ty+.01,Math.sin(a)*r);sadd(m,g*40);}}
-function buildCandles(ty,tr){const cc=[0xFFD1DC,0xB5EAD7,0xC7CEEA,0xFDFD96,0xFFB7B2];const pos=[[0,0],[tr*.44,tr*.44],[-tr*.44,tr*.44],[tr*.44,-tr*.44],[-tr*.44,-tr*.44]];pos.forEach(([cx,cz],ci)=>{const g=new THREE.Group();const wax=new THREE.Mesh(new THREE.CylinderGeometry(.065,.065,.55,16),new THREE.MeshStandardMaterial({color:cc[ci%cc.length],roughness:.8}));wax.position.y=.28;g.add(wax);const wick=new THREE.Mesh(new THREE.CylinderGeometry(.008,.008,.1,6),new THREE.MeshStandardMaterial({color:0x1A1008}));wick.position.y=.6;g.add(wick);const flame=new THREE.Mesh(new THREE.SphereGeometry(.055,8,8),new THREE.MeshStandardMaterial({color:0xFFA020,emissive:0xFF6000,emissiveIntensity:1.2,roughness:.2}));flame.scale.set(1,2.2,1);flame.position.y=.7;flame.userData.flicker=Math.random()*Math.PI*2;g.add(flame);const fl=new THREE.PointLight(0xFFA040,.6,2.5);fl.position.y=.72;g.add(fl);g.position.set(cx,ty,cz);g.scale.setScalar(.01);pushAnim(g.scale,'scalar',.01,1,380,ci*100);decoRoot.add(g);});}
-function buildMacs(ty,tr,env){const mc=[0xF4A7B4,0xB8A4D4,0x9DCFB8,0xF5D97A,0x90B8D4,0xFFB7B2];for(let m=0;m<6;m++){const a=(m/6)*Math.PI*2,g=new THREE.Group();const mat=new THREE.MeshPhysicalMaterial({color:mc[m],roughness:.35,clearcoat:.5,envMap:env,envMapIntensity:.7});const geo=new THREE.CylinderGeometry(.16,.155,.1,24);const top=new THREE.Mesh(geo,mat);top.position.y=.13;g.add(top);const b=new THREE.Mesh(new THREE.CylinderGeometry(.155,.16,.1,24),mat);b.position.y=.03;g.add(b);const f=new THREE.Mesh(new THREE.CylinderGeometry(.145,.145,.05,24),new THREE.MeshStandardMaterial({color:0xF8F0E0,roughness:.6}));f.position.y=.08;g.add(f);g.position.set(Math.cos(a)*tr*.65,ty,Math.sin(a)*tr*.65);g.scale.setScalar(.01);pushAnim(g.scale,'scalar',.01,1,360,m*80);decoRoot.add(g);}}
-function buildFlowers(ty,tr){const pm=[new THREE.MeshStandardMaterial({color:0xFFE0F0,roughness:.7,side:THREE.DoubleSide}),new THREE.MeshStandardMaterial({color:0xF0D8E8,roughness:.7,side:THREE.DoubleSide})];[[0,tr*.6],[tr*.55,tr*.3],[-tr*.55,tr*.3],[tr*.55,-tr*.3],[-tr*.55,-tr*.3]].forEach(([fx,fz],fi)=>{const g=new THREE.Group();for(let p=0;p<5;p++){const a=(p/5)*Math.PI*2,geo=new THREE.SphereGeometry(.12,8,6);geo.scale(1,.25,2);const m=new THREE.Mesh(geo,pm[fi%2]);m.position.set(Math.cos(a)*.1,0,Math.sin(a)*.1);m.rotation.y=a;g.add(m);}g.add(new THREE.Mesh(new THREE.SphereGeometry(.065,10,10),new THREE.MeshStandardMaterial({color:0xF5D020,roughness:.4,metalness:.1})));g.rotation.x=Math.PI/2;g.position.set(fx,ty+.04,fz);g.scale.setScalar(.01);pushAnim(g.scale,'scalar',.01,1,360,fi*80);decoRoot.add(g);});}
+
+function buildRoses(ty,tr,mult){
+  const cnt=Math.round(7*mult);
+  for(let pi=0;pi<cnt;pi++){
+    const ang=(pi/cnt)*Math.PI*2,rx=Math.cos(ang)*tr*.65,rz=Math.sin(ang)*tr*.65;
+    const g=new THREE.Group();
+    const pm=new THREE.MeshPhysicalMaterial({color:0xC04060,roughness:.55,clearcoat:.3,envMap:envMap,envMapIntensity:.6});
+    for(let p=0;p<9;p++){const a=(p/9)*Math.PI*2,sp=.07+p*.008;const geo=new THREE.SphereGeometry(.075,8,6);geo.scale(1.6,.5,1);const m=new THREE.Mesh(geo,pm);m.position.set(Math.cos(a)*sp,p*.007,Math.sin(a)*sp);m.rotation.y=a;g.add(m);}
+    g.add(new THREE.Mesh(new THREE.SphereGeometry(.06,10,10),new THREE.MeshStandardMaterial({color:0x901830,roughness:.7})));
+    g.position.set(rx,ty+.08,rz);g.scale.setScalar(.01);pushAnim(g.scale,'scalar',.01,1,380,pi*60);decoRoot.add(g);
+  }
+}
+function buildBerries(ty,tr,mult){
+  const cnt=Math.round(16*mult);
+  const mB=new THREE.MeshPhysicalMaterial({color:0x2A1855,roughness:.25,clearcoat:.8,envMap:envMap,envMapIntensity:1});
+  const mR=new THREE.MeshPhysicalMaterial({color:0xC0204A,roughness:.35,clearcoat:.6,envMap:envMap,envMapIntensity:.8});
+  for(let b=0;b<cnt;b++){const a=(b/cnt)*Math.PI*2,rad=tr*(.55+(b%3)*.08);const m=new THREE.Mesh(new THREE.SphereGeometry(.09+Math.random()*.04,12,12),b%3===0?mR:mB);m.position.set(Math.cos(a)*rad,ty+.06+Math.random()*.04,Math.sin(a)*rad);m.castShadow=true;sadd(m,b*25);}
+}
+function buildGold(ty,tr,mult){
+  const cnt=Math.round(12*mult);
+  const gm=new THREE.MeshStandardMaterial({color:0xD4A020,roughness:.04,metalness:.96,envMap:envMap,envMapIntensity:2});
+  for(let g=0;g<cnt;g++){const a=Math.random()*Math.PI*2,r=Math.random()*tr*.8;const m=new THREE.Mesh(new THREE.PlaneGeometry(.18,.12),gm);m.rotation.x=-Math.PI/2+(Math.random()-.5)*.3;m.rotation.z=Math.random()*Math.PI;m.position.set(Math.cos(a)*r,ty+.01,Math.sin(a)*r);sadd(m,g*35);}
+}
+function buildCandles(ty,tr){
+  const cc=[0xFFD1DC,0xB5EAD7,0xC7CEEA,0xFDFD96,0xFFB7B2];
+  const pos=[[0,0],[tr*.44,tr*.44],[-tr*.44,tr*.44],[tr*.44,-tr*.44],[-tr*.44,-tr*.44]];
+  pos.forEach(([cx,cz],ci)=>{
+    const g=new THREE.Group();
+    const wax=new THREE.Mesh(new THREE.CylinderGeometry(.065,.065,.55,16),new THREE.MeshStandardMaterial({color:cc[ci%cc.length],roughness:.8}));wax.position.y=.28;g.add(wax);
+    const wick=new THREE.Mesh(new THREE.CylinderGeometry(.008,.008,.1,6),new THREE.MeshStandardMaterial({color:0x1A1008}));wick.position.y=.6;g.add(wick);
+    const flame=new THREE.Mesh(new THREE.SphereGeometry(.055,8,8),new THREE.MeshStandardMaterial({color:0xFFA020,emissive:0xFF6000,emissiveIntensity:1.2,roughness:.2}));flame.scale.set(1,2.2,1);flame.position.y=.7;flame.userData.flicker=Math.random()*Math.PI*2;g.add(flame);
+    const fl=new THREE.PointLight(0xFFA040,.6,2.5);fl.position.y=.72;g.add(fl);
+    g.position.set(cx,ty,cz);g.scale.setScalar(.01);pushAnim(g.scale,'scalar',.01,1,380,ci*90);decoRoot.add(g);
+  });
+}
+function buildMacs(ty,tr,mult){
+  const cnt=Math.round(6*mult);
+  const mc=[0xF4A7B4,0xB8A4D4,0x9DCFB8,0xF5D97A,0x90B8D4,0xFFB7B2];
+  for(let m=0;m<cnt;m++){
+    const a=(m/cnt)*Math.PI*2,g=new THREE.Group();
+    const mat=new THREE.MeshPhysicalMaterial({color:mc[m%mc.length],roughness:.35,clearcoat:.5,envMap:envMap,envMapIntensity:.7});
+    const top=new THREE.Mesh(new THREE.CylinderGeometry(.16,.155,.1,24),mat);top.position.y=.13;g.add(top);
+    const bot=new THREE.Mesh(new THREE.CylinderGeometry(.155,.16,.1,24),mat);bot.position.y=.03;g.add(bot);
+    const fill=new THREE.Mesh(new THREE.CylinderGeometry(.145,.145,.05,24),new THREE.MeshStandardMaterial({color:0xF8F0E0,roughness:.6}));fill.position.y=.08;g.add(fill);
+    g.position.set(Math.cos(a)*tr*.65,ty,Math.sin(a)*tr*.65);g.scale.setScalar(.01);pushAnim(g.scale,'scalar',.01,1,360,m*70);decoRoot.add(g);
+  }
+}
+function buildFlowers(ty,tr,mult){
+  const cnt=Math.round(5*mult);
+  const pm=[new THREE.MeshStandardMaterial({color:0xFFE0F0,roughness:.7,side:THREE.DoubleSide}),new THREE.MeshStandardMaterial({color:0xF0D8E8,roughness:.7,side:THREE.DoubleSide})];
+  for(let fi=0;fi<cnt;fi++){
+    const a=(fi/cnt)*Math.PI*2,fx=Math.cos(a)*tr*.6,fz=Math.sin(a)*tr*.6;
+    const g=new THREE.Group();
+    for(let p=0;p<5;p++){const pa=(p/5)*Math.PI*2,geo=new THREE.SphereGeometry(.12,8,6);geo.scale(1,.25,2);const m=new THREE.Mesh(geo,pm[fi%2]);m.position.set(Math.cos(pa)*.1,0,Math.sin(pa)*.1);m.rotation.y=pa;g.add(m);}
+    g.add(new THREE.Mesh(new THREE.SphereGeometry(.065,10,10),new THREE.MeshStandardMaterial({color:0xF5D020,roughness:.4,metalness:.1})));
+    g.rotation.x=Math.PI/2;g.position.set(fx,ty+.04,fz);g.scale.setScalar(.01);pushAnim(g.scale,'scalar',.01,1,360,fi*70);decoRoot.add(g);
+  }
+}
+function buildPearls(ty,tr,mult){
+  const cnt=Math.round(20*mult);
+  const pm=new THREE.MeshPhysicalMaterial({color:0xF0ECE8,roughness:.05,metalness:.1,clearcoat:.9,envMap:envMap,envMapIntensity:1.5});
+  for(let i=0;i<cnt;i++){const a=(i/cnt)*Math.PI*2;const m=new THREE.Mesh(new THREE.SphereGeometry(.07,10,10),pm);m.position.set(Math.cos(a)*tr*.75,ty+.04,Math.sin(a)*tr*.75);sadd(m,i*20);}
+}
+function buildStars(ty,tr,mult){
+  const cnt=Math.round(8*mult);
+  const gm=new THREE.MeshStandardMaterial({color:0xFFD700,roughness:.1,metalness:.8,envMap:envMap,envMapIntensity:1.5});
+  for(let i=0;i<cnt;i++){const a=(i/cnt)*Math.PI*2,r=Math.random()*tr*.7;const m=new THREE.Mesh(new THREE.OctahedronGeometry(.1,0),gm);m.position.set(Math.cos(a)*r,ty+.06+Math.random()*.1,Math.sin(a)*r);m.rotation.set(Math.random(),Math.random(),Math.random());sadd(m,i*40);}
+}
+function buildHearts(ty,tr,mult){
+  const cnt=Math.round(6*mult);
+  const hm=new THREE.MeshPhysicalMaterial({color:0xFF4060,roughness:.3,clearcoat:.5,envMap:envMap,envMapIntensity:.8});
+  for(let i=0;i<cnt;i++){const a=(i/cnt)*Math.PI*2;const g=new THREE.Group();const s1=new THREE.Mesh(new THREE.SphereGeometry(.08,8,8),hm);s1.position.set(-.06,0,0);g.add(s1);const s2=new THREE.Mesh(new THREE.SphereGeometry(.08,8,8),hm);s2.position.set(.06,0,0);g.add(s2);const c=new THREE.Mesh(new THREE.CylinderGeometry(.06,.06,.08,8),hm);c.rotation.z=Math.PI/4;c.position.set(0,-.08,0);g.add(c);g.position.set(Math.cos(a)*tr*.6,ty+.05,Math.sin(a)*tr*.6);g.scale.setScalar(.01);pushAnim(g.scale,'scalar',.01,1,360,i*60);decoRoot.add(g);}
+}
+
+// ── ANIM ──
 function pushAnim(obj,key,from,to,dur,delay=0){animQ.push({obj,key,from,to,dur,delay,start:performance.now()+delay});}
-function processAnim(now){for(let i=animQ.length-1;i>=0;i--){const a=animQ[i];if(now<a.start)continue;const t=Math.min((now-a.start)/a.dur,1),e=1-Math.pow(1-t,3),v=a.from+(a.to-a.from)*e;if(a.key==='scalar')a.obj.setScalar(v);else a.obj[a.key]=v;if(t>=1)animQ.splice(i,1);}}
-function setTiers(n,el){document.querySelectorAll('.tier-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');S.tiers=n;if(rendererReady)buildCake(envMap);updatePrice();}
-function setFlav(f,el){document.querySelectorAll('.flav').forEach(b=>b.classList.remove('active'));el.classList.add('active');S.flavor=f;updatePrice();}
+function procAnim(now){for(let i=animQ.length-1;i>=0;i--){const a=animQ[i];if(now<a.start)continue;const t=Math.min((now-a.start)/a.dur,1),e=1-Math.pow(1-t,3),v=a.from+(a.to-a.from)*e;if(a.key==='scalar')a.obj.setScalar(v);else a.obj[a.key]=v;if(t>=1)animQ.splice(i,1);}}
+
+// ── CONTROLS ──
+function setTiers(n,el){document.querySelectorAll('.sec .btn-grid:first-of-type .opt-btn, .tier-btns .opt-btn').forEach(()=>{});document.querySelectorAll('#p-pasta .sec:nth-child(2) .opt-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');S.tiers=n;if(rendererReady)buildCake(envMap);updatePrice();}
+function setFlav(key,el){document.querySelectorAll('#flav-btns .opt-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');S.flavor=key;updatePrice();}
+function setSize(cm,el){document.querySelectorAll('#size-btns .opt-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');S.size=cm;updatePrice();}
+function setDensity(d,el){document.querySelectorAll('#density-btns .opt-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');S.density=d;if(rendererReady)buildCake(envMap);}
+function setBorderDeco(d,el){document.querySelectorAll('#border-btns .opt-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');S.borderDeco=d;if(rendererReady)buildCake(envMap);}
 function togDeco(d,el){S.decos.has(d)?(S.decos.delete(d),el.classList.remove('active')):(S.decos.add(d),el.classList.add('active'));if(rendererReady)buildCake(envMap);updatePrice();}
-function handleMsg(v){S.msg=v;const pt=document.getElementById('prev-txt');pt.textContent=v||'Mesajınız burada görünecek...';pt.style.fontFamily=S.font;pt.style.color=S.icingColor;pt.style.fontSize=Math.max(12,S.fontSize*.38)+'px';drawInscription();}
-function handleFont(v){S.font=v;document.getElementById('prev-txt').style.fontFamily=v;drawInscription();}
+
+function handleMsg(v){
+  S.msg=v;
+  const pt=document.getElementById('prev-txt');
+  pt.textContent=v||'Mesajınız burada görünecek...';
+  pt.style.fontFamily=S.font;pt.style.color=S.icingColor;
+  pt.style.fontSize=Math.max(11,S.fontSize*.32)+'px';
+  drawInscription();
+}
+function setFont(val,name,el){
+  S.font=val;
+  document.querySelectorAll('#font-btns .opt-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('prev-txt').style.fontFamily=val;
+  drawInscription();
+}
 function handleIcing(v){S.icingColor=v;document.getElementById('prev-txt').style.color=v;drawInscription();}
 function handleSize(v){S.fontSize=parseInt(v);document.getElementById('sVal').textContent=v;drawInscription();}
-function buildPalette(){const pal=document.getElementById('palette');COLORS.forEach((c,i)=>{const sw=document.createElement('div');sw.className='csw'+(i===0?' active':'');sw.style.background=c.hex;sw.title=c.name;sw.onclick=()=>{document.querySelectorAll('.csw').forEach(s=>s.classList.remove('active'));sw.classList.add('active');S.colorIdx=i;document.getElementById('colName').textContent=`— ${c.name} —`;if(rendererReady)buildCake(envMap);updatePrice();};pal.appendChild(sw);});}
-function updatePrice(){let p=350+S.tiers*100+(FPRICE[S.flavor]||0);S.decos.forEach(d=>p+=DPRICE[d]||0);if(S.msg)p+=20;document.getElementById('pVal').textContent='₺ '+p.toLocaleString('tr-TR');return p;}
-function openModal(){const dl=[...S.decos].map(d=>DNAMES[d]).join(', ')||'—';document.getElementById('mDetail').innerHTML=`<b>Kat:</b> ${S.tiers} · <b>Renk:</b> ${COLORS[S.colorIdx].name}<br><b>Lezzet:</b> ${FNAMES[S.flavor]}<br><b>Süsleme:</b> ${dl}<br><b>Yazı:</b> ${S.msg||'—'}<br><b>Toplam:</b> ${document.getElementById('pVal').textContent}`;document.getElementById('modal').classList.add('open');}
+function handleTxtPos(){
+  S.txtX=parseInt(document.getElementById('txtX').value);
+  S.txtY=parseInt(document.getElementById('txtY').value);
+  drawInscription();
+}
+function toggleShadow(el){S.shadow=!S.shadow;el.textContent=S.shadow?'✦ Gölge Açık':'○ Gölge Kapalı';el.classList.toggle('active',S.shadow);drawInscription();}
 
+// ── IMAGE UPLOAD ──
+function handleImageUpload(input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    S.imgData=e.target.result;
+    const preview=document.getElementById('imgPreview');
+    preview.src=S.imgData;preview.style.display='block';
+    document.getElementById('uploadZone').style.display='none';
+    document.getElementById('imgControls').classList.add('show');
+    document.getElementById('img-adjust-sec').style.display='block';
+    drawInscription();
+  };
+  reader.readAsDataURL(file);
+}
+function removeImage(){
+  S.imgData=null;
+  document.getElementById('imgPreview').style.display='none';
+  document.getElementById('imgPreview').src='';
+  document.getElementById('uploadZone').style.display='block';
+  document.getElementById('imgControls').classList.remove('show');
+  document.getElementById('img-adjust-sec').style.display='none';
+  document.getElementById('imgInput').value='';
+  drawInscription();
+}
+function handleImgAdjust(){
+  S.imgScale=parseInt(document.getElementById('imgScale').value);
+  S.imgOpacity=parseInt(document.getElementById('imgOpacity').value);
+  S.imgX=parseInt(document.getElementById('imgX').value);
+  S.imgY=parseInt(document.getElementById('imgY').value);
+  document.getElementById('imgScaleVal').textContent=S.imgScale+'%';
+  document.getElementById('imgOpacityVal').textContent=S.imgOpacity+'%';
+  drawInscription();
+}
+
+// ── PALETTE ──
+function buildPalette(){
+  const pal=document.getElementById('palette');
+  COLORS.forEach((c,i)=>{
+    const sw=document.createElement('div');sw.className='csw'+(i===0?' active':'');sw.style.background=c.hex;sw.title=c.name;
+    sw.onclick=()=>{document.querySelectorAll('.csw').forEach(s=>s.classList.remove('active'));sw.classList.add('active');S.colorIdx=i;document.getElementById('colName').textContent=`— ${c.name} —`;if(rendererReady)buildCake(envMap);updatePrice();};
+    pal.appendChild(sw);
+  });
+}
+
+// ── PRICE ──
+function updatePrice(){
+  const base=350;
+  const tierAdd=S.tiers*100;
+  const sizeAdd=SIZEPRICE[S.size]||0;
+  const flavAdd=FPRICE[S.flavor]||0;
+  let decoAdd=0;S.decos.forEach(d=>decoAdd+=DPRICE[d]||0);
+  const msgAdd=S.msg?20:0;
+  const imgAdd=S.imgData?50:0;
+  const densityAdd=S.density==='cok'?50:0;
+  const borderAdd=S.borderDeco!=='none'?60:0;
+  const total=base+tierAdd+sizeAdd+flavAdd+decoAdd+msgAdd+imgAdd+densityAdd+borderAdd;
+  document.getElementById('pVal').textContent='₺ '+total.toLocaleString('tr-TR');
+  // Price detail
+  const detail=document.getElementById('priceDetail');
+  if(detail){
+    detail.innerHTML=
+      `Temel fiyat: ₺${base}<br>`+
+      `${S.tiers} kat: +₺${tierAdd}<br>`+
+      `${S.size}cm: +₺${sizeAdd}<br>`+
+      `${FNAMES[S.flavor]}: +₺${flavAdd}`+
+      (decoAdd?`<br>Süslemeler: +₺${decoAdd}`:'')+
+      (msgAdd?`<br>Pasta yazısı: +₺${msgAdd}`:'')+
+      (imgAdd?`<br>Görsel: +₺${imgAdd}`:'')+
+      (densityAdd?`<br>Yoğun süsleme: +₺${densityAdd}`:'')+
+      (borderAdd?`<br>Kenar süslemesi: +₺${borderAdd}`:'')+
+      `<br><b style="color:var(--gold-hi)">Toplam: ₺${total.toLocaleString('tr-TR')}</b>`;
+  }
+  return total;
+}
+
+function updateOrderSummary(){
+  const dl=[...S.decos].map(d=>DNAMES[d]).join(', ')||'—';
+  const txt=
+    `<b>Kat:</b> ${S.tiers} · <b>Boyut:</b> ${S.size}cm<br>`+
+    `<b>Renk:</b> ${COLORS[S.colorIdx].name}<br>`+
+    `<b>Lezzet:</b> ${FNAMES[S.flavor]||S.flavor}<br>`+
+    `<b>Süsleme:</b> ${dl}<br>`+
+    `<b>Yazı:</b> ${S.msg||'—'}<br>`+
+    `<b>Görsel:</b> ${S.imgData?'Eklendi':'—'}<br>`+
+    `<b>Toplam:</b> ${document.getElementById('pVal').textContent}`;
+  document.getElementById('orderSummaryPanel').innerHTML=txt;
+}
+
+// ── ORDER MODAL ──
+function openOrderModal(){
+  updateOrderSummary();
+  const dl=[...S.decos].map(d=>DNAMES[d]).join(', ')||'—';
+  document.getElementById('modalSummary').innerHTML=
+    `<b>Kat:</b> ${S.tiers} · <b>Boyut:</b> ${S.size}cm · <b>Renk:</b> ${COLORS[S.colorIdx].name}<br>`+
+    `<b>Lezzet:</b> ${FNAMES[S.flavor]||S.flavor}<br>`+
+    `<b>Süsleme:</b> ${dl}<br>`+
+    `<b>Yazı:</b> ${S.msg||'—'}<br>`+
+    `<b>Toplam:</b> ${document.getElementById('pVal').textContent}`;
+  // Set default date to 3 days from now
+  const d=new Date();d.setDate(d.getDate()+3);
+  document.getElementById('oDate').value=d.toISOString().split('T')[0];
+  document.getElementById('orderModal').classList.add('open');
+}
+function closeModal(){document.getElementById('orderModal').classList.remove('open');}
+
+function sendWhatsApp(){
+  const name=document.getElementById('oName').value.trim();
+  const phone=document.getElementById('oPhone').value.trim();
+  const date=document.getElementById('oDate').value;
+  const time=document.getElementById('oTime').value;
+  const addr=document.getElementById('oAddr').value.trim();
+  const note=document.getElementById('oNote').value.trim();
+  if(!name||!phone){alert('Lütfen ad soyad ve telefon numaranızı girin.');return;}
+  const dl=[...S.decos].map(d=>DNAMES[d]).join(', ')||'—';
+  const msg=
+    `🎂 *SARAY PATİSSERİE - YENİ SİPARİŞ*\n\n`+
+    `👤 *Müşteri:* ${name}\n📞 *Tel:* ${phone}\n\n`+
+    `*PASTA DETAYLARI*\n`+
+    `• Kat: ${S.tiers} kat\n`+
+    `• Boyut: ${S.size}cm\n`+
+    `• Renk: ${COLORS[S.colorIdx].name}\n`+
+    `• Lezzet: ${FNAMES[S.flavor]||S.flavor}\n`+
+    `• Süsleme: ${dl}\n`+
+    `• Pasta yazısı: ${S.msg||'—'}\n`+
+    `• Görsel: ${S.imgData?'✅ Ayrıca gönderilecek':'—'}\n\n`+
+    `*TESLİMAT*\n`+
+    `• Tarih: ${date} ${time}\n`+
+    `• Adres: ${addr||'Mağazadan teslim'}\n`+
+    (note?`• Not: ${note}\n`:'')+
+    `\n💰 *Toplam: ${document.getElementById('pVal').textContent}*`;
+  const waNumber='905436475871';
+  window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+// ── SAVE IMAGE ──
+function saveImage(){
+  if(!rendererReady){alert('Önce "✦ 3D Özelleştir" sekmesine geçin.');return;}
+  renderer.render(scene,camera);
+  const link=document.createElement('a');
+  link.download='saray-pasta-tasarim.png';
+  link.href=renderer.domElement.toDataURL('image/png');
+  link.click();
+}
+
+// ── BOOT ──
 (function boot(){
-  const steps=[[15,'Model yükleniyor...'],[35,'Sahne hazırlanıyor...'],[60,'PBR materyaller...'],[80,'Studio hazırlanıyor...'],[100,'Hazır!']];
+  const steps=[[15,'Model yükleniyor...'],[40,'Sahne hazırlanıyor...'],[70,'Studio hazır...'],[100,'Başlayalım!']];
   let si=0;
-  (function step(){if(si>=steps.length){setTimeout(()=>document.getElementById('loading').classList.add('gone'),500);return;}const[p,l]=steps[si++];document.getElementById('ldBar').style.width=p+'%';document.getElementById('ldLbl').textContent=l;setTimeout(step,200+Math.random()*180);})();
+  (function step(){
+    if(si>=steps.length){setTimeout(()=>document.getElementById('loading').classList.add('gone'),400);return;}
+    const[p,l]=steps[si++];
+    document.getElementById('ldBar').style.width=p+'%';
+    document.getElementById('ldLbl').textContent=l;
+    setTimeout(step,220+Math.random()*160);
+  })();
 })();
 
 buildPalette();
+updatePrice();
 </script>
 </body>
 </html>
