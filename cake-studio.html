@@ -243,11 +243,11 @@ input[type=color]{width:32px;height:27px;border:1px solid var(--border);border-r
 
     <!-- Panel tab navigation -->
     <div class="panel-tabs">
-      <button class="ptab active" onclick="showPage('p-pasta')">🎂 Pasta</button>
-      <button class="ptab" onclick="showPage('p-yazi')">✍️ Yazı</button>
-      <button class="ptab" onclick="showPage('p-gorsel')">🖼 Görsel</button>
-      <button class="ptab" onclick="showPage('p-sus')">🌹 Süs</button>
-      <button class="ptab" onclick="showPage('p-siparis')">🛍 Sipariş</button>
+      <button class="ptab active" onclick="showPage('p-pasta',this)">🎂 Pasta</button>
+      <button class="ptab" onclick="showPage('p-yazi',this)">✍️ Yazı</button>
+      <button class="ptab" onclick="showPage('p-gorsel',this)">🖼 Görsel</button>
+      <button class="ptab" onclick="showPage('p-sus',this)">🌹 Süs</button>
+      <button class="ptab" onclick="showPage('p-siparis',this)">🛍 Sipariş</button>
     </div>
 
     <!-- PAGE 1: PASTA -->
@@ -277,6 +277,18 @@ input[type=color]{width:32px;height:27px;border:1px solid var(--border);border-r
           <button class="opt-btn" onclick="setSize(24,this)">24 Kişilik</button>
           <button class="opt-btn" onclick="setSize(35,this)">35 Kişilik</button>
           <button class="opt-btn" onclick="setSize(50,this)">50 Kişilik</button>
+        </div>
+      </div>
+
+      <!-- Pasta Şekli -->
+      <div class="sec">
+        <div class="sec-lbl">Pasta Şekli</div>
+        <div class="btn-grid" id="shape-btns">
+          <button class="opt-btn active" onclick="setShape('round',this)">⭕ Yuvarlak</button>
+          <button class="opt-btn" onclick="setShape('heart',this)">❤️ Kalpli</button>
+          <button class="opt-btn" onclick="setShape('square',this)">⬛ Kare</button>
+          <button class="opt-btn" onclick="setShape('rectangle',this)">▬ Dikdörtgen</button>
+          <button class="opt-btn" onclick="setShape('hexagon',this)">⬡ Altıgen</button>
         </div>
       </div>
 
@@ -586,7 +598,7 @@ THREE.OrbitControls=function(cam,dom){
 
 // ── STATE ──
 const S = {
-  colorIdx:0, flavor:'vanilla', persons:4,
+  colorIdx:0, flavor:'vanilla', persons:4, shape:'round',
   decos:new Set(), msg:'', font:"'Dancing Script',cursive",
   icingColor:'#C9A96E', fontSize:46, shadow:true,
   txtX:512, txtY:512,
@@ -642,11 +654,11 @@ let currentView='sf', rendererReady=false;
 let renderer, scene, camera, controls, cakeRoot, decoRoot, animQ=[], envMap=null;
 
 // ── PANEL NAVIGATION ──
-function showPage(id) {
+function showPage(id, el) {
   document.querySelectorAll('.ppage').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  event.target.classList.add('active');
+  if(el) el.classList.add('active');
   if(id==='p-siparis') updateOrderSummary();
 }
 
@@ -804,40 +816,108 @@ function spongeMat(c){
 }
 function topMat(c){return new THREE.MeshPhysicalMaterial({color:c,roughness:.05,metalness:0,clearcoat:1,clearcoatRoughness:.04,envMap:envMap,envMapIntensity:1.5,map:window._inscTex||null});}
 
-const TD=[{r:1.62,h:1.0},{r:1.16,h:.92},{r:.78,h:.84}];
 
 function clearGrp(g){while(g.children.length){const c=g.children[0];if(c.geometry)c.geometry.dispose();if(c.material){Array.isArray(c.material)?c.material.forEach(m=>m.dispose()):c.material.dispose();}g.remove(c);}}
 function blendHex(a,b,t){return new THREE.Color(a).lerp(new THREE.Color(b),t).getHex();}
+
+// ── SHAPE GEOMETRY HELPERS ──
+function makeShapeGeo(shape, r, h, segments) {
+  switch(shape) {
+    case 'heart': return makeHeartGeo(r, h);
+    case 'square': return new THREE.BoxGeometry(r*1.8, h, r*1.8);
+    case 'rectangle': return new THREE.BoxGeometry(r*2.4, h, r*1.4);
+    case 'hexagon': return new THREE.CylinderGeometry(r, r, h, 6);
+    default: return new THREE.CylinderGeometry(r, r, h, 80);
+  }
+}
+function makeHeartGeo(r, h) {
+  // Heart shape using LatheGeometry approximation via ExtrudeGeometry
+  const shape = new THREE.Shape();
+  const s = r * 0.9;
+  shape.moveTo(0, -s*0.6);
+  shape.bezierCurveTo(-s*1.2,-s*0.6,-s*1.4,s*0.4,-s*0.5,s*0.8);
+  shape.bezierCurveTo(-s*0.2,s*1.2,0,s*1.0,0,s*0.8);
+  shape.bezierCurveTo(0,s*1.0,s*0.2,s*1.2,s*0.5,s*0.8);
+  shape.bezierCurveTo(s*1.4,s*0.4,s*1.2,-s*0.6,0,-s*0.6);
+  return new THREE.ExtrudeGeometry(shape, {depth:h, bevelEnabled:false});
+}
+function makeShellGeo(shape, r, h) {
+  if(shape==='square') return new THREE.BoxGeometry(r*1.8, h, r*1.8);
+  if(shape==='rectangle') return new THREE.BoxGeometry(r*2.4, h, r*1.4);
+  if(shape==='hexagon') return new THREE.CylinderGeometry(r, r, h, 6, 1, true);
+  if(shape==='heart') return makeHeartGeo(r, h);
+  return new THREE.CylinderGeometry(r, r, h, 80, 1, true);
+}
+function makeTopGeo(shape, r) {
+  if(shape==='square') return new THREE.PlaneGeometry(r*1.8, r*1.8);
+  if(shape==='rectangle') return new THREE.PlaneGeometry(r*2.4, r*1.4);
+  if(shape==='hexagon') return new THREE.CircleGeometry(r, 6);
+  if(shape==='heart') {
+    const s=new THREE.Shape();const rs=r*0.9;
+    s.moveTo(0,-rs*.6);s.bezierCurveTo(-rs*1.2,-rs*.6,-rs*1.4,rs*.4,-rs*.5,rs*.8);s.bezierCurveTo(-rs*.2,rs*1.2,0,rs*1.0,0,rs*.8);s.bezierCurveTo(0,rs*1.0,rs*.2,rs*1.2,rs*.5,rs*.8);s.bezierCurveTo(rs*1.4,rs*.4,rs*1.2,-rs*.6,0,-rs*.6);
+    return new THREE.ShapeGeometry(s);
+  }
+  return new THREE.CircleGeometry(r, 80);
+}
 
 function buildCake(env){
   if(!cakeRoot)return;
   clearGrp(cakeRoot);clearGrp(decoRoot);animQ.length=0;
   const col=COLORS[S.colorIdx],gc=col.glaze,sc=col.sponge,frost=blendHex(gc,0xFFFFFF,.5);
-  // Single tier cake, scale handles size
   const r=1.62, h=1.0, lH=h*.285;
-  let yOff=0;
+  const shp=S.shape||'round';
+
+  // Sponge layers (3 thin layers = single cake)
   [sc,blendHex(sc,0xF5E8C8,.45),sc].forEach((lc,li)=>{
-    const lm=new THREE.Mesh(new THREE.CylinderGeometry(r-.02,r-.02,lH,64),spongeMat(lc));
-    lm.castShadow=lm.receiveShadow=true;lm.position.y=yOff+lH*li+lH/2;cakeRoot.add(lm);
+    const geo=shp==='round'?new THREE.CylinderGeometry(r-.02,r-.02,lH,64):
+              shp==='hexagon'?new THREE.CylinderGeometry(r-.02,r-.02,lH,6):
+              shp==='heart'?makeHeartGeo(r-.05,lH):
+              shp==='square'?new THREE.BoxGeometry(r*1.76,lH,r*1.76):
+              new THREE.BoxGeometry(r*2.36,lH,r*1.36);
+    const lm=new THREE.Mesh(geo,spongeMat(lc));
+    lm.castShadow=lm.receiveShadow=true;
+    if(shp==='heart'){lm.position.set(-r*.02,lH*li+lH/2,-r*.1);lm.rotation.x=-Math.PI/2;}
+    else{lm.position.y=lH*li+lH/2;}
+    cakeRoot.add(lm);
   });
-  const shell=new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,80,1,true),glazeMat(gc));
-  shell.castShadow=true;shell.position.y=yOff+h/2;shell.scale.y=.01;
-  pushAnim(shell.scale,'y',.01,1,500,0);cakeRoot.add(shell);
-  const tface=new THREE.Mesh(new THREE.CircleGeometry(r,80),topMat(frost));
-  tface.rotation.x=-Math.PI/2;tface.position.y=yOff+h+.001;tface.receiveShadow=true;cakeRoot.add(tface);
-  const dripCount=S.density==='az'?12:S.density==='cok'?30:22;
-  for(let d=0;d<dripCount;d++){
-    const ang=(d/dripCount)*Math.PI*2+(Math.random()-.5)*.28,dH=.08+Math.random()*.26,dR=.038+Math.random()*.022;
-    const drip=new THREE.Mesh(new THREE.CylinderGeometry(dR*.55,dR,dH,8),glazeMat(frost));
-    drip.position.set(Math.cos(ang)*r,yOff+h-dH/2-.02,Math.sin(ang)*r);drip.castShadow=true;cakeRoot.add(drip);
-    const blob=new THREE.Mesh(new THREE.SphereGeometry(dR*1.1,8,8),glazeMat(frost));
-    blob.position.set(Math.cos(ang)*r,yOff+h-dH-.04,Math.sin(ang)*r);cakeRoot.add(blob);
+
+  // Outer shell (glaze)
+  const shellGeo=shp==='round'?new THREE.CylinderGeometry(r,r,h,80,1,true):
+                 shp==='hexagon'?new THREE.CylinderGeometry(r,r,h,6,1,true):
+                 shp==='heart'?makeHeartGeo(r,h):
+                 shp==='square'?new THREE.BoxGeometry(r*1.8,h,r*1.8):
+                 new THREE.BoxGeometry(r*2.4,h,r*1.4);
+  const shell=new THREE.Mesh(shellGeo,glazeMat(gc));
+  shell.castShadow=true;
+  if(shp==='heart'){shell.position.set(-r*.02,h/2,-r*.1);shell.rotation.x=-Math.PI/2;}
+  else{shell.position.y=h/2;}
+  shell.scale.y=.01;
+  pushAnim(shell.scale,'y',.01,1,500,0);
+  cakeRoot.add(shell);
+
+  // Top face with inscription texture
+  const topGeo=makeTopGeo(shp,r);
+  const tface=new THREE.Mesh(topGeo,topMat(frost));
+  tface.rotation.x=-Math.PI/2;tface.position.y=h+.001;tface.receiveShadow=true;
+  cakeRoot.add(tface);
+
+  // Drips (only for round/hexagon)
+  if(shp==='round'||shp==='hexagon'){
+    const segs=shp==='hexagon'?6:80;
+    const dripCount=S.density==='az'?12:S.density==='cok'?30:22;
+    for(let d=0;d<dripCount;d++){
+      const ang=(d/dripCount)*Math.PI*2+(Math.random()-.5)*.28,dH=.08+Math.random()*.26,dR=.038+Math.random()*.022;
+      const drip=new THREE.Mesh(new THREE.CylinderGeometry(dR*.55,dR,dH,8),glazeMat(frost));
+      drip.position.set(Math.cos(ang)*r,h-dH/2-.02,Math.sin(ang)*r);drip.castShadow=true;cakeRoot.add(drip);
+      const blob=new THREE.Mesh(new THREE.SphereGeometry(dR*1.1,8,8),glazeMat(frost));
+      blob.position.set(Math.cos(ang)*r,h-dH-.04,Math.sin(ang)*r);cakeRoot.add(blob);
+    }
   }
-  yOff=h;
+
   // Apply person scale
   const sc2=PERSONSCALE[S.persons]||1;
   cakeRoot.scale.setScalar(sc2);
-  buildDecos(yOff,r);
+  buildDecos(h, r);
   drawInscription();
 }
 
@@ -936,6 +1016,13 @@ function procAnim(now){for(let i=animQ.length-1;i>=0;i--){const a=animQ[i];if(no
 // ── CONTROLS ──
 // setTiers removed
 function setFlav(key,el){document.querySelectorAll('#flav-btns .opt-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');S.flavor=key;updatePrice();}
+function setShape(shp, el){
+  document.querySelectorAll('#shape-btns .opt-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  S.shape=shp;
+  if(rendererReady) buildCake(envMap);
+}
+
 function setSize(persons,el){
   document.querySelectorAll('#size-btns .opt-btn').forEach(b=>b.classList.remove('active'));
   el.classList.add('active');
