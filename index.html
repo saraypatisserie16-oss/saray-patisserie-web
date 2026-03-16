@@ -1366,3 +1366,1235 @@ render();
 </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saray Patisserie — Cake Studio</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@200;300;400;500;600&family=Dancing+Script:wght@400;600;700&family=Great+Vibes&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════
+   SARAY PATİSSERİE — CAKE STUDIO v2
+   Dark Obsidian · Warm Gold · CC-BY Model
+   ═══════════════════════════════════════ */
+:root {
+  --bg:         #07050303;
+  --obsidian:   #07050A;
+  --deep:       #0F0B10;
+  --surface:    #18121A;
+  --panel:      #1E1520;
+  --card:       #261C28;
+  --border:     #3A2840;
+  --border-hi:  #5A4060;
+
+  --gold:       #C9A96E;
+  --gold-hi:    #E8C98E;
+  --gold-dim:   #7A6035;
+  --gold-glow:  rgba(201,169,110,0.18);
+  --gold-soft:  rgba(201,169,110,0.07);
+
+  --rose:       #D4889A;
+  --rose-deep:  #A85868;
+
+  --cream:      #F2E8D5;
+  --text-hi:    #EEE0CC;
+  --text:       #C0A888;
+  --text-muted: #7A6050;
+  --text-dim:   #4A3530;
+
+  --panel-w: 390px;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:100%; height:100%; overflow:hidden; background:var(--obsidian); font-family:'Jost',sans-serif; color:var(--text); }
+
+/* ── LAYOUT ── */
+#app { display:flex; width:100vw; height:100vh; }
+
+/* ══════════════════════════════════════
+   LEFT: SKETCHFAB VIEWER
+   ══════════════════════════════════════ */
+#viewer-col {
+  flex:1;
+  position:relative;
+  overflow:hidden;
+  background: radial-gradient(ellipse 100% 100% at 50% 40%, #1A0E1E 0%, var(--obsidian) 100%);
+  display:flex;
+  flex-direction:column;
+}
+
+/* Brand */
+.brand {
+  position:absolute;
+  top:28px; left:36px;
+  z-index:20; pointer-events:none;
+}
+.brand h1 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.4rem; font-weight:300;
+  color:var(--gold-hi);
+  letter-spacing:0.22em; text-transform:uppercase;
+}
+.brand p {
+  font-size:0.58rem; letter-spacing:0.32em;
+  color:var(--gold-dim); text-transform:uppercase; margin-top:3px;
+}
+
+/* Tab switcher */
+.view-tabs {
+  position:absolute;
+  top:26px; left:50%; transform:translateX(-50%);
+  z-index:20;
+  display:flex;
+  background:rgba(30,21,32,0.85);
+  border:1px solid var(--border);
+  border-radius:30px;
+  padding:4px;
+  backdrop-filter:blur(12px);
+  gap:2px;
+}
+.vtab {
+  padding:7px 18px;
+  border-radius:24px;
+  font-size:0.7rem; font-weight:500;
+  letter-spacing:0.1em; text-transform:uppercase;
+  cursor:pointer;
+  color:var(--text-muted);
+  transition:all 0.3s;
+  border:none; background:transparent;
+  font-family:'Jost',sans-serif;
+}
+.vtab.active {
+  background:var(--gold-dim);
+  color:var(--obsidian);
+  box-shadow:0 2px 12px var(--gold-glow);
+}
+
+/* Sketchfab iframe container */
+#sketchfab-wrap {
+  position:absolute; inset:0;
+  z-index:5;
+  transition:opacity 0.5s ease;
+}
+#sketchfab-wrap iframe {
+  width:100%; height:100%;
+  border:none;
+  display:block;
+}
+#sketchfab-wrap.hidden { opacity:0; pointer-events:none; }
+
+/* Sketchfab credit badge */
+.sfab-credit {
+  position:absolute;
+  bottom:20px; left:50%; transform:translateX(-50%);
+  z-index:30;
+  background:rgba(30,21,32,0.8);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:6px 16px;
+  font-size:0.65rem; color:var(--text-muted);
+  letter-spacing:0.08em;
+  backdrop-filter:blur(8px);
+  display:flex; align-items:center; gap:6px;
+  pointer-events:none;
+}
+.sfab-credit a {
+  color:var(--gold-dim);
+  text-decoration:none; pointer-events:all;
+}
+.sfab-credit span.dot { color:var(--border-hi); }
+
+/* Three.js canvas container */
+#canvas-wrap {
+  position:absolute; inset:0;
+  z-index:4;
+  transition:opacity 0.5s ease;
+}
+#canvas-wrap.hidden { opacity:0; pointer-events:none; }
+#canvas-wrap canvas { width:100%!important; height:100%!important; display:block; }
+
+/* Vignette */
+#viewer-col::after {
+  content:'';
+  position:absolute; inset:0; z-index:6; pointer-events:none;
+  background:radial-gradient(ellipse 85% 85% at 50% 50%, transparent 40%, rgba(7,5,10,0.5) 100%);
+}
+
+/* Rotate hint */
+.rot-hint {
+  position:absolute; bottom:56px; left:50%; transform:translateX(-50%);
+  z-index:30; pointer-events:none;
+  font-size:0.62rem; letter-spacing:0.2em; text-transform:uppercase;
+  color:var(--text-dim); display:flex; align-items:center; gap:10px;
+  opacity:0; animation:fadeHint 3.5s 2s ease forwards;
+}
+@keyframes fadeHint { 0%{opacity:0} 20%{opacity:1} 80%{opacity:1} 100%{opacity:0} }
+.rot-hint::before,.rot-hint::after { content:''; display:block; width:26px; height:1px; background:var(--gold-dim); }
+
+/* ── HERO CTA BUTTON — The Boutique Button ── */
+.hero-cta {
+  position:absolute;
+  bottom:70px; right:40px;
+  z-index:30;
+}
+.btn-studio {
+  display:flex; align-items:center; gap:12px;
+  padding:0;
+  background:none; border:none; cursor:pointer;
+  text-decoration:none;
+  position:relative;
+}
+.btn-studio-inner {
+  display:flex; align-items:center; gap:14px;
+  padding:16px 28px 16px 20px;
+  background:linear-gradient(135deg, rgba(201,169,110,0.12), rgba(201,169,110,0.06));
+  border:1px solid rgba(201,169,110,0.35);
+  border-radius:50px;
+  backdrop-filter:blur(16px);
+  transition:all 0.4s cubic-bezier(.2,0,.2,1);
+  position:relative; overflow:hidden;
+}
+.btn-studio-inner::before {
+  content:'';
+  position:absolute; inset:0;
+  background:linear-gradient(135deg, rgba(201,169,110,0.22), rgba(201,169,110,0.08));
+  opacity:0; transition:opacity 0.3s;
+}
+.btn-studio:hover .btn-studio-inner {
+  border-color:rgba(201,169,110,0.7);
+  box-shadow:0 8px 40px rgba(201,169,110,0.2), 0 0 0 1px rgba(201,169,110,0.2);
+  transform:translateY(-2px);
+}
+.btn-studio:hover .btn-studio-inner::before { opacity:1; }
+
+.btn-studio-icon {
+  width:36px; height:36px;
+  background:linear-gradient(135deg, var(--gold-dim), var(--gold));
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1rem;
+  box-shadow:0 4px 16px rgba(201,169,110,0.3);
+  transition:transform 0.3s;
+  position:relative; z-index:1;
+  flex-shrink:0;
+}
+.btn-studio:hover .btn-studio-icon { transform:rotate(15deg) scale(1.05); }
+
+.btn-studio-text {
+  position:relative; z-index:1;
+  text-align:left;
+}
+.btn-studio-text .bst-top {
+  display:block;
+  font-family:'Cormorant Garamond',serif;
+  font-size:0.95rem; font-weight:600;
+  color:var(--gold-hi);
+  letter-spacing:0.06em; line-height:1;
+  margin-bottom:2px;
+}
+.btn-studio-text .bst-sub {
+  display:block;
+  font-size:0.6rem; font-weight:400;
+  letter-spacing:0.18em; text-transform:uppercase;
+  color:var(--gold-dim);
+}
+
+.btn-studio-arrow {
+  position:relative; z-index:1;
+  color:var(--gold-dim);
+  font-size:0.8rem;
+  transition:transform 0.3s, color 0.3s;
+}
+.btn-studio:hover .btn-studio-arrow { transform:translateX(4px); color:var(--gold-hi); }
+
+/* Pulse ring */
+.btn-studio::after {
+  content:'';
+  position:absolute;
+  inset:-6px;
+  border:1px solid rgba(201,169,110,0.2);
+  border-radius:56px;
+  animation:pulseRing 2.5s ease-in-out infinite;
+}
+@keyframes pulseRing {
+  0%,100% { opacity:0; transform:scale(1); }
+  50% { opacity:1; transform:scale(1.04); }
+}
+
+/* ══════════════════════════════════════
+   RIGHT: CONTROL PANEL
+   ══════════════════════════════════════ */
+#panel {
+  width:var(--panel-w);
+  background:var(--panel);
+  border-left:1px solid var(--border);
+  display:flex; flex-direction:column;
+  overflow:hidden; z-index:20;
+  box-shadow:-20px 0 60px rgba(0,0,0,0.4);
+}
+
+.panel-head {
+  padding:26px 28px 18px;
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;
+  background:linear-gradient(180deg, rgba(201,169,110,0.04), transparent);
+}
+.panel-head h2 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem; font-weight:400;
+  color:var(--gold-hi); letter-spacing:0.14em; text-transform:uppercase;
+}
+.panel-head p { font-size:0.68rem; color:var(--text-muted); margin-top:4px; letter-spacing:0.07em; }
+
+/* Active view indicator */
+.view-indicator {
+  display:flex; align-items:center; gap:8px;
+  margin-top:12px;
+  font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-dim);
+}
+.vi-dot { width:6px; height:6px; border-radius:50%; background:var(--gold-dim); }
+#vi-label { color:var(--gold-dim); }
+
+.panel-body {
+  flex:1; overflow-y:auto; overflow-x:hidden;
+  scrollbar-width:thin; scrollbar-color:var(--border) transparent;
+}
+.panel-body::-webkit-scrollbar { width:3px; }
+.panel-body::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
+
+/* Section */
+.sec {
+  padding:18px 28px;
+  border-bottom:1px solid var(--border);
+}
+.sec:last-child { border-bottom:none; }
+.sec-lbl {
+  font-size:0.57rem; letter-spacing:0.28em; text-transform:uppercase;
+  color:var(--gold-dim); margin-bottom:13px;
+  display:flex; align-items:center; gap:8px;
+}
+.sec-lbl::after { content:''; flex:1; height:1px; background:var(--border); }
+
+/* Tier */
+.tier-row { display:flex; gap:8px; }
+.tier-btn {
+  flex:1; padding:13px 6px; text-align:center; cursor:pointer;
+  background:var(--surface); border:1px solid var(--border); border-radius:10px;
+  transition:all 0.25s; position:relative; overflow:hidden;
+}
+.tier-btn::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(circle at 50% 0%, rgba(201,169,110,0.1), transparent 70%);
+  opacity:0; transition:opacity 0.25s;
+}
+.tier-btn:hover::before { opacity:1; }
+.tier-btn.active { border-color:var(--gold); background:#281D08; box-shadow:0 0 20px var(--gold-glow), inset 0 1px 0 rgba(201,169,110,0.15); }
+.tier-btn .t-n {
+  font-family:'Cormorant Garamond',serif; font-size:1.5rem;
+  color:var(--text-muted); display:block; margin-bottom:3px; transition:color 0.25s;
+}
+.tier-btn.active .t-n { color:var(--gold-hi); }
+.tier-btn .t-l { font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-dim); transition:color 0.25s; }
+.tier-btn.active .t-l { color:var(--gold-dim); }
+
+/* Colors */
+.pal { display:flex; flex-wrap:wrap; gap:9px; margin-bottom:10px; }
+.csw {
+  width:30px; height:30px; border-radius:50%; cursor:pointer;
+  border:2.5px solid transparent; transition:all 0.2s;
+}
+.csw:hover { transform:scale(1.1); }
+.csw.active {
+  border-color:var(--gold-hi);
+  transform:scale(1.15);
+  box-shadow:0 0 14px var(--gold-glow);
+}
+.csw.active::after { content:'✓'; position:absolute; /* handled via wrapper */ }
+.col-name { font-size:0.66rem; color:var(--text-muted); letter-spacing:0.05em; margin-top:2px; }
+
+/* Flavor chips */
+.flav-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+.flav {
+  padding:9px 10px; background:var(--surface); border:1px solid var(--border);
+  border-radius:8px; cursor:pointer; transition:all 0.2s;
+  display:flex; align-items:center; gap:7px;
+  font-size:0.73rem; color:var(--text-muted);
+}
+.flav:hover { border-color:var(--border-hi); color:var(--text); }
+.flav.active { border-color:var(--gold-dim); background:#241808; color:var(--gold); }
+.flav .fi { font-size:0.95rem; }
+
+/* Inscription */
+.insc-preview {
+  background:var(--surface); border:1px solid var(--border); border-radius:12px;
+  padding:16px; min-height:68px; display:flex; align-items:center; justify-content:center;
+  margin-bottom:12px; position:relative; overflow:hidden;
+}
+.insc-preview::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 50%, rgba(201,169,110,0.04), transparent);
+}
+#prev-txt {
+  position:relative; z-index:1; color:var(--gold-hi); text-align:center;
+  max-width:100%; word-break:break-word; transition:all 0.3s; font-size:1.1rem;
+}
+
+.inp {
+  width:100%; background:var(--surface); border:1px solid var(--border);
+  border-radius:8px; padding:10px 13px; font-family:'Jost',sans-serif;
+  font-size:0.83rem; color:var(--text-hi); outline:none;
+  transition:border-color 0.2s, box-shadow 0.2s; margin-bottom:9px;
+}
+.inp:focus { border-color:var(--gold-dim); box-shadow:0 0 0 3px rgba(201,169,110,0.08); }
+.inp::placeholder { color:var(--text-dim); font-style:italic; }
+
+.ctrl {
+  display:flex; align-items:center; gap:8px; margin-bottom:9px;
+}
+.clbl { font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-muted); min-width:44px; flex-shrink:0; }
+
+select.inp {
+  margin-bottom:0; cursor:pointer; flex:1; padding:8px 12px;
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%237A6035'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 10px center;
+}
+input[type=range] {
+  flex:1; height:2px; -webkit-appearance:none;
+  background:var(--border); border-radius:1px; outline:none; cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance:none; width:13px; height:13px; border-radius:50%;
+  background:var(--gold); border:2px solid var(--panel);
+  box-shadow:0 0 8px var(--gold-glow); cursor:pointer;
+}
+input[type=color] {
+  width:34px; height:28px; border:1px solid var(--border); border-radius:5px;
+  background:var(--surface); cursor:pointer; padding:2px; flex-shrink:0;
+}
+.rval { font-size:0.68rem; color:var(--gold-dim); min-width:26px; text-align:right; flex-shrink:0; }
+
+/* Deco */
+.deco-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
+.deco-card {
+  padding:11px 6px; background:var(--surface); border:1px solid var(--border);
+  border-radius:9px; cursor:pointer; text-align:center; transition:all 0.22s; position:relative;
+}
+.deco-card:hover { border-color:var(--border-hi); }
+.deco-card.active { border-color:var(--rose); background:#200F14; box-shadow:0 0 16px rgba(212,136,154,0.1); }
+.deco-card .di { font-size:1.25rem; display:block; margin-bottom:3px; }
+.deco-card .dl { font-size:0.58rem; color:var(--text-muted); letter-spacing:0.05em; }
+.deco-card.active .dl { color:var(--rose); }
+.dchk { position:absolute; top:4px; right:4px; width:13px; height:13px; background:var(--rose); border-radius:50%; font-size:0.5rem; color:#fff; display:none; align-items:center; justify-content:center; }
+.deco-card.active .dchk { display:flex; }
+
+/* Panel footer */
+.panel-foot {
+  padding:18px 28px 22px;
+  border-top:1px solid var(--border);
+  background:linear-gradient(0deg, rgba(201,169,110,0.03), transparent);
+  flex-shrink:0;
+}
+.price-row { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:14px; }
+.price-lbl { font-size:0.62rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-muted); }
+.price-val { font-family:'Cormorant Garamond',serif; font-size:1.55rem; font-weight:400; color:var(--gold-hi); }
+
+/* CTA ORDER BUTTON */
+.btn-order {
+  width:100%; padding:0; background:none; border:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  position:relative;
+}
+.btn-order-inner {
+  width:100%; padding:14px 20px;
+  background:linear-gradient(135deg, #6A4818, var(--gold), #B88030);
+  background-size:200% 100%; background-position:100% 0;
+  border-radius:10px;
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  transition:background-position 0.5s ease, box-shadow 0.3s, transform 0.2s;
+  box-shadow:0 4px 24px rgba(201,169,110,0.22);
+}
+.btn-order:hover .btn-order-inner {
+  background-position:0 0;
+  box-shadow:0 8px 40px rgba(201,169,110,0.38);
+  transform:translateY(-2px);
+}
+.btn-order-inner span {
+  font-family:'Jost',sans-serif; font-size:0.75rem; font-weight:600;
+  letter-spacing:0.2em; text-transform:uppercase; color:var(--obsidian);
+}
+.btn-order-inner .ico { font-size:1rem; }
+
+/* ══════════════════════════════════════
+   MODAL
+   ══════════════════════════════════════ */
+.modal-bg {
+  display:none; position:fixed; inset:0; z-index:999;
+  background:rgba(7,5,10,0.82); backdrop-filter:blur(12px);
+  align-items:center; justify-content:center;
+}
+.modal-bg.open { display:flex; }
+.modal {
+  background:var(--panel); border:1px solid var(--gold-dim); border-radius:22px;
+  padding:44px 36px; max-width:420px; width:90%; text-align:center;
+  animation:mIn 0.4s cubic-bezier(.2,0,.2,1);
+  box-shadow:0 40px 100px rgba(0,0,0,0.7), 0 0 60px rgba(201,169,110,0.07);
+}
+@keyframes mIn { from{opacity:0;transform:scale(0.88) translateY(24px)} to{opacity:1;transform:none} }
+.m-ico { font-size:3rem; margin-bottom:14px; }
+.modal h3 { font-family:'Cormorant Garamond',serif; font-size:1.7rem; font-weight:400; color:var(--gold-hi); margin-bottom:10px; }
+.modal p { font-size:0.82rem; color:var(--text-muted); line-height:1.9; margin-bottom:22px; }
+.m-detail {
+  background:var(--surface); border-radius:10px; padding:14px 16px; text-align:left;
+  font-size:0.78rem; color:var(--text-muted); line-height:2.1; margin-bottom:22px;
+  border:1px solid var(--border);
+}
+.m-detail b { color:var(--text); font-weight:400; }
+.btn-mclose {
+  background:var(--gold-dim); border:none; border-radius:8px;
+  padding:11px 28px; color:var(--obsidian); font-family:'Jost',sans-serif;
+  font-size:0.75rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; cursor:pointer;
+}
+
+/* ══════════════════════════════════════
+   LOADING
+   ══════════════════════════════════════ */
+#loading {
+  position:absolute; inset:0; z-index:100;
+  background:var(--obsidian);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;
+  transition:opacity 0.8s ease;
+}
+#loading.gone { opacity:0; pointer-events:none; }
+.ld-logo { font-family:'Cormorant Garamond',serif; font-size:2.2rem; font-weight:300; color:var(--gold); letter-spacing:0.35em; text-transform:uppercase; }
+.ld-bar-w { width:160px; height:1px; background:var(--border); border-radius:1px; overflow:hidden; }
+.ld-bar { height:100%; background:var(--gold); width:0%; transition:width 0.3s ease; }
+.ld-lbl { font-size:0.62rem; letter-spacing:0.28em; color:var(--text-dim); text-transform:uppercase; }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ══ LEFT: VIEWER ══ -->
+  <div id="viewer-col">
+
+    <div class="brand">
+      <h1>Saray</h1>
+      <p>Patisserie · Cake Studio</p>
+    </div>
+
+    <!-- Tab switcher: Sketchfab ↔ Three.js -->
+    <div class="view-tabs">
+      <button class="vtab active" id="tab-sf"    onclick="switchView('sf')">🎂 Model</button>
+      <button class="vtab"        id="tab-three" onclick="switchView('three')">✦ Özelleştir</button>
+    </div>
+
+    <!-- Sketchfab Embed (primary view) -->
+    <div id="sketchfab-wrap">
+      <!--
+        MODEL: "Wedding Cake" by Mekokishvili
+        License: CC Attribution (CC-BY)
+        URL: https://sketchfab.com/3d-models/wedding-cake-69be5c0c0d404113a227d9ba19d78447
+        Embed parameters: autostart=1, autospin=0.3, ui_theme=dark, ui_color=c9a96e
+      -->
+      <iframe
+        title="Wedding Cake — Saray Patisserie"
+        allow="autoplay; fullscreen; xr-spatial-tracking"
+        allowfullscreen
+        mozallowfullscreen="true"
+        webkitallowfullscreen="true"
+        src="https://sketchfab.com/models/69be5c0c0d404113a227d9ba19d78447/embed?autostart=1&autospin=0.3&ui_theme=dark&ui_color=c9a96e&ui_controls=1&ui_infos=0&ui_stop=0&ui_watermark=0&dnt=1&camera=0&transparent=1&scrollwheel=1&double_click=1"
+      ></iframe>
+    </div>
+
+    <!-- Three.js PBR (customizer view) -->
+    <div id="canvas-wrap" class="hidden"></div>
+
+    <!-- Sketchfab attribution (required for CC-BY) -->
+    <div class="sfab-credit" id="sfab-credit">
+      <span>3D Model:</span>
+      <a href="https://sketchfab.com/3d-models/wedding-cake-69be5c0c0d404113a227d9ba19d78447" target="_blank">Wedding Cake</a>
+      <span class="dot">·</span>
+      <a href="https://sketchfab.com/Mekokishvili" target="_blank">Mekokishvili</a>
+      <span class="dot">·</span>
+      CC-BY
+    </div>
+
+    <!-- Rotate hint (Three.js view) -->
+    <div class="rot-hint" id="rotHint">Sürükle &amp; Döndür</div>
+
+    <!-- ✦ HERO CTA BUTTON ✦ -->
+    <div class="hero-cta">
+      <button class="btn-studio" onclick="switchView('three'); scrollPanel()">
+        <div class="btn-studio-inner">
+          <div class="btn-studio-icon">🎂</div>
+          <div class="btn-studio-text">
+            <span class="bst-top">Pastanı Tasarla</span>
+            <span class="bst-sub">3D Özelleştirici · Saray Studio</span>
+          </div>
+          <div class="btn-studio-arrow">›</div>
+        </div>
+      </button>
+    </div>
+
+    <!-- Loading -->
+    <div id="loading">
+      <div class="ld-logo">Saray</div>
+      <div class="ld-bar-w"><div class="ld-bar" id="ldBar"></div></div>
+      <div class="ld-lbl" id="ldLbl">Yükleniyor...</div>
+    </div>
+  </div>
+
+  <!-- ══ RIGHT: PANEL ══ -->
+  <div id="panel">
+
+    <div class="panel-head">
+      <h2>Cake Studio</h2>
+      <p>Gerçek zamanlı 3D pasta özelleştirici</p>
+      <div class="view-indicator">
+        <div class="vi-dot"></div>
+        <span>Görünüm:</span>
+        <span id="vi-label">Sketchfab Modeli</span>
+      </div>
+    </div>
+
+    <div class="panel-body">
+
+      <!-- KAT -->
+      <div class="sec">
+        <div class="sec-lbl">Kat Sayısı</div>
+        <div class="tier-row">
+          <div class="tier-btn active" onclick="setTiers(1,this)"><span class="t-n">I</span><span class="t-l">Tek</span></div>
+          <div class="tier-btn"       onclick="setTiers(2,this)"><span class="t-n">II</span><span class="t-l">İki</span></div>
+          <div class="tier-btn"       onclick="setTiers(3,this)"><span class="t-n">III</span><span class="t-l">Üç</span></div>
+        </div>
+      </div>
+
+      <!-- RENK -->
+      <div class="sec">
+        <div class="sec-lbl">Kaplama Rengi</div>
+        <div class="pal" id="palette"></div>
+        <div class="col-name" id="colName">— Pembe Fondan —</div>
+      </div>
+
+      <!-- LEZZET -->
+      <div class="sec">
+        <div class="sec-lbl">Lezzet</div>
+        <div class="flav-grid">
+          <div class="flav active" onclick="setFlav('vanilla',this)"><span class="fi">🤍</span>Vanilya</div>
+          <div class="flav"        onclick="setFlav('chocolate',this)"><span class="fi">🍫</span>Çikolata</div>
+          <div class="flav"        onclick="setFlav('strawberry',this)"><span class="fi">🍓</span>Çilek</div>
+          <div class="flav"        onclick="setFlav('pistachio',this)"><span class="fi">🌿</span>Fıstık</div>
+          <div class="flav"        onclick="setFlav('lemon',this)"><span class="fi">🍋</span>Limon</div>
+          <div class="flav"        onclick="setFlav('red_velvet',this)"><span class="fi">❤️</span>Red Velvet</div>
+        </div>
+      </div>
+
+      <!-- İNSCRIPTION -->
+      <div class="sec">
+        <div class="sec-lbl">Pasta Yazısı</div>
+        <div class="insc-preview">
+          <span id="prev-txt" style="font-family:'Dancing Script',cursive">Mesajınız burada görünecek...</span>
+        </div>
+        <input class="inp" type="text" id="cakeMsg" maxlength="30"
+               placeholder="Örn: İyi ki doğdun Ayşe! 🌹"
+               oninput="handleMsg(this.value)">
+        <div class="ctrl">
+          <span class="clbl">Font</span>
+          <select class="inp" id="fontSel" onchange="handleFont(this.value)">
+            <option value="'Dancing Script',cursive">Dancing Script</option>
+            <option value="'Great Vibes',cursive">Great Vibes</option>
+            <option value="'Pinyon Script',cursive">Pinyon Script</option>
+            <option value="'Playfair Display',serif">Playfair Display</option>
+            <option value="'Cormorant Garamond',serif">Cormorant Garamond</option>
+          </select>
+        </div>
+        <div class="ctrl">
+          <span class="clbl">Renk</span>
+          <input type="color" id="icingCol" value="#C9A96E" oninput="handleIcing(this.value)">
+          <span style="font-size:0.68rem;color:var(--text-muted);margin-left:8px;flex:1">Krema rengi</span>
+        </div>
+        <div class="ctrl">
+          <span class="clbl">Boyut</span>
+          <input type="range" id="fSize" min="26" max="72" value="46" oninput="handleSize(this.value)">
+          <span class="rval" id="sVal">46</span>
+        </div>
+      </div>
+
+      <!-- SÜSLEME -->
+      <div class="sec">
+        <div class="sec-lbl">Süsleme</div>
+        <div class="deco-grid">
+          <div class="deco-card" onclick="togDeco('roses',this)"><span class="di">🌹</span><span class="dl">Güller</span><span class="dchk">✓</span></div>
+          <div class="deco-card" onclick="togDeco('berries',this)"><span class="di">🫐</span><span class="dl">Meyveler</span><span class="dchk">✓</span></div>
+          <div class="deco-card" onclick="togDeco('gold_leaf',this)"><span class="di">✨</span><span class="dl">Altın Varak</span><span class="dchk">✓</span></div>
+          <div class="deco-card" onclick="togDeco('candles',this)"><span class="di">🕯️</span><span class="dl">Mumlar</span><span class="dchk">✓</span></div>
+          <div class="deco-card" onclick="togDeco('macarons',this)"><span class="di">🍬</span><span class="dl">Makaronlar</span><span class="dchk">✓</span></div>
+          <div class="deco-card" onclick="togDeco('flowers',this)"><span class="di">🌸</span><span class="dl">Çiçekler</span><span class="dchk">✓</span></div>
+        </div>
+      </div>
+
+    </div><!-- /panel-body -->
+
+    <div class="panel-foot">
+      <div class="price-row">
+        <span class="price-lbl">Tahmini Fiyat</span>
+        <span class="price-val" id="pVal">₺ 450</span>
+      </div>
+      <button class="btn-order" onclick="openModal()">
+        <div class="btn-order-inner">
+          <span class="ico">🛍</span>
+          <span>Sipariş Ver</span>
+        </div>
+      </button>
+    </div>
+  </div>
+
+</div><!-- /app -->
+
+<!-- Modal -->
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <div class="m-ico">🎂</div>
+    <h3>Siparişiniz Alındı</h3>
+    <p>Saray Patisserie ekibi en kısa sürede sizi arayacak. Pastanız özenle hazırlanacaktır.</p>
+    <div class="m-detail" id="mDetail"></div>
+    <p style="font-size:0.72rem;margin-bottom:18px;">Teslim süresi: <b style="color:var(--gold)">3–5 iş günü</b></p>
+    <button class="btn-mclose" onclick="document.getElementById('modal').classList.remove('open')">Tamam</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     OrbitControls (inline)
+     ════════════════════════════════════ -->
+<script>
+THREE.OrbitControls = function(cam, dom) {
+  this.cam = cam; this.dom = dom;
+  this.enableDamping = true; this.dampingFactor = 0.06;
+  this.enablePan = false; this.minPolarAngle = 0.2; this.maxPolarAngle = Math.PI*0.54;
+  this.minDistance = 4; this.maxDistance = 15;
+  this.autoRotate = true; this.autoRotateSpeed = 0.45;
+  this.target = new THREE.Vector3(0, 1.8, 0);
+
+  const sph = new THREE.Spherical(), dSph = new THREE.Spherical();
+  const off = new THREE.Vector3();
+  off.copy(cam.position).sub(this.target);
+  sph.setFromVector3(off);
+
+  let drag = false, px = 0, py = 0;
+  const me = this;
+
+  dom.addEventListener('mousedown', e=>{drag=true;px=e.clientX;py=e.clientY;});
+  window.addEventListener('mouseup', ()=>drag=false);
+  window.addEventListener('mousemove', e=>{
+    if(!drag)return;
+    dSph.theta -= (e.clientX-px)/dom.clientHeight*2.0;
+    dSph.phi   -= (e.clientY-py)/dom.clientHeight*1.5;
+    px=e.clientX; py=e.clientY;
+  });
+  dom.addEventListener('touchstart', e=>{drag=true;px=e.touches[0].clientX;py=e.touches[0].clientY;},{passive:true});
+  dom.addEventListener('touchend', ()=>drag=false);
+  dom.addEventListener('touchmove', e=>{
+    if(!drag)return;
+    dSph.theta -= (e.touches[0].clientX-px)/dom.clientHeight*1.8;
+    dSph.phi   -= (e.touches[0].clientY-py)/dom.clientHeight*1.2;
+    px=e.touches[0].clientX; py=e.touches[0].clientY; e.preventDefault();
+  },{passive:false});
+
+  this.update = function() {
+    if(me.autoRotate && !drag) dSph.theta -= me.autoRotateSpeed*Math.PI/180*0.016;
+    sph.theta += dSph.theta * me.dampingFactor;
+    sph.phi   += dSph.phi   * me.dampingFactor;
+    dSph.theta *= (1-me.dampingFactor);
+    dSph.phi   *= (1-me.dampingFactor);
+    sph.phi = Math.max(me.minPolarAngle, Math.min(me.maxPolarAngle, sph.phi));
+    sph.radius = Math.max(me.minDistance, Math.min(me.maxDistance, sph.radius));
+    sph.makeSafe();
+    off.setFromSpherical(sph);
+    cam.position.copy(me.target).add(off);
+    cam.lookAt(me.target);
+  };
+};
+</script>
+
+<!-- ════════════════════════════════════
+     MAIN ENGINE
+     ════════════════════════════════════ -->
+<script>
+'use strict';
+
+// ── STATE ──
+const S = {
+  tiers:1, colorIdx:0, flavor:'vanilla',
+  decos:new Set(), msg:'', font:"'Dancing Script',cursive",
+  icingColor:'#C9A96E', fontSize:46,
+};
+
+const COLORS = [
+  {name:'Pembe Fondan',   hex:'#F2B4BE', glaze:0xF2B4BE, sponge:0xE08890},
+  {name:'İnci Beyaz',     hex:'#F2EDE6', glaze:0xF2EDE6, sponge:0xD4C4A8},
+  {name:'Bitter Çikolata',hex:'#5A3820', glaze:0x5A3820, sponge:0x3A2010},
+  {name:'Lavanta',        hex:'#C4B0D8', glaze:0xC4B0D8, sponge:0x9A7EC0},
+  {name:'Pistache',       hex:'#A8C8A0', glaze:0xA8C8A0, sponge:0x78A870},
+  {name:'Limon Sarısı',   hex:'#F2D878', glaze:0xF2D878, sponge:0xD8B840},
+  {name:'Gece Mavisi',    hex:'#7888B8', glaze:0x7888B8, sponge:0x485888},
+  {name:'Altın Krem',     hex:'#D8C090', glaze:0xD8C090, sponge:0xB89860},
+  {name:'Kırmızı Kadife', hex:'#C05060', glaze:0xC05060, sponge:0x901830},
+  {name:'Mint',           hex:'#98D8C8', glaze:0x98D8C8, sponge:0x58A890},
+];
+
+const FPRICE = {vanilla:0,chocolate:50,strawberry:30,pistachio:80,lemon:20,red_velvet:60};
+const DPRICE = {roses:40,berries:50,gold_leaf:120,candles:30,macarons:70,flowers:45};
+
+// ── VIEW SWITCHING ──
+let currentView = 'sf';
+
+function switchView(v) {
+  currentView = v;
+  const sfWrap     = document.getElementById('sketchfab-wrap');
+  const threeWrap  = document.getElementById('canvas-wrap');
+  const sfCredit   = document.getElementById('sfab-credit');
+  const rotH       = document.getElementById('rotHint');
+  const tabSf      = document.getElementById('tab-sf');
+  const tabThree   = document.getElementById('tab-three');
+  const viLabel    = document.getElementById('vi-label');
+
+  if (v === 'sf') {
+    sfWrap.classList.remove('hidden');
+    threeWrap.classList.add('hidden');
+    sfCredit.style.display = 'flex';
+    rotH.style.display = 'none';
+    tabSf.classList.add('active');
+    tabThree.classList.remove('active');
+    viLabel.textContent = 'Sketchfab Modeli';
+  } else {
+    sfWrap.classList.add('hidden');
+    threeWrap.classList.remove('hidden');
+    sfCredit.style.display = 'none';
+    rotH.style.display = 'flex';
+    tabSf.classList.remove('active');
+    tabThree.classList.add('active');
+    viLabel.textContent = '3D Özelleştirici';
+    if (!rendererReady) initThree();
+  }
+}
+
+function scrollPanel() {
+  document.querySelector('.panel-body').scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── THREE.JS ENGINE ──
+let rendererReady = false;
+let renderer, scene, camera, controls, cakeRoot, decoRoot, animQ = [];
+
+function initThree() {
+  if (rendererReady) return;
+  rendererReady = true;
+
+  const wrap = document.getElementById('canvas-wrap');
+  const W = wrap.clientWidth, H = wrap.clientHeight;
+
+  renderer = new THREE.WebGLRenderer({antialias:true, alpha:true, powerPreference:'high-performance'});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(W, H);
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.15;
+  wrap.appendChild(renderer.domElement);
+
+  scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x07050A, 0.04);
+
+  camera = new THREE.PerspectiveCamera(36, W/H, 0.1, 60);
+  camera.position.set(0, 5.5, 10.5);
+
+  controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+  // Env map
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  pmrem.compileEquirectangularShader();
+  const sz = 256;
+  const data = new Uint8Array(sz*sz*4);
+  for(let y=0;y<sz;y++) for(let x=0;x<sz;x++){
+    const i=(y*sz+x)*4, ny=y/sz;
+    const hot = (x/sz>0.6 && x/sz<0.9 && ny>0.3 && ny<0.7);
+    data[i]   = Math.min(255, 28+ny*18+(hot?200:0));
+    data[i+1] = Math.min(255, 20+ny*12+(hot?158:0));
+    data[i+2] = Math.min(255, 12+ny*6 +(hot?78:0));
+    data[i+3] = 255;
+  }
+  const dt = new THREE.DataTexture(data,sz,sz,THREE.RGBAFormat);
+  dt.needsUpdate=true;
+  const env = pmrem.fromEquirectangular(dt).texture;
+  scene.environment = env;
+  pmrem.dispose();
+
+  // Lights
+  const key = new THREE.DirectionalLight(0xFFEDD5, 2.2);
+  key.position.set(3,12,6); key.castShadow=true;
+  key.shadow.mapSize.set(2048,2048); key.shadow.bias=-0.0005; key.shadow.normalBias=0.02;
+  key.shadow.camera.top=key.shadow.camera.right=8;
+  key.shadow.camera.bottom=key.shadow.camera.left=-8;
+  scene.add(key);
+  const fill = new THREE.DirectionalLight(0xC8D8F8,0.45); fill.position.set(-6,5,-4); scene.add(fill);
+  const rim  = new THREE.DirectionalLight(0xFFCA70,0.8);  rim.position.set(0,2,-8);   scene.add(rim);
+  const bounce = new THREE.DirectionalLight(0xF0C880,0.22); bounce.position.set(0,-4,3); scene.add(bounce);
+  scene.add(new THREE.HemisphereLight(0x2A1808,0x07050A,0.4));
+
+  // Marble board
+  const mc = document.createElement('canvas'); mc.width=mc.height=512;
+  const mctx = mc.getContext('2d');
+  mctx.fillStyle='#EDE4D5'; mctx.fillRect(0,0,512,512);
+  for(let v=0;v<18;v++){
+    mctx.beginPath(); mctx.moveTo(Math.random()*512,Math.random()*512);
+    for(let p=0;p<8;p++) mctx.lineTo(Math.random()*512,Math.random()*512);
+    mctx.strokeStyle=`rgba(${160+Math.random()*40|0},${148+Math.random()*30|0},${120+Math.random()*30|0},${0.12+Math.random()*0.18})`;
+    mctx.lineWidth=0.5+Math.random()*1.5; mctx.stroke();
+  }
+  const board = new THREE.Mesh(
+    new THREE.CylinderGeometry(3.2,3.2,0.1,80),
+    new THREE.MeshStandardMaterial({map:new THREE.CanvasTexture(mc),roughness:0.18,metalness:0.05,envMap:env,envMapIntensity:0.6})
+  );
+  board.receiveShadow=true; board.position.y=-0.05; scene.add(board);
+  const sg = new THREE.Mesh(new THREE.PlaneGeometry(20,20),new THREE.ShadowMaterial({opacity:0.32,color:0x1A0808}));
+  sg.rotation.x=-Math.PI/2; sg.position.y=-0.06; sg.receiveShadow=true; scene.add(sg);
+
+  // Canvas texture for inscription
+  window._inscCanvas = document.createElement('canvas');
+  window._inscCanvas.width = window._inscCanvas.height = 1024;
+  window._inscTex = new THREE.CanvasTexture(window._inscCanvas);
+  window._inscTex.colorSpace = THREE.SRGBColorSpace;
+
+  cakeRoot = new THREE.Group(); decoRoot = new THREE.Group();
+  scene.add(cakeRoot); scene.add(decoRoot);
+
+  buildCake(env);
+
+  // Resize
+  window.addEventListener('resize', ()=>{
+    const w=wrap.clientWidth, h=wrap.clientHeight;
+    camera.aspect=w/h; camera.updateProjectionMatrix(); renderer.setSize(w,h);
+  });
+
+  // Render loop
+  (function loop(now=0){
+    requestAnimationFrame(loop);
+    controls.update();
+    processAnim(now);
+    // flame flicker
+    decoRoot.traverse(o=>{
+      if(o.userData.flicker!==undefined){
+        o.userData.flicker+=0.08;
+        const s=1+Math.sin(o.userData.flicker)*0.14;
+        o.scale.set(s,2*s,s);
+      }
+    });
+    renderer.render(scene,camera);
+  })();
+}
+
+// ── CANVAS TEXTURE ──
+function drawInscription() {
+  if (!window._inscCanvas) return;
+  const c = window._inscCanvas, ctx = c.getContext('2d');
+  ctx.clearRect(0,0,1024,1024);
+  if (!S.msg) { window._inscTex.needsUpdate=true; return; }
+  ctx.save();
+  ctx.shadowColor='rgba(0,0,0,0.4)'; ctx.shadowBlur=10; ctx.shadowOffsetX=2; ctx.shadowOffsetY=3;
+  ctx.fillStyle = S.icingColor;
+  ctx.font = `${S.fontSize}px ${S.font}`;
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText(S.msg, 512, 512);
+  ctx.restore();
+  window._inscTex.needsUpdate = true;
+}
+
+// ── MATERIAL HELPERS ──
+function glazeMat(c, env) {
+  return new THREE.MeshPhysicalMaterial({
+    color:c, roughness:0.07, metalness:0, reflectivity:0.9,
+    clearcoat:1, clearcoatRoughness:0.05,
+    envMap:env, envMapIntensity:1.3,
+  });
+}
+function spongeMat(c, env) {
+  const nc=document.createElement('canvas'); nc.width=nc.height=256;
+  const nx=nc.getContext('2d');
+  nx.fillStyle='#8080FF'; nx.fillRect(0,0,256,256);
+  for(let i=0;i<2000;i++){
+    const vv=120+Math.random()*60|0;
+    nx.beginPath(); nx.arc(Math.random()*256,Math.random()*256,1+Math.random()*3,0,Math.PI*2);
+    nx.fillStyle=`rgb(${vv},${vv},255)`; nx.fill();
+  }
+  const nm=new THREE.CanvasTexture(nc);
+  nm.wrapS=nm.wrapT=THREE.RepeatWrapping; nm.repeat.set(3,3);
+  return new THREE.MeshStandardMaterial({color:c,roughness:0.87,normalMap:nm,normalScale:new THREE.Vector2(0.6,0.6),envMap:env,envMapIntensity:0.3});
+}
+function topMat(c, env) {
+  return new THREE.MeshPhysicalMaterial({
+    color:c, roughness:0.05, metalness:0,
+    clearcoat:1, clearcoatRoughness:0.04,
+    envMap:env, envMapIntensity:1.5,
+    map: window._inscTex || null,
+  });
+}
+
+const TD = [{r:1.62,h:1.0},{r:1.16,h:0.92},{r:0.78,h:0.84}];
+
+function clearGrp(g){
+  while(g.children.length){
+    const c=g.children[0];
+    if(c.geometry)c.geometry.dispose();
+    if(c.material){Array.isArray(c.material)?c.material.forEach(m=>m.dispose()):c.material.dispose();}
+    g.remove(c);
+  }
+}
+
+function blendHex(a,b,t){ const ca=new THREE.Color(a),cb=new THREE.Color(b); return ca.lerp(cb,t).getHex(); }
+
+function buildCake(env) {
+  if(!cakeRoot) return;
+  clearGrp(cakeRoot); clearGrp(decoRoot); animQ.length=0;
+  const col = COLORS[S.colorIdx];
+  const gc=col.glaze, sc=col.sponge;
+  const frost = blendHex(gc,0xFFFFFF,0.5);
+  let yOff=0;
+
+  for(let i=0;i<S.tiers;i++){
+    const {r,h}=TD[i], isTop=(i===S.tiers-1);
+    const lH=h*0.285;
+
+    [sc, blendHex(sc,0xF5E8C8,0.45), sc].forEach((lc,li)=>{
+      const lm=new THREE.Mesh(new THREE.CylinderGeometry(r-0.02,r-0.02,lH,64),spongeMat(lc,env));
+      lm.castShadow=lm.receiveShadow=true;
+      lm.position.y=yOff+lH*li+lH/2; cakeRoot.add(lm);
+    });
+
+    const shell=new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,80,1,true),glazeMat(gc,env));
+    shell.castShadow=true; shell.position.y=yOff+h/2; shell.scale.y=0.01;
+    pushAnim(shell.scale,'y',0.01,1,500,i*150); cakeRoot.add(shell);
+
+    const tface=new THREE.Mesh(new THREE.CircleGeometry(r,80),isTop?topMat(frost,env):glazeMat(frost,env));
+    tface.rotation.x=-Math.PI/2; tface.position.y=yOff+h+0.001;
+    tface.receiveShadow=true; cakeRoot.add(tface);
+
+    // drips
+    for(let d=0;d<22;d++){
+      const ang=(d/22)*Math.PI*2+(Math.random()-0.5)*0.28;
+      const dH=0.08+Math.random()*0.26, dR=0.038+Math.random()*0.022;
+      const drip=new THREE.Mesh(new THREE.CylinderGeometry(dR*0.55,dR,dH,8),glazeMat(frost,env));
+      drip.position.set(Math.cos(ang)*r,yOff+h-dH/2-0.02,Math.sin(ang)*r);
+      drip.castShadow=true; cakeRoot.add(drip);
+      const blob=new THREE.Mesh(new THREE.SphereGeometry(dR*1.1,8,8),glazeMat(frost,env));
+      blob.position.set(Math.cos(ang)*r,yOff+h-dH-0.04,Math.sin(ang)*r);
+      cakeRoot.add(blob);
+    }
+
+    if(i<S.tiers-1){
+      const sep=new THREE.Mesh(new THREE.CylinderGeometry(r+0.05,r+0.05,0.06,64),
+        new THREE.MeshStandardMaterial({color:0xEDE4D0,roughness:0.15,metalness:0.1,envMap:env,envMapIntensity:0.5}));
+      sep.position.y=yOff+h+0.03; sep.receiveShadow=true; cakeRoot.add(sep);
+    }
+    yOff+=h+(i<S.tiers-1?0.06:0);
+  }
+
+  buildDecos(yOff, TD[S.tiers-1].r, env);
+  drawInscription();
+}
+
+function buildDecos(ty,tr,env){
+  if(S.decos.has('roses'))    buildRoses(ty,tr,env);
+  if(S.decos.has('berries'))  buildBerries(ty,tr,env);
+  if(S.decos.has('gold_leaf'))buildGold(ty,tr,env);
+  if(S.decos.has('candles'))  buildCandles(ty,tr);
+  if(S.decos.has('macarons')) buildMacs(ty,tr,env);
+  if(S.decos.has('flowers'))  buildFlowers(ty,tr);
+}
+
+function sadd(m,d=0){ m.scale.setScalar(0.01); pushAnim(m.scale,'scalar',0.01,1,400,d); decoRoot.add(m); }
+
+function buildRoses(ty,tr,env){
+  const pos=[[0,0],[tr*.5,0],[-tr*.5,0],[0,tr*.5],[0,-tr*.5],[tr*.4,tr*.4],[-tr*.4,-tr*.4]];
+  pos.forEach(([rx,rz],pi)=>{
+    const g=new THREE.Group();
+    const pm=new THREE.MeshPhysicalMaterial({color:0xC04060,roughness:0.55,clearcoat:0.3,envMap:env,envMapIntensity:0.6});
+    for(let p=0;p<9;p++){
+      const a=(p/9)*Math.PI*2,sp=0.07+p*0.008;
+      const geo=new THREE.SphereGeometry(0.075,8,6); geo.scale(1.6,0.5,1);
+      const m=new THREE.Mesh(geo,pm); m.position.set(Math.cos(a)*sp,p*0.007,Math.sin(a)*sp); m.rotation.y=a; g.add(m);
+    }
+    g.add(new THREE.Mesh(new THREE.SphereGeometry(0.06,10,10),new THREE.MeshStandardMaterial({color:0x901830,roughness:0.7})));
+    g.position.set(rx,ty+0.08,rz); g.scale.setScalar(0.01); pushAnim(g.scale,'scalar',0.01,1,380,pi*70); decoRoot.add(g);
+  });
+}
+function buildBerries(ty,tr,env){
+  const mB=new THREE.MeshPhysicalMaterial({color:0x2A1855,roughness:0.25,clearcoat:0.8,envMap:env,envMapIntensity:1});
+  const mR=new THREE.MeshPhysicalMaterial({color:0xC0204A,roughness:0.35,clearcoat:0.6,envMap:env,envMapIntensity:0.8});
+  for(let b=0;b<16;b++){
+    const a=(b/16)*Math.PI*2,rad=tr*(0.55+(b%3)*0.08);
+    const m=new THREE.Mesh(new THREE.SphereGeometry(0.09+Math.random()*0.04,12,12),b%3===0?mR:mB);
+    m.position.set(Math.cos(a)*rad,ty+0.06+Math.random()*0.04,Math.sin(a)*rad);
+    m.castShadow=true; sadd(m,b*30);
+  }
+}
+function buildGold(ty,tr,env){
+  const gm=new THREE.MeshStandardMaterial({color:0xD4A020,roughness:0.04,metalness:0.96,envMap:env,envMapIntensity:2});
+  for(let g=0;g<12;g++){
+    const a=Math.random()*Math.PI*2,r=Math.random()*tr*0.8;
+    const m=new THREE.Mesh(new THREE.PlaneGeometry(0.18,0.12),gm);
+    m.rotation.x=-Math.PI/2+(Math.random()-0.5)*0.3; m.rotation.z=Math.random()*Math.PI;
+    m.position.set(Math.cos(a)*r,ty+0.01,Math.sin(a)*r); sadd(m,g*40);
+  }
+}
+function buildCandles(ty,tr){
+  const cc=[0xFFD1DC,0xB5EAD7,0xC7CEEA,0xFDFD96,0xFFB7B2];
+  const pos=[[0,0],[tr*.44,tr*.44],[-tr*.44,tr*.44],[tr*.44,-tr*.44],[-tr*.44,-tr*.44]];
+  pos.forEach(([cx,cz],ci)=>{
+    const g=new THREE.Group();
+    const wax=new THREE.Mesh(new THREE.CylinderGeometry(0.065,0.065,0.55,16),new THREE.MeshStandardMaterial({color:cc[ci%cc.length],roughness:0.8}));
+    wax.position.y=0.28; g.add(wax);
+    const wick=new THREE.Mesh(new THREE.CylinderGeometry(0.008,0.008,0.1,6),new THREE.MeshStandardMaterial({color:0x1A1008}));
+    wick.position.y=0.6; g.add(wick);
+    const flame=new THREE.Mesh(new THREE.SphereGeometry(0.055,8,8),new THREE.MeshStandardMaterial({color:0xFFA020,emissive:0xFF6000,emissiveIntensity:1.2,roughness:0.2}));
+    flame.scale.set(1,2.2,1); flame.position.y=0.7; flame.userData.flicker=Math.random()*Math.PI*2; g.add(flame);
+    const fl=new THREE.PointLight(0xFFA040,0.6,2.5); fl.position.y=0.72; g.add(fl);
+    g.position.set(cx,ty,cz); g.scale.setScalar(0.01); pushAnim(g.scale,'scalar',0.01,1,380,ci*100); decoRoot.add(g);
+  });
+}
+function buildMacs(ty,tr,env){
+  const mc=[0xF4A7B4,0xB8A4D4,0x9DCFB8,0xF5D97A,0x90B8D4,0xFFB7B2];
+  for(let m=0;m<6;m++){
+    const a=(m/6)*Math.PI*2, g=new THREE.Group();
+    const mat=new THREE.MeshPhysicalMaterial({color:mc[m],roughness:0.35,clearcoat:0.5,envMap:env,envMapIntensity:0.7});
+    const geo=new THREE.CylinderGeometry(0.16,0.155,0.1,24);
+    g.add(Object.assign(new THREE.Mesh(geo,mat),{position:{y:0.13}}));
+    const b=new THREE.Mesh(new THREE.CylinderGeometry(0.155,0.16,0.1,24),mat); b.position.y=0.03; g.add(b);
+    const f=new THREE.Mesh(new THREE.CylinderGeometry(0.145,0.145,0.05,24),new THREE.MeshStandardMaterial({color:0xF8F0E0,roughness:0.6})); f.position.y=0.08; g.add(f);
+    g.position.set(Math.cos(a)*tr*0.65,ty,Math.sin(a)*tr*0.65); g.scale.setScalar(0.01); pushAnim(g.scale,'scalar',0.01,1,360,m*80); decoRoot.add(g);
+  }
+}
+function buildFlowers(ty,tr){
+  const pm=[
+    new THREE.MeshStandardMaterial({color:0xFFE0F0,roughness:0.7,side:THREE.DoubleSide}),
+    new THREE.MeshStandardMaterial({color:0xF0D8E8,roughness:0.7,side:THREE.DoubleSide}),
+  ];
+  [[0,tr*.6],[tr*.55,tr*.3],[-tr*.55,tr*.3],[tr*.55,-tr*.3],[-tr*.55,-tr*.3]].forEach(([fx,fz],fi)=>{
+    const g=new THREE.Group();
+    for(let p=0;p<5;p++){
+      const a=(p/5)*Math.PI*2, geo=new THREE.SphereGeometry(0.12,8,6); geo.scale(1,0.25,2);
+      const m=new THREE.Mesh(geo,pm[fi%2]); m.position.set(Math.cos(a)*0.1,0,Math.sin(a)*0.1); m.rotation.y=a; g.add(m);
+    }
+    g.add(new THREE.Mesh(new THREE.SphereGeometry(0.065,10,10),new THREE.MeshStandardMaterial({color:0xF5D020,roughness:0.4,metalness:0.1})));
+    g.rotation.x=Math.PI/2; g.position.set(fx,ty+0.04,fz); g.scale.setScalar(0.01); pushAnim(g.scale,'scalar',0.01,1,360,fi*80); decoRoot.add(g);
+  });
+}
+
+// ── ANIM QUEUE ──
+function pushAnim(obj,key,from,to,dur,delay=0){
+  animQ.push({obj,key,from,to,dur,delay,start:performance.now()+delay});
+}
+function processAnim(now){
+  for(let i=animQ.length-1;i>=0;i--){
+    const a=animQ[i];
+    if(now<a.start) continue;
+    const t=Math.min((now-a.start)/a.dur,1);
+    const e=1-Math.pow(1-t,3);
+    const v=a.from+(a.to-a.from)*e;
+    if(a.key==='scalar') a.obj.setScalar(v); else a.obj[a.key]=v;
+    if(t>=1) animQ.splice(i,1);
+  }
+}
+
+// ── CONTROLS ──
+function setTiers(n,el){
+  document.querySelectorAll('.tier-btn').forEach(b=>b.classList.remove('active')); el.classList.add('active');
+  S.tiers=n; if(rendererReady) buildCake(scene.environment); updatePrice();
+}
+function setFlav(f,el){
+  document.querySelectorAll('.flav').forEach(b=>b.classList.remove('active')); el.classList.add('active');
+  S.flavor=f; updatePrice();
+}
+function togDeco(d,el){
+  S.decos.has(d)?(S.decos.delete(d),el.classList.remove('active')):(S.decos.add(d),el.classList.add('active'));
+  if(rendererReady) buildCake(scene.environment); updatePrice();
+}
+function handleMsg(v){
+  S.msg=v;
+  const pt=document.getElementById('prev-txt');
+  pt.textContent=v||'Mesajınız burada görünecek...';
+  pt.style.fontFamily=S.font; pt.style.color=S.icingColor;
+  pt.style.fontSize=Math.max(12,S.fontSize*0.38)+'px';
+  drawInscription();
+}
+function handleFont(v){
+  S.font=v; document.getElementById('prev-txt').style.fontFamily=v; drawInscription();
+}
+function handleIcing(v){
+  S.icingColor=v; document.getElementById('prev-txt').style.color=v; drawInscription();
+}
+function handleSize(v){
+  S.fontSize=parseInt(v); document.getElementById('sVal').textContent=v; drawInscription();
+}
+
+// ── PALETTE UI ──
+function buildPalette(){
+  const pal=document.getElementById('palette');
+  COLORS.forEach((c,i)=>{
+    const sw=document.createElement('div');
+    sw.className='csw'+(i===0?' active':'');
+    sw.style.background=c.hex; sw.title=c.name;
+    sw.onclick=()=>{
+      document.querySelectorAll('.csw').forEach(s=>s.classList.remove('active')); sw.classList.add('active');
+      S.colorIdx=i; document.getElementById('colName').textContent=`— ${c.name} —`;
+      if(rendererReady) buildCake(scene.environment); updatePrice();
+    };
+    pal.appendChild(sw);
+  });
+}
+
+// ── PRICE ──
+const FNAMES={vanilla:'Vanilya',chocolate:'Çikolata',strawberry:'Çilek',pistachio:'Antep Fıstığı',lemon:'Limon',red_velvet:'Red Velvet'};
+const DNAMES={roses:'🌹 Güller',berries:'🫐 Meyveler',gold_leaf:'✨ Altın Varak',candles:'🕯️ Mumlar',macarons:'🍬 Makaronlar',flowers:'🌸 Çiçekler'};
+
+function updatePrice(){
+  let p=350+S.tiers*100+(FPRICE[S.flavor]||0);
+  S.decos.forEach(d=>p+=DPRICE[d]||0);
+  if(S.msg) p+=20;
+  document.getElementById('pVal').textContent='₺ '+p.toLocaleString('tr-TR');
+  return p;
+}
+
+function openModal(){
+  const dl=[...S.decos].map(d=>DNAMES[d]).join(', ')||'—';
+  document.getElementById('mDetail').innerHTML=`
+    <b>Kat:</b> ${S.tiers} · <b>Renk:</b> ${COLORS[S.colorIdx].name}<br>
+    <b>Lezzet:</b> ${FNAMES[S.flavor]}<br>
+    <b>Süsleme:</b> ${dl}<br>
+    <b>Yazı:</b> ${S.msg||'—'}<br>
+    <b>Toplam:</b> ${document.getElementById('pVal').textContent}`;
+  document.getElementById('modal').classList.add('open');
+}
+
+// ── BOOT ──
+function boot(){
+  const steps=[[15,'Sketchfab modeli yükleniyor...'],[35,'Sahne hazırlanıyor...'],[60,'PBR materyaller...'],[80,'CanvasTexture başlatılıyor...'],[95,'Tamamlandı!'],[100,'']];
+  let si=0;
+  (function step(){
+    if(si>=steps.length){setTimeout(()=>document.getElementById('loading').classList.add('gone'),500);return;}
+    const [p,l]=steps[si++];
+    document.getElementById('ldBar').style.width=p+'%';
+    document.getElementById('ldLbl').textContent=l;
+    setTimeout(step,200+Math.random()*180);
+  })();
+}
+
+buildPalette();
+boot();
+</script>
+</body>
+</html>
