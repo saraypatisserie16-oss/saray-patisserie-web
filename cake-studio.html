@@ -171,6 +171,22 @@ input[type=color]{width:32px;height:27px;border:1px solid var(--border);border-r
 .btn-wa:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(37,211,102,.4)}
 .btn-wa svg{width:18px;height:18px;fill:#fff;flex-shrink:0}
 
+/* Payment tabs */
+.pay-tabs{display:flex;gap:0;margin-bottom:16px;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.pay-tab{flex:1;padding:10px;text-align:center;font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;background:var(--surface);color:var(--text-muted);transition:all .2s;border:none;font-family:'Jost',sans-serif}
+.pay-tab.active{background:var(--gold-dim);color:var(--obsidian)}
+.pay-page{display:none}.pay-page.active{display:block}
+/* Card input styles */
+.card-input-wrap{position:relative;margin-bottom:12px}
+.card-input-wrap .card-icon{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:1.1rem}
+.card-number-display{display:flex;gap:8px;margin-bottom:12px}
+.card-number-display span{flex:1;text-align:center;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 4px;font-size:.85rem;color:var(--text-hi);letter-spacing:.2em;font-family:'Cormorant Garamond',serif}
+.secure-badge{display:flex;align-items:center;justify-content:center;gap:6px;font-size:.62rem;color:var(--text-dim);margin:10px 0;letter-spacing:.06em}
+.secure-badge::before,.secure-badge::after{content:'';flex:1;height:1px;background:var(--border)}
+.btn-pay{width:100%;padding:14px;background:linear-gradient(135deg,#1a4a8a,#2060C0);border:none;border-radius:10px;font-family:'Jost',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .2s,box-shadow .2s;margin-top:4px;box-shadow:0 4px 20px rgba(32,96,192,.3)}
+.btn-pay:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(32,96,192,.45)}
+.card-logos{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:10px;opacity:.5;font-size:.7rem;color:var(--text-dim)}
+
 @media(max-width:768px){
   #app{flex-direction:column}
   #viewer{height:50vw;min-height:260px;flex:none}
@@ -250,25 +266,17 @@ input[type=color]{width:32px;height:27px;border:1px solid var(--border);border-r
         </div>
       </div>
 
-      <!-- Kat Sayısı -->
+      <!-- Kişi Sayısı -->
       <div class="sec">
-        <div class="sec-lbl">Kat Sayısı</div>
-        <div class="btn-grid">
-          <button class="opt-btn active" onclick="setTiers(1,this)">I — Tek Kat</button>
-          <button class="opt-btn" onclick="setTiers(2,this)">II — İki Kat</button>
-          <button class="opt-btn" onclick="setTiers(3,this)">III — Üç Kat</button>
-        </div>
-      </div>
-
-      <!-- Boyut -->
-      <div class="sec">
-        <div class="sec-lbl">Boyut & Kişi Sayısı</div>
+        <div class="sec-lbl">Kişi Sayısı</div>
         <div class="btn-grid" id="size-btns">
-          <button class="opt-btn" onclick="setSize(10,this)">10cm · 4 kişi</button>
-          <button class="opt-btn active" onclick="setSize(15,this)">15cm · 8 kişi</button>
-          <button class="opt-btn" onclick="setSize(20,this)">20cm · 16 kişi</button>
-          <button class="opt-btn" onclick="setSize(25,this)">25cm · 25 kişi</button>
-          <button class="opt-btn" onclick="setSize(30,this)">30cm · 40 kişi</button>
+          <button class="opt-btn active" onclick="setSize(4,this)">4 Kişilik</button>
+          <button class="opt-btn" onclick="setSize(6,this)">6 Kişilik</button>
+          <button class="opt-btn" onclick="setSize(10,this)">10 Kişilik</button>
+          <button class="opt-btn" onclick="setSize(16,this)">16 Kişilik</button>
+          <button class="opt-btn" onclick="setSize(24,this)">24 Kişilik</button>
+          <button class="opt-btn" onclick="setSize(35,this)">35 Kişilik</button>
+          <button class="opt-btn" onclick="setSize(50,this)">50 Kişilik</button>
         </div>
       </div>
 
@@ -480,6 +488,7 @@ input[type=color]{width:32px;height:27px;border:1px solid var(--border);border-r
     </div>
     <div class="order-summary" id="modalSummary"></div>
     <div class="order-form">
+      <!-- Müşteri Bilgileri -->
       <div class="form-row">
         <div class="fg"><label>Ad Soyad</label><input type="text" id="oName" placeholder="Adınız Soyadınız"></div>
         <div class="fg"><label>Telefon</label><input type="tel" id="oPhone" placeholder="0 5XX XXX XX XX"></div>
@@ -495,14 +504,55 @@ input[type=color]{width:32px;height:27px;border:1px solid var(--border);border-r
         </div>
       </div>
       <div class="fg"><label>Teslimat Adresi</label><input type="text" id="oAddr" placeholder="Adres veya mağazadan teslim"></div>
-      <div class="fg"><label>Ek Notlar</label><textarea id="oNote" placeholder="Özel istekleriniz..."></textarea></div>
-      <div style="font-size:.72rem;color:var(--text-muted);text-align:center;margin:10px 0 14px">
-        Siparişiniz WhatsApp üzerinden gönderilecek. Saray Patisserie ekibi sizinle iletişime geçecektir.
+      <div class="fg"><label>Ek Notlar</label><textarea id="oNote" placeholder="Özel istekleriniz..." style="min-height:52px"></textarea></div>
+
+      <!-- Ödeme Seçimi -->
+      <div style="font-size:.55rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);margin:14px 0 8px">Ödeme Yöntemi</div>
+      <div class="pay-tabs">
+        <button class="pay-tab active" onclick="switchPayTab('wa',this)">📱 WhatsApp</button>
+        <button class="pay-tab" onclick="switchPayTab('card',this)">💳 Kredi Kartı</button>
       </div>
-      <button class="btn-wa" onclick="sendWhatsApp()">
-        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        WhatsApp ile Sipariş Gönder
-      </button>
+
+      <!-- WhatsApp -->
+      <div class="pay-page active" id="pay-wa">
+        <div style="font-size:.7rem;color:var(--text-muted);text-align:center;margin:0 0 12px;line-height:1.6">
+          Siparişiniz WhatsApp'a iletilecek.<br>Saray Patisserie ekibi ödeme için sizinle iletişime geçecektir.
+        </div>
+        <button class="btn-wa" onclick="sendWhatsApp()">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp ile Sipariş Gönder
+        </button>
+      </div>
+
+      <!-- Kredi Kartı -->
+      <div class="pay-page" id="pay-card">
+        <div class="fg">
+          <label>Kart Üzerindeki Ad</label>
+          <input type="text" id="cName" placeholder="AD SOYAD" style="text-transform:uppercase">
+        </div>
+        <div class="fg card-input-wrap">
+          <label>Kart Numarası</label>
+          <input type="text" id="cNumber" placeholder="0000  0000  0000  0000" maxlength="19"
+            oninput="formatCard(this)" style="letter-spacing:.12em;font-family:'Cormorant Garamond',serif;font-size:.95rem">
+          <span class="card-icon" id="cardIcon">💳</span>
+        </div>
+        <div class="form-row">
+          <div class="fg">
+            <label>Son Kullanma Tarihi</label>
+            <input type="text" id="cExpiry" placeholder="AA / YY" maxlength="7" oninput="formatExpiry(this)">
+          </div>
+          <div class="fg">
+            <label>CVV / CVC</label>
+            <input type="text" id="cCvv" placeholder="•••" maxlength="4" oninput="this.value=this.value.replace(/\D/g,'')">
+          </div>
+        </div>
+        <div class="secure-badge">🔒 256-bit SSL Güvenli Ödeme</div>
+        <button class="btn-pay" onclick="processPayment()">
+          🔒 Güvenli Ödeme Yap — <span id="payAmount"></span>
+        </button>
+        <div class="card-logos">VISA &nbsp;·&nbsp; Mastercard &nbsp;·&nbsp; Troy &nbsp;·&nbsp; AmEx</div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -536,7 +586,7 @@ THREE.OrbitControls=function(cam,dom){
 
 // ── STATE ──
 const S = {
-  tiers:1, colorIdx:0, flavor:'vanilla', size:15,
+  colorIdx:0, flavor:'vanilla', persons:4,
   decos:new Set(), msg:'', font:"'Dancing Script',cursive",
   icingColor:'#C9A96E', fontSize:46, shadow:true,
   txtX:512, txtY:512,
@@ -574,7 +624,8 @@ const COLORS = [
 
 const FPRICE = {vanilla:0,chocolate:50,strawberry:30,pistachio:80,lemon:20,red_velvet:60,caramel:40,hazelnut:60,coconut:50,mango:70,blueberry:60,matcha:80,tiramisu:70,blackforest:60,orange:30,rose:90,banana:30,peanut:50,lavender:90,mixed:100};
 const DPRICE = {roses:40,berries:50,gold_leaf:120,candles:30,macarons:70,flowers:45,pearls:80,butterflies:60,stars:40,leaves:35,hearts:45,ribbons:55};
-const SIZEPRICE = {10:0,15:100,20:200,25:350,30:500};
+const PERSONPRICE = {4:0,6:40,10:80,16:180,24:280,35:420,50:600};
+const PERSONSCALE = {4:0.55,6:0.65,10:0.85,16:1.0,24:1.15,35:1.3,50:1.5};
 const FNAMES = {vanilla:'Vanilya',chocolate:'Çikolata',strawberry:'Çilek',pistachio:'Antep Fıstığı',lemon:'Limon',red_velvet:'Red Velvet',caramel:'Karamel',hazelnut:'Fındık',coconut:'Hindistan Cevizi',mango:'Mango',blueberry:'Yaban Mersini',matcha:'Matcha',tiramisu:'Tiramisu',blackforest:'Orman Meyveli',orange:'Portakal',rose:'Gül Suyu',banana:'Muz',peanut:'Yer Fıstığı',lavender:'Lavanta',mixed:'Karma'};
 const DNAMES = {roses:'🌹 Güller',berries:'🫐 Meyveler',gold_leaf:'✨ Altın Varak',candles:'🕯️ Mumlar',macarons:'🍬 Makaronlar',flowers:'🌸 Çiçekler',pearls:'⚪ İnciler',butterflies:'🦋 Kelebekler',stars:'⭐ Yıldızlar',leaves:'🍃 Yapraklar',hearts:'💛 Kalpler',ribbons:'🎀 Kurdeleler'};
 
@@ -622,6 +673,7 @@ function applyTheme(name, el) {
   const t = THEMES[name]; if(!t) return;
   // color
   S.colorIdx = t.colorIdx;
+  S.persons = S.persons; // keep current
   document.querySelectorAll('.csw').forEach((s,i)=>s.classList.toggle('active',i===t.colorIdx));
   document.getElementById('colName').textContent=`— ${COLORS[t.colorIdx].name} —`;
   // flavor
@@ -694,6 +746,7 @@ function initThree(){
   window._inscTex=new THREE.CanvasTexture(window._inscCanvas);window._inscTex.colorSpace=THREE.SRGBColorSpace;
   cakeRoot=new THREE.Group();decoRoot=new THREE.Group();scene.add(cakeRoot);scene.add(decoRoot);
   buildCake(envMap);
+  const initSc=PERSONSCALE[S.persons]||1;cakeRoot.scale.setScalar(initSc);decoRoot.scale.setScalar(initSc);
   window.addEventListener('resize',()=>{const w=wrap.clientWidth,h=wrap.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
   (function loop(){
     requestAnimationFrame(loop);controls.update();procAnim(performance.now());
@@ -760,34 +813,31 @@ function buildCake(env){
   if(!cakeRoot)return;
   clearGrp(cakeRoot);clearGrp(decoRoot);animQ.length=0;
   const col=COLORS[S.colorIdx],gc=col.glaze,sc=col.sponge,frost=blendHex(gc,0xFFFFFF,.5);
+  // Single tier cake, scale handles size
+  const r=1.62, h=1.0, lH=h*.285;
   let yOff=0;
-  for(let i=0;i<S.tiers;i++){
-    const{r,h}=TD[i],isTop=(i===S.tiers-1),lH=h*.285;
-    [sc,blendHex(sc,0xF5E8C8,.45),sc].forEach((lc,li)=>{
-      const lm=new THREE.Mesh(new THREE.CylinderGeometry(r-.02,r-.02,lH,64),spongeMat(lc));
-      lm.castShadow=lm.receiveShadow=true;lm.position.y=yOff+lH*li+lH/2;cakeRoot.add(lm);
-    });
-    const shell=new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,80,1,true),glazeMat(gc));
-    shell.castShadow=true;shell.position.y=yOff+h/2;shell.scale.y=.01;
-    pushAnim(shell.scale,'y',.01,1,500,i*150);cakeRoot.add(shell);
-    const tface=new THREE.Mesh(new THREE.CircleGeometry(r,80),isTop?topMat(frost):glazeMat(frost));
-    tface.rotation.x=-Math.PI/2;tface.position.y=yOff+h+.001;tface.receiveShadow=true;cakeRoot.add(tface);
-    // Drips
-    const dripCount = S.density==='az'?12:S.density==='cok'?30:22;
-    for(let d=0;d<dripCount;d++){
-      const ang=(d/dripCount)*Math.PI*2+(Math.random()-.5)*.28,dH=.08+Math.random()*.26,dR=.038+Math.random()*.022;
-      const drip=new THREE.Mesh(new THREE.CylinderGeometry(dR*.55,dR,dH,8),glazeMat(frost));
-      drip.position.set(Math.cos(ang)*r,yOff+h-dH/2-.02,Math.sin(ang)*r);drip.castShadow=true;cakeRoot.add(drip);
-      const blob=new THREE.Mesh(new THREE.SphereGeometry(dR*1.1,8,8),glazeMat(frost));
-      blob.position.set(Math.cos(ang)*r,yOff+h-dH-.04,Math.sin(ang)*r);cakeRoot.add(blob);
-    }
-    if(i<S.tiers-1){
-      const sep=new THREE.Mesh(new THREE.CylinderGeometry(r+.05,r+.05,.06,64),new THREE.MeshStandardMaterial({color:0xEDE4D0,roughness:.15,metalness:.1,envMap:envMap,envMapIntensity:.5}));
-      sep.position.y=yOff+h+.03;sep.receiveShadow=true;cakeRoot.add(sep);
-    }
-    yOff+=h+(i<S.tiers-1?.06:0);
+  [sc,blendHex(sc,0xF5E8C8,.45),sc].forEach((lc,li)=>{
+    const lm=new THREE.Mesh(new THREE.CylinderGeometry(r-.02,r-.02,lH,64),spongeMat(lc));
+    lm.castShadow=lm.receiveShadow=true;lm.position.y=yOff+lH*li+lH/2;cakeRoot.add(lm);
+  });
+  const shell=new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,80,1,true),glazeMat(gc));
+  shell.castShadow=true;shell.position.y=yOff+h/2;shell.scale.y=.01;
+  pushAnim(shell.scale,'y',.01,1,500,0);cakeRoot.add(shell);
+  const tface=new THREE.Mesh(new THREE.CircleGeometry(r,80),topMat(frost));
+  tface.rotation.x=-Math.PI/2;tface.position.y=yOff+h+.001;tface.receiveShadow=true;cakeRoot.add(tface);
+  const dripCount=S.density==='az'?12:S.density==='cok'?30:22;
+  for(let d=0;d<dripCount;d++){
+    const ang=(d/dripCount)*Math.PI*2+(Math.random()-.5)*.28,dH=.08+Math.random()*.26,dR=.038+Math.random()*.022;
+    const drip=new THREE.Mesh(new THREE.CylinderGeometry(dR*.55,dR,dH,8),glazeMat(frost));
+    drip.position.set(Math.cos(ang)*r,yOff+h-dH/2-.02,Math.sin(ang)*r);drip.castShadow=true;cakeRoot.add(drip);
+    const blob=new THREE.Mesh(new THREE.SphereGeometry(dR*1.1,8,8),glazeMat(frost));
+    blob.position.set(Math.cos(ang)*r,yOff+h-dH-.04,Math.sin(ang)*r);cakeRoot.add(blob);
   }
-  buildDecos(yOff,TD[S.tiers-1].r);
+  yOff=h;
+  // Apply person scale
+  const sc2=PERSONSCALE[S.persons]||1;
+  cakeRoot.scale.setScalar(sc2);
+  buildDecos(yOff,r);
   drawInscription();
 }
 
@@ -884,9 +934,20 @@ function pushAnim(obj,key,from,to,dur,delay=0){animQ.push({obj,key,from,to,dur,d
 function procAnim(now){for(let i=animQ.length-1;i>=0;i--){const a=animQ[i];if(now<a.start)continue;const t=Math.min((now-a.start)/a.dur,1),e=1-Math.pow(1-t,3),v=a.from+(a.to-a.from)*e;if(a.key==='scalar')a.obj.setScalar(v);else a.obj[a.key]=v;if(t>=1)animQ.splice(i,1);}}
 
 // ── CONTROLS ──
-function setTiers(n,el){document.querySelectorAll('.sec .btn-grid:first-of-type .opt-btn, .tier-btns .opt-btn').forEach(()=>{});document.querySelectorAll('#p-pasta .sec:nth-child(2) .opt-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');S.tiers=n;if(rendererReady)buildCake(envMap);updatePrice();}
+// setTiers removed
 function setFlav(key,el){document.querySelectorAll('#flav-btns .opt-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');S.flavor=key;updatePrice();}
-function setSize(cm,el){document.querySelectorAll('#size-btns .opt-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');S.size=cm;updatePrice();}
+function setSize(persons,el){
+  document.querySelectorAll('#size-btns .opt-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  S.persons=persons;
+  // Scale cake group in 3D
+  if(cakeRoot){
+    const sc=PERSONSCALE[persons]||1;
+    cakeRoot.scale.setScalar(sc);
+    decoRoot.scale.setScalar(sc);
+  }
+  updatePrice();
+}
 function setDensity(d,el){document.querySelectorAll('#density-btns .opt-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');S.density=d;if(rendererReady)buildCake(envMap);}
 function setBorderDeco(d,el){document.querySelectorAll('#border-btns .opt-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');S.borderDeco=d;if(rendererReady)buildCake(envMap);}
 function togDeco(d,el){S.decos.has(d)?(S.decos.delete(d),el.classList.remove('active')):(S.decos.add(d),el.classList.add('active'));if(rendererReady)buildCake(envMap);updatePrice();}
@@ -963,23 +1024,21 @@ function buildPalette(){
 // ── PRICE ──
 function updatePrice(){
   const base=350;
-  const tierAdd=S.tiers*100;
-  const sizeAdd=SIZEPRICE[S.size]||0;
+  const sizeAdd=PERSONPRICE[S.persons]||0;
   const flavAdd=FPRICE[S.flavor]||0;
   let decoAdd=0;S.decos.forEach(d=>decoAdd+=DPRICE[d]||0);
   const msgAdd=S.msg?20:0;
   const imgAdd=S.imgData?50:0;
   const densityAdd=S.density==='cok'?50:0;
   const borderAdd=S.borderDeco!=='none'?60:0;
-  const total=base+tierAdd+sizeAdd+flavAdd+decoAdd+msgAdd+imgAdd+densityAdd+borderAdd;
+  const total=base+sizeAdd+flavAdd+decoAdd+msgAdd+imgAdd+densityAdd+borderAdd;
   document.getElementById('pVal').textContent='₺ '+total.toLocaleString('tr-TR');
   // Price detail
   const detail=document.getElementById('priceDetail');
   if(detail){
     detail.innerHTML=
       `Temel fiyat: ₺${base}<br>`+
-      `${S.tiers} kat: +₺${tierAdd}<br>`+
-      `${S.size}cm: +₺${sizeAdd}<br>`+
+      `${S.persons} kişilik: +₺${sizeAdd}<br>`+
       `${FNAMES[S.flavor]}: +₺${flavAdd}`+
       (decoAdd?`<br>Süslemeler: +₺${decoAdd}`:'')+
       (msgAdd?`<br>Pasta yazısı: +₺${msgAdd}`:'')+
@@ -994,7 +1053,7 @@ function updatePrice(){
 function updateOrderSummary(){
   const dl=[...S.decos].map(d=>DNAMES[d]).join(', ')||'—';
   const txt=
-    `<b>Kat:</b> ${S.tiers} · <b>Boyut:</b> ${S.size}cm<br>`+
+    `<b>Kişi Sayısı:</b> ${S.persons} kişi<br>`+
     `<b>Renk:</b> ${COLORS[S.colorIdx].name}<br>`+
     `<b>Lezzet:</b> ${FNAMES[S.flavor]||S.flavor}<br>`+
     `<b>Süsleme:</b> ${dl}<br>`+
@@ -1006,10 +1065,15 @@ function updateOrderSummary(){
 
 // ── ORDER MODAL ──
 function openOrderModal(){
+  // Set pay button amount
+  setTimeout(()=>{
+    const pa=document.getElementById('payAmount');
+    if(pa) pa.textContent=document.getElementById('pVal').textContent;
+  },100);
   updateOrderSummary();
   const dl=[...S.decos].map(d=>DNAMES[d]).join(', ')||'—';
   document.getElementById('modalSummary').innerHTML=
-    `<b>Kat:</b> ${S.tiers} · <b>Boyut:</b> ${S.size}cm · <b>Renk:</b> ${COLORS[S.colorIdx].name}<br>`+
+    `<b>Kişi:</b> ${S.persons} kişilik · <b>Renk:</b> ${COLORS[S.colorIdx].name}<br>`+
     `<b>Lezzet:</b> ${FNAMES[S.flavor]||S.flavor}<br>`+
     `<b>Süsleme:</b> ${dl}<br>`+
     `<b>Yazı:</b> ${S.msg||'—'}<br>`+
@@ -1034,8 +1098,7 @@ function sendWhatsApp(){
     `🎂 *SARAY PATİSSERİE - YENİ SİPARİŞ*\n\n`+
     `👤 *Müşteri:* ${name}\n📞 *Tel:* ${phone}\n\n`+
     `*PASTA DETAYLARI*\n`+
-    `• Kat: ${S.tiers} kat\n`+
-    `• Boyut: ${S.size}cm\n`+
+    `• Kişi sayısı: ${S.persons} kişilik\n`+
     `• Renk: ${COLORS[S.colorIdx].name}\n`+
     `• Lezzet: ${FNAMES[S.flavor]||S.flavor}\n`+
     `• Süsleme: ${dl}\n`+
@@ -1048,6 +1111,59 @@ function sendWhatsApp(){
     `\n💰 *Toplam: ${document.getElementById('pVal').textContent}*`;
   const waNumber='905436475871';
   window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+// ── PAYMENT TABS ──
+function switchPayTab(tab, el){
+  document.querySelectorAll('.pay-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.pay-page').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('pay-'+tab).classList.add('active');
+}
+
+// ── CARD FORMATTING ──
+function formatCard(input){
+  let v=input.value.replace(/\D/g,'').substring(0,16);
+  input.value=v.replace(/(.{4})/g,'$1  ').trim();
+  // Detect card type
+  const icon=document.getElementById('cardIcon');
+  if(v.startsWith('4')) icon.textContent='💙'; // Visa
+  else if(v.startsWith('5')) icon.textContent='🟠'; // MC
+  else if(v.startsWith('9')) icon.textContent='🇹🇷'; // Troy
+  else if(v.startsWith('3')) icon.textContent='🟦'; // AmEx
+  else icon.textContent='💳';
+}
+function formatExpiry(input){
+  let v=input.value.replace(/\D/g,'').substring(0,4);
+  if(v.length>2) v=v.substring(0,2)+' / '+v.substring(2);
+  input.value=v;
+}
+
+// ── PROCESS PAYMENT ──
+function processPayment(){
+  const name=document.getElementById('oName').value.trim();
+  const phone=document.getElementById('oPhone').value.trim();
+  const cName=document.getElementById('cName').value.trim();
+  const cNum=document.getElementById('cNumber').value.replace(/\s/g,'');
+  const cExp=document.getElementById('cExpiry').value.trim();
+  const cCvv=document.getElementById('cCvv').value.trim();
+  if(!name||!phone){alert('Lütfen ad soyad ve telefon numaranızı girin.');return;}
+  if(!cName||cNum.length<16||!cExp||cCvv.length<3){alert('Lütfen kart bilgilerini eksiksiz girin.');return;}
+  // Show success (in real app this would connect to payment gateway)
+  document.getElementById('orderModal').classList.remove('open');
+  setTimeout(()=>{
+    document.body.insertAdjacentHTML('beforeend',`
+      <div style="position:fixed;inset:0;z-index:99999;background:rgba(7,5,10,.95);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;animation:mIn .4s ease" id="successMsg">
+        <div style="font-size:3rem">✅</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:hsl(45,70%,70%);letter-spacing:.1em">Siparişiniz Alındı!</div>
+        <div style="font-size:.78rem;color:#7A6050;text-align:center;line-height:1.8;max-width:300px">
+          ${document.getElementById('pVal').textContent} tutarında ödemeniz alındı.<br>
+          Saray Patisserie ekibi en kısa sürede <b style="color:#C9A96E">${phone}</b> numaralı telefonunuzu arayacaktır.
+        </div>
+        <div style="font-size:.65rem;color:#4A3530;letter-spacing:.15em;text-transform:uppercase">Teşekkürler · Saray Patisserie</div>
+        <button onclick="document.getElementById('successMsg').remove()" style="margin-top:8px;background:#7A6035;border:none;border-radius:8px;padding:10px 24px;color:#07050A;font-family:'Jost',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;cursor:pointer">Kapat</button>
+      </div>`);
+  },200);
 }
 
 // ── SAVE IMAGE ──
