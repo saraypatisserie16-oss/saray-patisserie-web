@@ -18,7 +18,7 @@
 <meta property="og:description" content="Türk kahvesinin büyüsü, ev yapımı lezzetler ve sıcak bir atmosfer.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=Dancing+Script:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 /* ─── DESIGN TOKENS ─── */
 :root {
@@ -553,127 +553,6 @@ footer{
 .foot-links a{font-size:12px;color:var(--muted);transition:.2s}
 .foot-links a:hover{color:var(--gold)}
 
-/* ─── CAKE STUDIO SECTION ─── */
-#cake-studio{padding:0;overflow:hidden}
-.cake-studio-wrap{
-  display:flex;width:100%;height:90vh;min-height:560px;
-  position:relative;
-}
-.cs-viewer{
-  flex:1;position:relative;overflow:hidden;
-  background:radial-gradient(ellipse 100% 100% at 50% 40%,#1A0E1E 0%,#07050A 100%);
-}
-.cs-brand{position:absolute;top:20px;left:28px;z-index:20;pointer-events:none}
-.cs-brand h3{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;color:hsl(45,70%,70%);letter-spacing:.2em;text-transform:uppercase}
-.cs-brand p{font-size:.55rem;letter-spacing:.3em;color:#7A6035;text-transform:uppercase;margin-top:2px}
-.cs-view-tabs{position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:20;display:flex;background:rgba(30,21,32,.88);border:1px solid #3A2840;border-radius:30px;padding:4px;backdrop-filter:blur(12px);gap:2px}
-.cs-vtab{padding:6px 16px;border-radius:24px;font-size:.68rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;color:#7A6050;transition:all .3s;border:none;background:transparent;font-family:'DM Sans',sans-serif}
-.cs-vtab.active{background:#7A6035;color:#07050A;box-shadow:0 2px 12px rgba(201,169,110,.2)}
-#cs-sketchfab-wrap{position:absolute;inset:0;z-index:5;transition:opacity .5s}
-#cs-sketchfab-wrap iframe{width:100%;height:100%;border:none;display:block}
-#cs-sketchfab-wrap.cs-hidden{opacity:0;pointer-events:none}
-.cs-sfab-credit{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);z-index:30;background:rgba(30,21,32,.8);border:1px solid #3A2840;border-radius:20px;padding:5px 14px;font-size:.62rem;color:#7A6050;letter-spacing:.07em;backdrop-filter:blur(8px);display:flex;align-items:center;gap:6px;pointer-events:none}
-.cs-sfab-credit a{color:#7A6035;text-decoration:none;pointer-events:all}
-#cs-canvas-wrap{position:absolute;inset:0;z-index:4;transition:opacity .5s}
-#cs-canvas-wrap.cs-hidden{opacity:0;pointer-events:none}
-#cs-canvas-wrap canvas{width:100%!important;height:100%!important;display:block}
-.cs-viewer::after{content:'';position:absolute;inset:0;z-index:6;pointer-events:none;background:radial-gradient(ellipse 85% 85% at 50% 50%,transparent 40%,rgba(7,5,10,.5) 100%)}
-.cs-hero-cta{position:absolute;bottom:60px;right:32px;z-index:30}
-.cs-btn-studio{display:flex;align-items:center;gap:12px;padding:0;background:none;border:none;cursor:pointer;text-decoration:none;position:relative}
-.cs-btn-studio-inner{display:flex;align-items:center;gap:14px;padding:13px 22px 13px 17px;background:linear-gradient(135deg,rgba(201,169,110,.12),rgba(201,169,110,.06));border:1px solid rgba(201,169,110,.35);border-radius:50px;backdrop-filter:blur(16px);transition:all .4s cubic-bezier(.2,0,.2,1);position:relative;overflow:hidden}
-.cs-btn-studio-inner::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,169,110,.22),rgba(201,169,110,.08));opacity:0;transition:opacity .3s}
-.cs-btn-studio:hover .cs-btn-studio-inner{border-color:rgba(201,169,110,.7);box-shadow:0 8px 40px rgba(201,169,110,.2),0 0 0 1px rgba(201,169,110,.2);transform:translateY(-2px)}
-.cs-btn-studio:hover .cs-btn-studio-inner::before{opacity:1}
-.cs-btn-studio-icon{width:32px;height:32px;background:linear-gradient(135deg,#7A6035,#C9A96E);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem;box-shadow:0 4px 16px rgba(201,169,110,.3);transition:transform .3s;position:relative;z-index:1;flex-shrink:0}
-.cs-btn-studio:hover .cs-btn-studio-icon{transform:rotate(15deg) scale(1.05)}
-.cs-btn-studio-text{position:relative;z-index:1;text-align:left}
-.cs-btn-studio-text .bst-top{display:block;font-family:'Playfair Display',serif;font-size:.88rem;font-weight:600;color:hsl(45,70%,70%);letter-spacing:.06em;line-height:1;margin-bottom:2px}
-.cs-btn-studio-text .bst-sub{display:block;font-size:.56rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:#7A6035}
-.cs-btn-studio-arrow{position:relative;z-index:1;color:#7A6035;font-size:.76rem;transition:transform .3s,color .3s}
-.cs-btn-studio:hover .cs-btn-studio-arrow{transform:translateX(4px);color:hsl(45,70%,70%)}
-.cs-rot-hint{position:absolute;bottom:44px;left:50%;transform:translateX(-50%);z-index:30;pointer-events:none;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:#4A3530;display:none;align-items:center;gap:10px}
-.cs-rot-hint::before,.cs-rot-hint::after{content:'';display:block;width:24px;height:1px;background:#7A6035}
-.cs-panel{width:360px;background:#1E1520;border-left:1px solid #3A2840;display:flex;flex-direction:column;overflow:hidden;z-index:20;box-shadow:-16px 0 50px rgba(0,0,0,.4)}
-.cs-panel-head{padding:22px 24px 16px;border-bottom:1px solid #3A2840;flex-shrink:0;background:linear-gradient(180deg,rgba(201,169,110,.04),transparent)}
-.cs-panel-head h2{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;color:hsl(45,70%,70%);letter-spacing:.14em;text-transform:uppercase}
-.cs-panel-head p{font-size:.63rem;color:#7A6050;margin-top:3px;letter-spacing:.06em}
-.cs-vi{display:flex;align-items:center;gap:7px;margin-top:9px;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:#4A3530}
-.cs-vi-dot{width:6px;height:6px;border-radius:50%;background:#7A6035}
-#cs-vi-label{color:#7A6035}
-.cs-panel-body{flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:#3A2840 transparent}
-.cs-panel-body::-webkit-scrollbar{width:3px}
-.cs-panel-body::-webkit-scrollbar-thumb{background:#3A2840;border-radius:2px}
-.cs-sec{padding:15px 22px;border-bottom:1px solid #3A2840}
-.cs-sec:last-child{border-bottom:none}
-.cs-sec-lbl{font-size:.54rem;letter-spacing:.28em;text-transform:uppercase;color:#7A6035;margin-bottom:10px;display:flex;align-items:center;gap:8px}
-.cs-sec-lbl::after{content:'';flex:1;height:1px;background:#3A2840}
-.cs-tier-row{display:flex;gap:6px}
-.cs-tier-btn{flex:1;padding:11px 6px;text-align:center;cursor:pointer;background:#18121A;border:1px solid #3A2840;border-radius:10px;transition:all .25s}
-.cs-tier-btn.active{border-color:#C9A96E;background:#281D08;box-shadow:0 0 18px rgba(201,169,110,.14),inset 0 1px 0 rgba(201,169,110,.1)}
-.cs-tier-btn .t-n{font-family:'Playfair Display',serif;font-size:1.2rem;color:#7A6050;display:block;margin-bottom:2px;transition:color .25s}
-.cs-tier-btn.active .t-n{color:hsl(45,70%,70%)}
-.cs-tier-btn .t-l{font-size:.57rem;letter-spacing:.1em;text-transform:uppercase;color:#4A3530;transition:color .25s}
-.cs-tier-btn.active .t-l{color:#7A6035}
-.cs-pal{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:7px}
-.cs-csw{width:26px;height:26px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;transition:all .2s}
-.cs-csw:hover{transform:scale(1.1)}
-.cs-csw.active{border-color:hsl(45,70%,70%);transform:scale(1.15);box-shadow:0 0 11px rgba(201,169,110,.28)}
-.cs-col-name{font-size:.62rem;color:#7A6050;letter-spacing:.05em;margin-top:2px}
-.cs-flav-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
-.cs-flav{padding:8px 8px;background:#18121A;border:1px solid #3A2840;border-radius:8px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px;font-size:.68rem;color:#7A6050}
-.cs-flav:hover{border-color:#5A4060;color:#C0A888}
-.cs-flav.active{border-color:#7A6035;background:#241808;color:#C9A96E}
-.cs-flav .fi{font-size:.88rem}
-.cs-insc-preview{background:#18121A;border:1px solid #3A2840;border-radius:11px;padding:13px;min-height:58px;display:flex;align-items:center;justify-content:center;margin-bottom:9px;position:relative;overflow:hidden}
-#cs-prev-txt{position:relative;z-index:1;color:hsl(45,70%,70%);text-align:center;max-width:100%;word-break:break-word;transition:all .3s;font-size:.95rem}
-.cs-inp{width:100%;background:#18121A;border:1px solid #3A2840;border-radius:8px;padding:8px 11px;font-family:'DM Sans',sans-serif;font-size:.78rem;color:#EEE0CC;outline:none;transition:border-color .2s,box-shadow .2s;margin-bottom:7px}
-.cs-inp:focus{border-color:#7A6035;box-shadow:0 0 0 3px rgba(201,169,110,.07)}
-.cs-inp::placeholder{color:#4A3530;font-style:italic}
-.cs-ctrl{display:flex;align-items:center;gap:7px;margin-bottom:7px}
-.cs-clbl{font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:#7A6050;min-width:38px;flex-shrink:0}
-select.cs-inp{margin-bottom:0;cursor:pointer;flex:1;padding:7px 10px;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%237A6035'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center}
-input[type=range].cs-range{flex:1;height:2px;-webkit-appearance:none;background:#3A2840;border-radius:1px;outline:none;cursor:pointer}
-input[type=range].cs-range::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:#C9A96E;border:2px solid #1E1520;box-shadow:0 0 8px rgba(201,169,110,.28);cursor:pointer}
-.cs-rval{font-size:.64rem;color:#7A6035;min-width:22px;text-align:right;flex-shrink:0}
-.cs-deco-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
-.cs-deco-card{padding:9px 5px;background:#18121A;border:1px solid #3A2840;border-radius:9px;cursor:pointer;text-align:center;transition:all .22s;position:relative}
-.cs-deco-card:hover{border-color:#5A4060}
-.cs-deco-card.active{border-color:#D4889A;background:#200F14;box-shadow:0 0 13px rgba(212,136,154,.1)}
-.cs-deco-card .di{font-size:1.1rem;display:block;margin-bottom:2px}
-.cs-deco-card .dl{font-size:.54rem;color:#7A6050;letter-spacing:.05em}
-.cs-deco-card.active .dl{color:#D4889A}
-.cs-dchk{position:absolute;top:3px;right:3px;width:11px;height:11px;background:#D4889A;border-radius:50%;font-size:.45rem;color:#fff;display:none;align-items:center;justify-content:center}
-.cs-deco-card.active .cs-dchk{display:flex}
-.cs-panel-foot{padding:15px 22px 18px;border-top:1px solid #3A2840;background:linear-gradient(0deg,rgba(201,169,110,.03),transparent);flex-shrink:0}
-.cs-price-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:11px}
-.cs-price-lbl{font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:#7A6050}
-.cs-price-val{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:600;color:hsl(45,70%,70%)}
-.cs-btn-order{width:100%;padding:0;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative}
-.cs-btn-order-inner{width:100%;padding:12px 16px;background:linear-gradient(135deg,#6A4818,#C9A96E,#B88030);background-size:200% 100%;background-position:100% 0;border-radius:10px;display:flex;align-items:center;justify-content:center;gap:9px;transition:background-position .5s ease,box-shadow .3s,transform .2s;box-shadow:0 4px 24px rgba(201,169,110,.18)}
-.cs-btn-order:hover .cs-btn-order-inner{background-position:0 0;box-shadow:0 8px 40px rgba(201,169,110,.32);transform:translateY(-2px)}
-.cs-btn-order-inner span{font-family:'DM Sans',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#07050A}
-.cs-modal-bg{display:none;position:fixed;inset:0;z-index:9999;background:rgba(7,5,10,.85);backdrop-filter:blur(12px);align-items:center;justify-content:center}
-.cs-modal-bg.open{display:flex}
-.cs-modal{background:#1E1520;border:1px solid #7A6035;border-radius:20px;padding:38px 30px;max-width:400px;width:90%;text-align:center;animation:csMIn .4s cubic-bezier(.2,0,.2,1);box-shadow:0 40px 100px rgba(0,0,0,.7),0 0 60px rgba(201,169,110,.06)}
-@keyframes csMIn{from{opacity:0;transform:scale(.88) translateY(24px)}to{opacity:1;transform:none}}
-.cs-m-ico{font-size:2.6rem;margin-bottom:11px}
-.cs-modal h3{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;color:hsl(45,70%,70%);margin-bottom:7px}
-.cs-modal p{font-size:.78rem;color:#7A6050;line-height:1.9;margin-bottom:18px}
-.cs-m-detail{background:#18121A;border-radius:10px;padding:11px 13px;text-align:left;font-size:.74rem;color:#7A6050;line-height:2;margin-bottom:18px;border:1px solid #3A2840}
-.cs-m-detail b{color:#C0A888;font-weight:400}
-.cs-btn-mclose{background:#7A6035;border:none;border-radius:8px;padding:9px 24px;color:#07050A;font-family:'DM Sans',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
-#cs-loading{position:absolute;inset:0;z-index:100;background:#07050A;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;transition:opacity .8s ease}
-#cs-loading.gone{opacity:0;pointer-events:none}
-.cs-ld-logo{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:600;color:#C9A96E;letter-spacing:.35em;text-transform:uppercase}
-.cs-ld-bar-w{width:130px;height:1px;background:#3A2840;border-radius:1px;overflow:hidden}
-.cs-ld-bar{height:100%;background:#C9A96E;width:0%;transition:width .3s ease}
-.cs-ld-lbl{font-size:.58rem;letter-spacing:.28em;color:#4A3530;text-transform:uppercase}
-@media(max-width:768px){
-  .cake-studio-wrap{flex-direction:column;height:auto}
-  .cs-viewer{height:55vw;min-height:280px}
-  .cs-panel{width:100%;height:auto}
-}
-
 /* ─── WHATSAPP FAB ─── */
 .wa-fab{
   position:fixed;bottom:24px;left:24px;z-index:200;
@@ -1027,160 +906,55 @@ input[type=range].cs-range::-webkit-slider-thumb{-webkit-appearance:none;width:1
   </div>
 </section>
 
-<!-- CAKE STUDIO -->
-<section id="cake-studio">
-  <div class="cake-studio-wrap">
-
-    <!-- LEFT: VIEWER -->
-    <div class="cs-viewer">
-      <div class="cs-brand">
-        <h3>Saray</h3>
-        <p>Patisserie · Cake Studio</p>
+<!-- CAKE STUDIO PROMO -->
+<section class="sec sec-dark" id="cake-studio">
+  <div class="sec-head reveal">
+    <div class="sec-label tr">Özel Sipariş</div>
+    <div class="sec-label en" style="display:none">Custom Order</div>
+    <div class="sec-title tr">Cake <span>Studio</span></div>
+    <div class="sec-title en" style="display:none">Cake <span>Studio</span></div>
+    <div class="sec-sub tr">Pastanı 3D olarak tasarla — renk, lezzet, süsleme ve yazı</div>
+    <div class="sec-sub en" style="display:none">Design your cake in 3D — color, flavor, decoration and inscription</div>
+    <div class="divider"></div>
+  </div>
+  <div class="reveal" style="display:flex;flex-direction:column;align-items:center;gap:32px;padding:0 0 20px">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:780px;width:100%">
+      <div class="feat-card" style="text-align:center">
+        <span class="feat-icon">🎨</span>
+        <div class="feat-title tr">10 Renk Seçeneği</div>
+        <div class="feat-desc tr">Pembe fondandan bitter çikolataya, istediğin kaplamayla tasarla</div>
       </div>
-      <div class="cs-view-tabs">
-        <button class="cs-vtab active" id="cs-tab-sf"    onclick="csSwitchView('sf')">🎂 Model</button>
-        <button class="cs-vtab"        id="cs-tab-three" onclick="csSwitchView('three')">✦ Özelleştir</button>
+      <div class="feat-card" style="text-align:center">
+        <span class="feat-icon">✍️</span>
+        <div class="feat-title tr">Kişisel Yazı</div>
+        <div class="feat-desc tr">Pastanın üstüne istediğin mesajı, font ve renkle yaz</div>
       </div>
-      <div id="cs-sketchfab-wrap">
-        <iframe
-          title="Wedding Cake — Saray Patisserie"
-          allow="autoplay; fullscreen; xr-spatial-tracking"
-          allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true"
-          src="https://sketchfab.com/models/69be5c0c0d404113a227d9ba19d78447/embed?autostart=1&autospin=0.3&ui_theme=dark&ui_color=c9a96e&ui_controls=1&ui_infos=0&ui_stop=0&ui_watermark=0&dnt=1&camera=0&transparent=1&scrollwheel=1&double_click=1"
-        ></iframe>
-      </div>
-      <div id="cs-canvas-wrap" class="cs-hidden"></div>
-      <div class="cs-sfab-credit" id="cs-sfab-credit">
-        <span>3D Model:</span>
-        <a href="https://sketchfab.com/3d-models/wedding-cake-69be5c0c0d404113a227d9ba19d78447" target="_blank">Wedding Cake</a>
-        <span>·</span>
-        <a href="https://sketchfab.com/Mekokishvili" target="_blank">Mekokishvili</a>
-        <span>· CC-BY</span>
-      </div>
-      <div class="cs-rot-hint" id="cs-rotHint">Sürükle &amp; Döndür</div>
-      <div class="cs-hero-cta">
-        <button class="cs-btn-studio" onclick="csSwitchView('three')">
-          <div class="cs-btn-studio-inner">
-            <div class="cs-btn-studio-icon">🎂</div>
-            <div class="cs-btn-studio-text">
-              <span class="bst-top">Pastanı Tasarla</span>
-              <span class="bst-sub">3D Özelleştirici · Saray Studio</span>
-            </div>
-            <div class="cs-btn-studio-arrow">›</div>
-          </div>
-        </button>
-      </div>
-      <div id="cs-loading">
-        <div class="cs-ld-logo">Saray</div>
-        <div class="cs-ld-bar-w"><div class="cs-ld-bar" id="cs-ldBar"></div></div>
-        <div class="cs-ld-lbl" id="cs-ldLbl">Yükleniyor...</div>
+      <div class="feat-card" style="text-align:center">
+        <span class="feat-icon">🌹</span>
+        <div class="feat-title tr">Süsleme Seçimi</div>
+        <div class="feat-desc tr">Güller, altın varak, makaronlar ve daha fazlası</div>
       </div>
     </div>
-
-    <!-- RIGHT: PANEL -->
-    <div class="cs-panel">
-      <div class="cs-panel-head">
-        <h2>Cake Studio</h2>
-        <p>Gerçek zamanlı 3D pasta özelleştirici</p>
-        <div class="cs-vi">
-          <div class="cs-vi-dot"></div>
-          <span>Görünüm:</span>
-          <span id="cs-vi-label">Sketchfab Modeli</span>
-        </div>
-      </div>
-      <div class="cs-panel-body">
-        <div class="cs-sec">
-          <div class="cs-sec-lbl">Kat Sayısı</div>
-          <div class="cs-tier-row">
-            <div class="cs-tier-btn active" onclick="csSetTiers(1,this)"><span class="t-n">I</span><span class="t-l">Tek</span></div>
-            <div class="cs-tier-btn"        onclick="csSetTiers(2,this)"><span class="t-n">II</span><span class="t-l">İki</span></div>
-            <div class="cs-tier-btn"        onclick="csSetTiers(3,this)"><span class="t-n">III</span><span class="t-l">Üç</span></div>
-          </div>
-        </div>
-        <div class="cs-sec">
-          <div class="cs-sec-lbl">Kaplama Rengi</div>
-          <div class="cs-pal" id="cs-palette"></div>
-          <div class="cs-col-name" id="cs-colName">— Pembe Fondan —</div>
-        </div>
-        <div class="cs-sec">
-          <div class="cs-sec-lbl">Lezzet</div>
-          <div class="cs-flav-grid">
-            <div class="cs-flav active" onclick="csSetFlav('vanilla',this)"><span class="fi">🤍</span>Vanilya</div>
-            <div class="cs-flav"        onclick="csSetFlav('chocolate',this)"><span class="fi">🍫</span>Çikolata</div>
-            <div class="cs-flav"        onclick="csSetFlav('strawberry',this)"><span class="fi">🍓</span>Çilek</div>
-            <div class="cs-flav"        onclick="csSetFlav('pistachio',this)"><span class="fi">🌿</span>Fıstık</div>
-            <div class="cs-flav"        onclick="csSetFlav('lemon',this)"><span class="fi">🍋</span>Limon</div>
-            <div class="cs-flav"        onclick="csSetFlav('red_velvet',this)"><span class="fi">❤️</span>Red Velvet</div>
-          </div>
-        </div>
-        <div class="cs-sec">
-          <div class="cs-sec-lbl">Pasta Yazısı</div>
-          <div class="cs-insc-preview">
-            <span id="cs-prev-txt" style="font-family:'Dancing Script',cursive">Mesajınız burada görünecek...</span>
-          </div>
-          <input class="cs-inp" type="text" id="cs-cakeMsg" maxlength="30"
-                 placeholder="Örn: İyi ki doğdun Ayşe! 🌹"
-                 oninput="csHandleMsg(this.value)">
-          <div class="cs-ctrl">
-            <span class="cs-clbl">Font</span>
-            <select class="cs-inp" id="cs-fontSel" onchange="csHandleFont(this.value)">
-              <option value="'Dancing Script',cursive">Dancing Script</option>
-              <option value="'Great Vibes',cursive">Great Vibes</option>
-              <option value="'Playfair Display',serif">Playfair Display</option>
-              <option value="'Cormorant Garamond',serif">Cormorant Garamond</option>
-            </select>
-          </div>
-          <div class="cs-ctrl">
-            <span class="cs-clbl">Renk</span>
-            <input type="color" id="cs-icingCol" value="#C9A96E" oninput="csHandleIcing(this.value)">
-            <span style="font-size:.66rem;color:#7A6050;margin-left:8px;flex:1">Krema rengi</span>
-          </div>
-          <div class="cs-ctrl">
-            <span class="cs-clbl">Boyut</span>
-            <input type="range" class="cs-range" id="cs-fSize" min="26" max="72" value="46" oninput="csHandleSize(this.value)">
-            <span class="cs-rval" id="cs-sVal">46</span>
-          </div>
-        </div>
-        <div class="cs-sec">
-          <div class="cs-sec-lbl">Süsleme</div>
-          <div class="cs-deco-grid">
-            <div class="cs-deco-card" onclick="csTogDeco('roses',this)"><span class="di">🌹</span><span class="dl">Güller</span><span class="cs-dchk">✓</span></div>
-            <div class="cs-deco-card" onclick="csTogDeco('berries',this)"><span class="di">🫐</span><span class="dl">Meyveler</span><span class="cs-dchk">✓</span></div>
-            <div class="cs-deco-card" onclick="csTogDeco('gold_leaf',this)"><span class="di">✨</span><span class="dl">Altın Varak</span><span class="cs-dchk">✓</span></div>
-            <div class="cs-deco-card" onclick="csTogDeco('candles',this)"><span class="di">🕯️</span><span class="dl">Mumlar</span><span class="cs-dchk">✓</span></div>
-            <div class="cs-deco-card" onclick="csTogDeco('macarons',this)"><span class="di">🍬</span><span class="dl">Makaronlar</span><span class="cs-dchk">✓</span></div>
-            <div class="cs-deco-card" onclick="csTogDeco('flowers',this)"><span class="di">🌸</span><span class="dl">Çiçekler</span><span class="cs-dchk">✓</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="cs-panel-foot">
-        <div class="cs-price-row">
-          <span class="cs-price-lbl">Tahmini Fiyat</span>
-          <span class="cs-price-val" id="cs-pVal">₺ 450</span>
-        </div>
-        <button class="cs-btn-order" onclick="csOpenModal()">
-          <div class="cs-btn-order-inner">
-            <span>🛍</span>
-            <span>Sipariş Ver</span>
-          </div>
-        </button>
-      </div>
-    </div>
-
+    <a href="cake-studio.html" style="
+      display:inline-flex;align-items:center;gap:14px;
+      padding:16px 36px;
+      background:linear-gradient(135deg,rgba(201,169,110,.14),rgba(201,169,110,.06));
+      border:1px solid rgba(201,169,110,.45);
+      border-radius:60px;
+      backdrop-filter:blur(12px);
+      transition:all .35s;
+      font-family:'Playfair Display',serif;
+      text-decoration:none;
+      " onmouseover="this.style.borderColor='rgba(201,169,110,.85)';this.style.transform='translateY(-2px)';this.style.boxShadow='0 12px 48px rgba(201,169,110,.2)'" onmouseout="this.style.borderColor='rgba(201,169,110,.45)';this.style.transform='';this.style.boxShadow=''">
+      <span style="font-size:1.6rem">🎂</span>
+      <span>
+        <span style="display:block;font-size:1.05rem;font-weight:600;color:hsl(45,70%,70%);letter-spacing:.07em">Pastanı Tasarla</span>
+        <span style="display:block;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:2px">3D Cake Studio'yu Aç →</span>
+      </span>
+    </a>
   </div>
 </section>
 
-<!-- CAKE STUDIO MODAL -->
-<div class="cs-modal-bg" id="cs-modal">
-  <div class="cs-modal">
-    <div class="cs-m-ico">🎂</div>
-    <h3>Siparişiniz Alındı</h3>
-    <p>Saray Patisserie ekibi en kısa sürede sizi arayacak. Pastanız özenle hazırlanacaktır.</p>
-    <div class="cs-m-detail" id="cs-mDetail"></div>
-    <p style="font-size:.7rem;margin-bottom:16px">Teslim süresi: <b style="color:#C9A96E">3–5 iş günü</b></p>
-    <button class="cs-btn-mclose" onclick="document.getElementById('cs-modal').classList.remove('open')">Tamam</button>
-  </div>
-</div>
 
 <!-- REVIEWS -->
 <section class="sec sec-dark" id="reviews">
@@ -1445,332 +1219,7 @@ checkOpenStatus();
 setInterval(checkOpenStatus,60000);
 </script>
 
-<!-- THREE.JS + CAKE STUDIO ENGINE -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script>
-'use strict';
-// ── CAKE STUDIO STATE ──
-const CS = {
-  tiers:1, colorIdx:0, flavor:'vanilla',
-  decos:new Set(), msg:'', font:"'Dancing Script',cursive",
-  icingColor:'#C9A96E', fontSize:46,
-};
-const CS_COLORS = [
-  {name:'Pembe Fondan',   hex:'#F2B4BE', glaze:0xF2B4BE, sponge:0xE08890},
-  {name:'İnci Beyaz',     hex:'#F2EDE6', glaze:0xF2EDE6, sponge:0xD4C4A8},
-  {name:'Bitter Çikolata',hex:'#5A3820', glaze:0x5A3820, sponge:0x3A2010},
-  {name:'Lavanta',        hex:'#C4B0D8', glaze:0xC4B0D8, sponge:0x9A7EC0},
-  {name:'Pistache',       hex:'#A8C8A0', glaze:0xA8C8A0, sponge:0x78A870},
-  {name:'Limon Sarısı',   hex:'#F2D878', glaze:0xF2D878, sponge:0xD8B840},
-  {name:'Gece Mavisi',    hex:'#7888B8', glaze:0x7888B8, sponge:0x485888},
-  {name:'Altın Krem',     hex:'#D8C090', glaze:0xD8C090, sponge:0xB89860},
-  {name:'Kırmızı Kadife', hex:'#C05060', glaze:0xC05060, sponge:0x901830},
-  {name:'Mint',           hex:'#98D8C8', glaze:0x98D8C8, sponge:0x58A890},
-];
-const CS_FPRICE = {vanilla:0,chocolate:50,strawberry:30,pistachio:80,lemon:20,red_velvet:60};
-const CS_DPRICE = {roses:40,berries:50,gold_leaf:120,candles:30,macarons:70,flowers:45};
 
-let csCurrentView = 'sf';
-let csRendererReady = false;
-let csRenderer, csScene, csCamera, csControls, csCakeRoot, csDecoRoot, csAnimQ = [];
-
-// ── ORBIT CONTROLS (inline) ──
-function CsOrbitControls(cam, dom) {
-  this.cam = cam; this.dom = dom;
-  this.enableDamping = true; this.dampingFactor = 0.06;
-  this.enablePan = false; this.minPolarAngle = 0.2; this.maxPolarAngle = Math.PI*0.54;
-  this.minDistance = 4; this.maxDistance = 15;
-  this.autoRotate = true; this.autoRotateSpeed = 0.45;
-  this.target = new THREE.Vector3(0, 1.8, 0);
-  const sph = new THREE.Spherical(), dSph = new THREE.Spherical();
-  const off = new THREE.Vector3();
-  off.copy(cam.position).sub(this.target);
-  sph.setFromVector3(off);
-  let drag = false, px = 0, py = 0;
-  const me = this;
-  dom.addEventListener('mousedown', e=>{drag=true;px=e.clientX;py=e.clientY;});
-  window.addEventListener('mouseup', ()=>drag=false);
-  window.addEventListener('mousemove', e=>{if(!drag)return;dSph.theta-=(e.clientX-px)/dom.clientHeight*2.0;dSph.phi-=(e.clientY-py)/dom.clientHeight*1.5;px=e.clientX;py=e.clientY;});
-  dom.addEventListener('touchstart', e=>{drag=true;px=e.touches[0].clientX;py=e.touches[0].clientY;},{passive:true});
-  dom.addEventListener('touchend', ()=>drag=false);
-  dom.addEventListener('touchmove', e=>{if(!drag)return;dSph.theta-=(e.touches[0].clientX-px)/dom.clientHeight*1.8;dSph.phi-=(e.touches[0].clientY-py)/dom.clientHeight*1.2;px=e.touches[0].clientX;py=e.touches[0].clientY;e.preventDefault();},{passive:false});
-  this.update = function() {
-    if(me.autoRotate && !drag) dSph.theta -= me.autoRotateSpeed*Math.PI/180*0.016;
-    sph.theta += dSph.theta * me.dampingFactor;
-    sph.phi   += dSph.phi   * me.dampingFactor;
-    dSph.theta *= (1-me.dampingFactor);
-    dSph.phi   *= (1-me.dampingFactor);
-    sph.phi = Math.max(me.minPolarAngle, Math.min(me.maxPolarAngle, sph.phi));
-    sph.radius = Math.max(me.minDistance, Math.min(me.maxDistance, sph.radius));
-    sph.makeSafe();
-    off.setFromSpherical(sph);
-    cam.position.copy(me.target).add(off);
-    cam.lookAt(me.target);
-  };
-}
-
-function csSwitchView(v) {
-  csCurrentView = v;
-  const sfWrap = document.getElementById('cs-sketchfab-wrap');
-  const threeWrap = document.getElementById('cs-canvas-wrap');
-  const sfCredit = document.getElementById('cs-sfab-credit');
-  const rotH = document.getElementById('cs-rotHint');
-  const tabSf = document.getElementById('cs-tab-sf');
-  const tabThree = document.getElementById('cs-tab-three');
-  const viLabel = document.getElementById('cs-vi-label');
-  if (v === 'sf') {
-    sfWrap.classList.remove('cs-hidden'); threeWrap.classList.add('cs-hidden');
-    sfCredit.style.display='flex'; rotH.style.display='none';
-    tabSf.classList.add('active'); tabThree.classList.remove('active');
-    viLabel.textContent = 'Sketchfab Modeli';
-  } else {
-    sfWrap.classList.add('cs-hidden'); threeWrap.classList.remove('cs-hidden');
-    sfCredit.style.display='none'; rotH.style.display='flex';
-    tabSf.classList.remove('active'); tabThree.classList.add('active');
-    viLabel.textContent = '3D Özelleştirici';
-    if (!csRendererReady) csInitThree();
-  }
-}
-
-function csInitThree() {
-  if (csRendererReady) return;
-  csRendererReady = true;
-  const wrap = document.getElementById('cs-canvas-wrap');
-  const W = wrap.clientWidth, H = wrap.clientHeight;
-  csRenderer = new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});
-  csRenderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-  csRenderer.setSize(W,H);
-  csRenderer.shadowMap.enabled=true; csRenderer.shadowMap.type=THREE.PCFSoftShadowMap;
-  csRenderer.outputColorSpace=THREE.SRGBColorSpace;
-  csRenderer.toneMapping=THREE.ACESFilmicToneMapping; csRenderer.toneMappingExposure=1.15;
-  wrap.appendChild(csRenderer.domElement);
-  csScene = new THREE.Scene();
-  csScene.fog = new THREE.FogExp2(0x07050A,0.04);
-  csCamera = new THREE.PerspectiveCamera(36,W/H,0.1,60);
-  csCamera.position.set(0,5.5,10.5);
-  csControls = new CsOrbitControls(csCamera, csRenderer.domElement);
-  // Env map
-  const pmrem = new THREE.PMREMGenerator(csRenderer);
-  pmrem.compileEquirectangularShader();
-  const sz=256; const data=new Uint8Array(sz*sz*4);
-  for(let y=0;y<sz;y++) for(let x=0;x<sz;x++){
-    const i=(y*sz+x)*4,ny=y/sz,hot=(x/sz>0.6&&x/sz<0.9&&ny>0.3&&ny<0.7);
-    data[i]=Math.min(255,28+ny*18+(hot?200:0));data[i+1]=Math.min(255,20+ny*12+(hot?158:0));
-    data[i+2]=Math.min(255,12+ny*6+(hot?78:0));data[i+3]=255;
-  }
-  const dt=new THREE.DataTexture(data,sz,sz,THREE.RGBAFormat); dt.needsUpdate=true;
-  const env=pmrem.fromEquirectangular(dt).texture;
-  csScene.environment=env; pmrem.dispose();
-  // Lights
-  const key=new THREE.DirectionalLight(0xFFEDD5,2.2); key.position.set(3,12,6); key.castShadow=true;
-  key.shadow.mapSize.set(2048,2048); key.shadow.bias=-0.0005; key.shadow.normalBias=0.02;
-  key.shadow.camera.top=key.shadow.camera.right=8; key.shadow.camera.bottom=key.shadow.camera.left=-8;
-  csScene.add(key);
-  csScene.add(Object.assign(new THREE.DirectionalLight(0xC8D8F8,0.45),{position:new THREE.Vector3(-6,5,-4)}));
-  csScene.add(Object.assign(new THREE.DirectionalLight(0xFFCA70,0.8),{position:new THREE.Vector3(0,2,-8)}));
-  csScene.add(Object.assign(new THREE.DirectionalLight(0xF0C880,0.22),{position:new THREE.Vector3(0,-4,3)}));
-  csScene.add(new THREE.HemisphereLight(0x2A1808,0x07050A,0.4));
-  // Marble board
-  const mc=document.createElement('canvas'); mc.width=mc.height=512;
-  const mctx=mc.getContext('2d'); mctx.fillStyle='#EDE4D5'; mctx.fillRect(0,0,512,512);
-  for(let v=0;v<18;v++){mctx.beginPath();mctx.moveTo(Math.random()*512,Math.random()*512);for(let p=0;p<8;p++)mctx.lineTo(Math.random()*512,Math.random()*512);mctx.strokeStyle=`rgba(${160+Math.random()*40|0},${148+Math.random()*30|0},${120+Math.random()*30|0},${0.12+Math.random()*0.18})`;mctx.lineWidth=0.5+Math.random()*1.5;mctx.stroke();}
-  const board=new THREE.Mesh(new THREE.CylinderGeometry(3.2,3.2,0.1,80),new THREE.MeshStandardMaterial({map:new THREE.CanvasTexture(mc),roughness:0.18,metalness:0.05,envMap:env,envMapIntensity:0.6}));
-  board.receiveShadow=true; board.position.y=-0.05; csScene.add(board);
-  const sg=new THREE.Mesh(new THREE.PlaneGeometry(20,20),new THREE.ShadowMaterial({opacity:0.32,color:0x1A0808}));
-  sg.rotation.x=-Math.PI/2; sg.position.y=-0.06; sg.receiveShadow=true; csScene.add(sg);
-  // Inscription canvas
-  window._csInscCanvas=document.createElement('canvas'); window._csInscCanvas.width=window._csInscCanvas.height=1024;
-  window._csInscTex=new THREE.CanvasTexture(window._csInscCanvas); window._csInscTex.colorSpace=THREE.SRGBColorSpace;
-  csCakeRoot=new THREE.Group(); csDecoRoot=new THREE.Group();
-  csScene.add(csCakeRoot); csScene.add(csDecoRoot);
-  csBuildCake(env);
-  window.addEventListener('resize',()=>{const w=wrap.clientWidth,h=wrap.clientHeight;csCamera.aspect=w/h;csCamera.updateProjectionMatrix();csRenderer.setSize(w,h);});
-  (function loop(){
-    requestAnimationFrame(loop); csControls.update(); csProcAnim(performance.now());
-    csDecoRoot.traverse(o=>{if(o.userData.flicker!==undefined){o.userData.flicker+=0.08;const s=1+Math.sin(o.userData.flicker)*0.14;o.scale.set(s,2*s,s);}});
-    csRenderer.render(csScene,csCamera);
-  })();
-}
-
-function csDrawInscription() {
-  if(!window._csInscCanvas)return;
-  const c=window._csInscCanvas,ctx=c.getContext('2d');
-  ctx.clearRect(0,0,1024,1024);
-  if(!CS.msg){window._csInscTex.needsUpdate=true;return;}
-  ctx.save(); ctx.shadowColor='rgba(0,0,0,0.4)'; ctx.shadowBlur=10; ctx.shadowOffsetX=2; ctx.shadowOffsetY=3;
-  ctx.fillStyle=CS.icingColor; ctx.font=`${CS.fontSize}px ${CS.font}`; ctx.textAlign='center'; ctx.textBaseline='middle';
-  ctx.fillText(CS.msg,512,512); ctx.restore(); window._csInscTex.needsUpdate=true;
-}
-
-function csGlazeMat(c,env){return new THREE.MeshPhysicalMaterial({color:c,roughness:0.07,metalness:0,reflectivity:0.9,clearcoat:1,clearcoatRoughness:0.05,envMap:env,envMapIntensity:1.3});}
-function csSpongeMat(c,env){
-  const nc=document.createElement('canvas');nc.width=nc.height=256;const nx=nc.getContext('2d');nx.fillStyle='#8080FF';nx.fillRect(0,0,256,256);
-  for(let i=0;i<2000;i++){const vv=120+Math.random()*60|0;nx.beginPath();nx.arc(Math.random()*256,Math.random()*256,1+Math.random()*3,0,Math.PI*2);nx.fillStyle=`rgb(${vv},${vv},255)`;nx.fill();}
-  const nm=new THREE.CanvasTexture(nc);nm.wrapS=nm.wrapT=THREE.RepeatWrapping;nm.repeat.set(3,3);
-  return new THREE.MeshStandardMaterial({color:c,roughness:0.87,normalMap:nm,normalScale:new THREE.Vector2(0.6,0.6),envMap:env,envMapIntensity:0.3});
-}
-function csTopMat(c,env){return new THREE.MeshPhysicalMaterial({color:c,roughness:0.05,metalness:0,clearcoat:1,clearcoatRoughness:0.04,envMap:env,envMapIntensity:1.5,map:window._csInscTex||null});}
-const CS_TD=[{r:1.62,h:1.0},{r:1.16,h:0.92},{r:0.78,h:0.84}];
-function csClearGrp(g){while(g.children.length){const c=g.children[0];if(c.geometry)c.geometry.dispose();if(c.material){Array.isArray(c.material)?c.material.forEach(m=>m.dispose()):c.material.dispose();}g.remove(c);}}
-function csBlendHex(a,b,t){const ca=new THREE.Color(a),cb=new THREE.Color(b);return ca.lerp(cb,t).getHex();}
-
-function csBuildCake(env) {
-  if(!csCakeRoot)return;
-  csClearGrp(csCakeRoot);csClearGrp(csDecoRoot);csAnimQ.length=0;
-  const col=CS_COLORS[CS.colorIdx],gc=col.glaze,sc=col.sponge,frost=csBlendHex(gc,0xFFFFFF,0.5);
-  let yOff=0;
-  for(let i=0;i<CS.tiers;i++){
-    const {r,h}=CS_TD[i],isTop=(i===CS.tiers-1),lH=h*0.285;
-    [sc,csBlendHex(sc,0xF5E8C8,0.45),sc].forEach((lc,li)=>{
-      const lm=new THREE.Mesh(new THREE.CylinderGeometry(r-0.02,r-0.02,lH,64),csSpongeMat(lc,env));
-      lm.castShadow=lm.receiveShadow=true;lm.position.y=yOff+lH*li+lH/2;csCakeRoot.add(lm);
-    });
-    const shell=new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,80,1,true),csGlazeMat(gc,env));
-    shell.castShadow=true;shell.position.y=yOff+h/2;shell.scale.y=0.01;
-    csPushAnim(shell.scale,'y',0.01,1,500,i*150);csCakeRoot.add(shell);
-    const tface=new THREE.Mesh(new THREE.CircleGeometry(r,80),isTop?csTopMat(frost,env):csGlazeMat(frost,env));
-    tface.rotation.x=-Math.PI/2;tface.position.y=yOff+h+0.001;tface.receiveShadow=true;csCakeRoot.add(tface);
-    for(let d=0;d<22;d++){
-      const ang=(d/22)*Math.PI*2+(Math.random()-0.5)*0.28,dH=0.08+Math.random()*0.26,dR=0.038+Math.random()*0.022;
-      const drip=new THREE.Mesh(new THREE.CylinderGeometry(dR*0.55,dR,dH,8),csGlazeMat(frost,env));
-      drip.position.set(Math.cos(ang)*r,yOff+h-dH/2-0.02,Math.sin(ang)*r);drip.castShadow=true;csCakeRoot.add(drip);
-      const blob=new THREE.Mesh(new THREE.SphereGeometry(dR*1.1,8,8),csGlazeMat(frost,env));
-      blob.position.set(Math.cos(ang)*r,yOff+h-dH-0.04,Math.sin(ang)*r);csCakeRoot.add(blob);
-    }
-    if(i<CS.tiers-1){
-      const sep=new THREE.Mesh(new THREE.CylinderGeometry(r+0.05,r+0.05,0.06,64),new THREE.MeshStandardMaterial({color:0xEDE4D0,roughness:0.15,metalness:0.1,envMap:env,envMapIntensity:0.5}));
-      sep.position.y=yOff+h+0.03;sep.receiveShadow=true;csCakeRoot.add(sep);
-    }
-    yOff+=h+(i<CS.tiers-1?0.06:0);
-  }
-  csBuildDecos(yOff,CS_TD[CS.tiers-1].r,env);
-  csDrawInscription();
-}
-function csBuildDecos(ty,tr,env){
-  if(CS.decos.has('roses'))csBuildRoses(ty,tr,env);
-  if(CS.decos.has('berries'))csBuildBerries(ty,tr,env);
-  if(CS.decos.has('gold_leaf'))csBuildGold(ty,tr,env);
-  if(CS.decos.has('candles'))csBuildCandles(ty,tr);
-  if(CS.decos.has('macarons'))csBuildMacs(ty,tr,env);
-  if(CS.decos.has('flowers'))csBuildFlowers(ty,tr);
-}
-function csSadd(m,d=0){m.scale.setScalar(0.01);csPushAnim(m.scale,'scalar',0.01,1,400,d);csDecoRoot.add(m);}
-function csBuildRoses(ty,tr,env){
-  const pos=[[0,0],[tr*.5,0],[-tr*.5,0],[0,tr*.5],[0,-tr*.5],[tr*.4,tr*.4],[-tr*.4,-tr*.4]];
-  pos.forEach(([rx,rz],pi)=>{
-    const g=new THREE.Group();
-    const pm=new THREE.MeshPhysicalMaterial({color:0xC04060,roughness:0.55,clearcoat:0.3,envMap:env,envMapIntensity:0.6});
-    for(let p=0;p<9;p++){const a=(p/9)*Math.PI*2,sp=0.07+p*0.008;const geo=new THREE.SphereGeometry(0.075,8,6);geo.scale(1.6,0.5,1);const m=new THREE.Mesh(geo,pm);m.position.set(Math.cos(a)*sp,p*0.007,Math.sin(a)*sp);m.rotation.y=a;g.add(m);}
-    g.add(new THREE.Mesh(new THREE.SphereGeometry(0.06,10,10),new THREE.MeshStandardMaterial({color:0x901830,roughness:0.7})));
-    g.position.set(rx,ty+0.08,rz);g.scale.setScalar(0.01);csPushAnim(g.scale,'scalar',0.01,1,380,pi*70);csDecoRoot.add(g);
-  });
-}
-function csBuildBerries(ty,tr,env){
-  const mB=new THREE.MeshPhysicalMaterial({color:0x2A1855,roughness:0.25,clearcoat:0.8,envMap:env,envMapIntensity:1});
-  const mR=new THREE.MeshPhysicalMaterial({color:0xC0204A,roughness:0.35,clearcoat:0.6,envMap:env,envMapIntensity:0.8});
-  for(let b=0;b<16;b++){const a=(b/16)*Math.PI*2,rad=tr*(0.55+(b%3)*0.08);const m=new THREE.Mesh(new THREE.SphereGeometry(0.09+Math.random()*0.04,12,12),b%3===0?mR:mB);m.position.set(Math.cos(a)*rad,ty+0.06+Math.random()*0.04,Math.sin(a)*rad);m.castShadow=true;csSadd(m,b*30);}
-}
-function csBuildGold(ty,tr,env){
-  const gm=new THREE.MeshStandardMaterial({color:0xD4A020,roughness:0.04,metalness:0.96,envMap:env,envMapIntensity:2});
-  for(let g=0;g<12;g++){const a=Math.random()*Math.PI*2,r=Math.random()*tr*0.8;const m=new THREE.Mesh(new THREE.PlaneGeometry(0.18,0.12),gm);m.rotation.x=-Math.PI/2+(Math.random()-0.5)*0.3;m.rotation.z=Math.random()*Math.PI;m.position.set(Math.cos(a)*r,ty+0.01,Math.sin(a)*r);csSadd(m,g*40);}
-}
-function csBuildCandles(ty,tr){
-  const cc=[0xFFD1DC,0xB5EAD7,0xC7CEEA,0xFDFD96,0xFFB7B2];
-  const pos=[[0,0],[tr*.44,tr*.44],[-tr*.44,tr*.44],[tr*.44,-tr*.44],[-tr*.44,-tr*.44]];
-  pos.forEach(([cx,cz],ci)=>{
-    const g=new THREE.Group();
-    const wax=new THREE.Mesh(new THREE.CylinderGeometry(0.065,0.065,0.55,16),new THREE.MeshStandardMaterial({color:cc[ci%cc.length],roughness:0.8}));wax.position.y=0.28;g.add(wax);
-    const wick=new THREE.Mesh(new THREE.CylinderGeometry(0.008,0.008,0.1,6),new THREE.MeshStandardMaterial({color:0x1A1008}));wick.position.y=0.6;g.add(wick);
-    const flame=new THREE.Mesh(new THREE.SphereGeometry(0.055,8,8),new THREE.MeshStandardMaterial({color:0xFFA020,emissive:0xFF6000,emissiveIntensity:1.2,roughness:0.2}));flame.scale.set(1,2.2,1);flame.position.y=0.7;flame.userData.flicker=Math.random()*Math.PI*2;g.add(flame);
-    const fl=new THREE.PointLight(0xFFA040,0.6,2.5);fl.position.y=0.72;g.add(fl);
-    g.position.set(cx,ty,cz);g.scale.setScalar(0.01);csPushAnim(g.scale,'scalar',0.01,1,380,ci*100);csDecoRoot.add(g);
-  });
-}
-function csBuildMacs(ty,tr,env){
-  const mc=[0xF4A7B4,0xB8A4D4,0x9DCFB8,0xF5D97A,0x90B8D4,0xFFB7B2];
-  for(let m=0;m<6;m++){
-    const a=(m/6)*Math.PI*2,g=new THREE.Group();
-    const mat=new THREE.MeshPhysicalMaterial({color:mc[m],roughness:0.35,clearcoat:0.5,envMap:env,envMapIntensity:0.7});
-    const geo=new THREE.CylinderGeometry(0.16,0.155,0.1,24);
-    const top=new THREE.Mesh(geo,mat);top.position.y=0.13;g.add(top);
-    const bot=new THREE.Mesh(new THREE.CylinderGeometry(0.155,0.16,0.1,24),mat);bot.position.y=0.03;g.add(bot);
-    const fill=new THREE.Mesh(new THREE.CylinderGeometry(0.145,0.145,0.05,24),new THREE.MeshStandardMaterial({color:0xF8F0E0,roughness:0.6}));fill.position.y=0.08;g.add(fill);
-    g.position.set(Math.cos(a)*tr*0.65,ty,Math.sin(a)*tr*0.65);g.scale.setScalar(0.01);csPushAnim(g.scale,'scalar',0.01,1,360,m*80);csDecoRoot.add(g);
-  }
-}
-function csBuildFlowers(ty,tr){
-  const pm=[new THREE.MeshStandardMaterial({color:0xFFE0F0,roughness:0.7,side:THREE.DoubleSide}),new THREE.MeshStandardMaterial({color:0xF0D8E8,roughness:0.7,side:THREE.DoubleSide})];
-  [[0,tr*.6],[tr*.55,tr*.3],[-tr*.55,tr*.3],[tr*.55,-tr*.3],[-tr*.55,-tr*.3]].forEach(([fx,fz],fi)=>{
-    const g=new THREE.Group();
-    for(let p=0;p<5;p++){const a=(p/5)*Math.PI*2,geo=new THREE.SphereGeometry(0.12,8,6);geo.scale(1,0.25,2);const m=new THREE.Mesh(geo,pm[fi%2]);m.position.set(Math.cos(a)*0.1,0,Math.sin(a)*0.1);m.rotation.y=a;g.add(m);}
-    g.add(new THREE.Mesh(new THREE.SphereGeometry(0.065,10,10),new THREE.MeshStandardMaterial({color:0xF5D020,roughness:0.4,metalness:0.1})));
-    g.rotation.x=Math.PI/2;g.position.set(fx,ty+0.04,fz);g.scale.setScalar(0.01);csPushAnim(g.scale,'scalar',0.01,1,360,fi*80);csDecoRoot.add(g);
-  });
-}
-function csPushAnim(obj,key,from,to,dur,delay=0){csAnimQ.push({obj,key,from,to,dur,delay,start:performance.now()+delay});}
-function csProcAnim(now){
-  for(let i=csAnimQ.length-1;i>=0;i--){
-    const a=csAnimQ[i];if(now<a.start)continue;
-    const t=Math.min((now-a.start)/a.dur,1),e=1-Math.pow(1-t,3),v=a.from+(a.to-a.from)*e;
-    if(a.key==='scalar')a.obj.setScalar(v);else a.obj[a.key]=v;
-    if(t>=1)csAnimQ.splice(i,1);
-  }
-}
-
-function csSetTiers(n,el){document.querySelectorAll('.cs-tier-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');CS.tiers=n;if(csRendererReady)csBuildCake(csScene.environment);csUpdatePrice();}
-function csSetFlav(f,el){document.querySelectorAll('.cs-flav').forEach(b=>b.classList.remove('active'));el.classList.add('active');CS.flavor=f;csUpdatePrice();}
-function csTogDeco(d,el){CS.decos.has(d)?(CS.decos.delete(d),el.classList.remove('active')):(CS.decos.add(d),el.classList.add('active'));if(csRendererReady)csBuildCake(csScene.environment);csUpdatePrice();}
-function csHandleMsg(v){CS.msg=v;const pt=document.getElementById('cs-prev-txt');pt.textContent=v||'Mesajınız burada görünecek...';pt.style.fontFamily=CS.font;pt.style.color=CS.icingColor;pt.style.fontSize=Math.max(11,CS.fontSize*0.36)+'px';csDrawInscription();}
-function csHandleFont(v){CS.font=v;document.getElementById('cs-prev-txt').style.fontFamily=v;csDrawInscription();}
-function csHandleIcing(v){CS.icingColor=v;document.getElementById('cs-prev-txt').style.color=v;csDrawInscription();}
-function csHandleSize(v){CS.fontSize=parseInt(v);document.getElementById('cs-sVal').textContent=v;csDrawInscription();}
-
-function csBuildPalette(){
-  const pal=document.getElementById('cs-palette');
-  CS_COLORS.forEach((c,i)=>{
-    const sw=document.createElement('div');
-    sw.className='cs-csw'+(i===0?' active':'');
-    sw.style.background=c.hex;sw.title=c.name;
-    sw.onclick=()=>{
-      document.querySelectorAll('.cs-csw').forEach(s=>s.classList.remove('active'));sw.classList.add('active');
-      CS.colorIdx=i;document.getElementById('cs-colName').textContent=`— ${c.name} —`;
-      if(csRendererReady)csBuildCake(csScene.environment);csUpdatePrice();
-    };
-    pal.appendChild(sw);
-  });
-}
-
-const CS_FNAMES={vanilla:'Vanilya',chocolate:'Çikolata',strawberry:'Çilek',pistachio:'Antep Fıstığı',lemon:'Limon',red_velvet:'Red Velvet'};
-const CS_DNAMES={roses:'🌹 Güller',berries:'🫐 Meyveler',gold_leaf:'✨ Altın Varak',candles:'🕯️ Mumlar',macarons:'🍬 Makaronlar',flowers:'🌸 Çiçekler'};
-
-function csUpdatePrice(){
-  let p=350+CS.tiers*100+(CS_FPRICE[CS.flavor]||0);
-  CS.decos.forEach(d=>p+=CS_DPRICE[d]||0);
-  if(CS.msg)p+=20;
-  document.getElementById('cs-pVal').textContent='₺ '+p.toLocaleString('tr-TR');
-  return p;
-}
-function csOpenModal(){
-  const dl=[...CS.decos].map(d=>CS_DNAMES[d]).join(', ')||'—';
-  document.getElementById('cs-mDetail').innerHTML=`<b>Kat:</b> ${CS.tiers} · <b>Renk:</b> ${CS_COLORS[CS.colorIdx].name}<br><b>Lezzet:</b> ${CS_FNAMES[CS.flavor]}<br><b>Süsleme:</b> ${dl}<br><b>Yazı:</b> ${CS.msg||'—'}<br><b>Toplam:</b> ${document.getElementById('cs-pVal').textContent}`;
-  document.getElementById('cs-modal').classList.add('open');
-}
-
-// Boot loader
-(function csBoot(){
-  const steps=[[15,'Sketchfab modeli yükleniyor...'],[35,'Sahne hazırlanıyor...'],[60,'PBR materyaller...'],[80,'Studio hazırlanıyor...'],[100,'Hazır!']];
-  let si=0;
-  (function step(){
-    if(si>=steps.length){setTimeout(()=>document.getElementById('cs-loading').classList.add('gone'),500);return;}
-    const [p,l]=steps[si++];
-    document.getElementById('cs-ldBar').style.width=p+'%';
-    document.getElementById('cs-ldLbl').textContent=l;
-    setTimeout(step,180+Math.random()*160);
-  })();
-})();
-
-csBuildPalette();
-</script>
 </body>
 </html>
 <!DOCTYPE html>
