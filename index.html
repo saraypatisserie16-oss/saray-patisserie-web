@@ -637,7 +637,53 @@ footer{
 
 <!-- HERO -->
 <section class="hero" id="hero">
+<section class="hero" id="hero">
   <div class="hero-progress" id="heroProg" style="width:0%"></div>
+
+  <!-- ÖZEL SİPARİŞ BUTONU -->
+  <a href="saray-patisserie-v2.html"
+     style="
+       position:absolute;
+       left:40px;
+       bottom:60px;
+       z-index:999;
+       display:inline-flex;
+       align-items:center;
+       gap:12px;
+       padding:15px 28px;
+       background:linear-gradient(135deg,#7A5028,#C9A96E);
+       color:#07050A;
+       font-family:'Georgia',serif;
+       font-size:0.88rem;
+       font-weight:700;
+       letter-spacing:0.12em;
+       text-decoration:none;
+       border-radius:50px;
+       box-shadow:0 8px 32px rgba(201,169,110,0.5);
+       animation:pulse 2.5s ease-in-out infinite;
+     "
+     onmouseover="this.style.transform='translateY(-3px)'"
+     onmouseout="this.style.transform='none'"
+  >
+    🎂 Özel Sipariş
+  </a>
+  <style>
+    @keyframes pulse {
+      0%,100%{ box-shadow:0 8px 32px rgba(201,169,110,0.45); }
+      50%{ box-shadow:0 8px 48px rgba(201,169,110,0.75),0 0 0 8px rgba(201,169,110,0.12); }
+    }
+  </style>
+
+  <div class="slide-track" id="slTrack">
+```
+
+Yani tam şöyle olacak:
+```
+hero-progress satırı
+  ↓
+BUTON BURAYA
+  ↓
+slide-track satırı  <div class="hero-progress" id="heroProg" style="width:0%"></div>
   <div class="slide-track" id="slTrack">
 
     <div class="slide active s0">
